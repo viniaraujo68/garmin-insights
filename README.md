@@ -27,6 +27,10 @@ npm ci
 npm run dev                                 # http://localhost:5173
 ```
 
+Checagens do site: `npm run check` (tipos), `npm run lint` (Prettier + ESLint) e
+`npm run test:e2e` (Playwright, contra os dados de `data/site`; na primeira vez rode
+`npx playwright install chromium-headless-shell`).
+
 As etapas do pipeline (`STAGES`) e a data de referência ficam no topo de
 `pipeline/src/passada/run.py`; o resto da configuração em `pipeline/src/passada/config.py`.
 

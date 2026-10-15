@@ -11,7 +11,8 @@
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
     "lint": "prettier --check . && eslint .",
     "format": "prettier --write .",
-    "types": "node scripts/gen-types.mjs"
+    "types": "node scripts/gen-types.mjs",
+    "test:e2e": "playwright test"
   },
   "dependencies": {
     "@viniaraujo68/plinth": "github:viniaraujo68/plinth#8d3fa8a30e1bb6a81f2e126f17176aeef39f901f",
@@ -20,6 +21,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
+    "@playwright/test": "^1.64.1",
     "@sveltejs/adapter-node": "^5.5.7",
     "@sveltejs/kit": "^2.70.3",
     "@sveltejs/vite-plugin-svelte": "^7.3.1",

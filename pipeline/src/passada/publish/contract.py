@@ -1,4 +1,8 @@
+from typing import Literal
+
 from pydantic import BaseModel, ConfigDict
+
+Status = Literal["good", "typical", "attention", "bad", "unknown"]
 
 
 class Contract(BaseModel):
@@ -26,21 +30,196 @@ class ActivitySummary(Contract):
     duration_min: float | None
     pace_s_km: int | None
     gap_pace_s_km: int | None
+    heat_adjusted_pace_s_km: int | None
+    heat_slowdown_pct: float | None
     avg_hr: float | None
     max_hr: float | None
+    recovery_hr: float | None
     meters_per_beat: float | None
+    cadence: float | None
+    stride_m: float | None
+    ground_contact_ms: float | None
+    vertical_oscillation_cm: float | None
+    vertical_ratio_pct: float | None
+    power_w: float | None
+    elevation_gain_m: float | None
+    performance_condition: float | None
     training_load: float | None
     aerobic_te: float | None
     anaerobic_te: float | None
     training_effect_label: str | None
+    zone_minutes: list[float]
+    temperature_c: float | None
     feels_like_c: float | None
     dew_point_c: float | None
     humidity_pct: float | None
     rpe: float | None
+    feel: float | None
+    body_battery_impact: float | None
     has_gps: bool
+
+
+class Lap(Contract):
+    lap: int
+    distance_m: float | None
+    duration_s: float | None
+    pace_s_km: int | None
+    gap_pace_s_km: int | None
+    avg_hr: float | None
+    max_hr: float | None
+    cadence: float | None
+    stride_m: float | None
+    ground_contact_ms: float | None
+    power_w: float | None
+    elevation_gain_m: float | None
+    elevation_loss_m: float | None
+
+
+class ZoneTime(Contract):
+    zone: int
+    floor_bpm: float | None
+    ceiling_bpm: float | None
+    seconds: float
+
+
+class Streams(Contract):
+    elapsed_s: list[float | None]
+    distance_m: list[float | None]
+    lat: list[float | None]
+    lon: list[float | None]
+    pace_s_km: list[float | None]
+    gap_pace_s_km: list[float | None]
+    hr: list[float | None]
+    cadence: list[float | None]
+    power: list[float | None]
+    elevation: list[float | None]
+    grade_pct: list[float | None]
+    performance_condition: list[float | None]
+
+
+class Weather(Contract):
+    temperature_c: float | None
+    feels_like_c: float | None
+    dew_point_c: float | None
+    humidity_pct: float | None
+    wind_kmh: float | None
+    description: str | None
+
+
+class ActivityDetail(Contract):
+    summary: ActivitySummary
+    laps: list[Lap]
+    zones: list[ZoneTime]
+    streams: Streams
+    weather: Weather
+
+
+class ReadinessFactor(Contract):
+    key: str
+    label: str
+    pct: float
+
+
+class Readiness(Contract):
+    date: str
+    score: float
+    level: str | None
+    feedback: str | None
+    recovery_time_h: float | None
+    factors: list[ReadinessFactor]
+
+
+class SparkPoint(Contract):
+    date: str
+    value: float | None
+
+
+class BaselineTile(Contract):
+    key: str
+    label: str
+    value: float | None
+    display: str
+    baseline_label: str
+    delta_display: str
+    status: Status
+    status_label: str
+    band_low: float | None
+    band_high: float | None
+    spark: list[SparkPoint]
+
+
+class IllnessSignal(Contract):
+    key: str
+    label: str
+    unit: str
+    value: float | None
+    median: float | None
+    z: float | None
+    flagged: bool
+
+
+class IllnessWatch(Contract):
+    status: Literal["ok", "watch", "alert", "insufficient"]
+    message: str
+    reference_nights: int
+    signals: list[IllnessSignal]
+
+
+class WeekActivity(Contract):
+    activity_id: str
+    sport: str
+    distance_km: float | None
+    duration_min: float | None
+    training_load: float | None
+
+
+class WeekDay(Contract):
+    date: str
+    activities: list[WeekActivity]
+
+
+class Signal(Contract):
+    key: str
+    label: str
+    display: str
+    detail: str
+    status: Status
+
+
+class Today(Contract):
+    date: str
+    readiness: Readiness | None
+    training_status: str | None
+    tiles: list[BaselineTile]
+    illness: IllnessWatch
+    week: list[WeekDay]
+    signals: list[Signal]
+    last_activity_id: str | None
+
+
+class Privacy(Contract):
+    lat: float
+    lon: float
+    radius_m: float
+
+
+class RouteTrace(Contract):
+    activity_id: str
+    date: str
+    distance_km: float | None
+    pace_s_km: int | None
+    points: list[list[float | None]]
+
+
+class Routes(Contract):
+    privacy: Privacy | None
+    routes: list[RouteTrace]
 
 
 DOCUMENTS: dict[str, type[Contract]] = {
     "meta": Meta,
     "activities": ActivitySummary,
+    "activity": ActivityDetail,
+    "today": Today,
+    "routes": Routes,
 }

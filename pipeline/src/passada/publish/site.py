@@ -7,7 +7,8 @@ from pathlib import Path
 from pydantic import BaseModel, TypeAdapter
 
 from passada import config
-from passada.calc.activities import activity_summaries
+from passada.calc.activities import activity_details, activity_summaries, routes_document, samples_by_activity
+from passada.calc.today import today_document
 from passada.publish.contract import DOCUMENTS, Contract, Meta
 
 
@@ -61,6 +62,9 @@ def verify_site(site_dir: Path) -> None:
     activities = json.loads((site_dir / "activities.json").read_text())
     if meta.activity_count != len(activities):
         raise ValueError(f"meta.activity_count={meta.activity_count} but activities.json has {len(activities)}")
+    missing = [item["activity_id"] for item in activities if not (site_dir / "activity" / f"{item['activity_id']}.json").exists()]
+    if missing:
+        raise ValueError(f"activities without a detail file: {missing}")
 
 
 def write_schema(site_dir: Path) -> None:
@@ -74,11 +78,16 @@ def publish_site(db_path: Path, site_dir: Path, today: date) -> dict[str, int]:
     staging.mkdir(parents=True)
     connection = open_database(db_path)
     try:
-        activities = activity_summaries(connection)
+        samples = samples_by_activity(connection)
+        activities = activity_summaries(connection, samples)
         documents: dict[str, BaseModel | list] = {
             "meta": build_meta(connection, today, len(activities)),
             "activities": activities,
+            "today": today_document(connection, activities, today),
+            "routes": routes_document(activities, samples),
         }
+        for activity_id, detail in activity_details(connection, activities, samples).items():
+            documents[f"activity/{activity_id}"] = detail
     finally:
         connection.close()
     for name, payload in documents.items():
@@ -87,4 +96,8 @@ def publish_site(db_path: Path, site_dir: Path, today: date) -> dict[str, int]:
     verify_site(staging)
     shutil.rmtree(site_dir, ignore_errors=True)
     staging.replace(site_dir)
-    return {name: len(payload) if isinstance(payload, list) else 1 for name, payload in documents.items()}
+    counts: dict[str, int] = {}
+    for name, payload in documents.items():
+        key = name.split("/")[0]
+        counts[key] = counts.get(key, 0) + (len(payload) if isinstance(payload, list) else 1)
+    return counts

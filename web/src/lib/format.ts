@@ -86,8 +86,10 @@ export const dayMonth = (value: string): string =>
 export const weekdayShort = (value: string): string =>
   weekday.format(new Date(`${value.slice(0, 10)}T00:00:00Z`)).replace(".", "");
 
-export const dayTitle = (value: string): string =>
-  longDay.format(new Date(`${value.slice(0, 10)}T00:00:00Z`));
+export const dayTitle = (value: string): string => {
+  const text = longDay.format(new Date(`${value.slice(0, 10)}T00:00:00Z`));
+  return text.charAt(0).toUpperCase() + text.slice(1);
+};
 
 export const datetime = (value: string | null | undefined): string =>
   value ? dates.datetime(value) : DASH;
