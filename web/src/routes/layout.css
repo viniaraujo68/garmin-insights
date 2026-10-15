@@ -1,0 +1,33 @@
+@import "@viniaraujo68/plinth/theme.css";
+
+@source "../../node_modules/@viniaraujo68/plinth/dist";
+
+@import "tailwindcss";
+
+@plugin "daisyui" {
+  exclude: rootscrollgutter;
+}
+
+:root {
+  --series-1: light-dark(#2a78d6, #3987e5);
+  --series-2: light-dark(#eb6834, #d95926);
+  --series-3: light-dark(#1baf7a, #199e70);
+  --series-4: light-dark(#eda100, #c98500);
+  --series-5: light-dark(#e87ba4, #d55181);
+  --series-6: light-dark(#008300, #008300);
+  --series-7: light-dark(#6250d6, #9085e9);
+  --series-8: light-dark(#e34948, #e66767);
+  --ramp-low: light-dark(#9ec5f4, #184f95);
+  --ramp-high: light-dark(#0d366b, #cde2fb);
+  --ramp-hr-low: light-dark(#f7c7b1, #7a2c0c);
+  --ramp-hr-high: light-dark(#8a2a07, #ffd2bf);
+  --sport-run: var(--series-1);
+  --sport-football: var(--series-3);
+  --sport-gym: var(--series-7);
+  --sport-other: var(--series-4);
+}
+
+html,
+body {
+  height: 100%;
+}

@@ -1,0 +1,22 @@
+[project]
+name = "passada"
+version = "0.1.0"
+description = "Garmin running data: sync, store and publish for the passada dashboard"
+requires-python = ">=3.12"
+dependencies = [
+    "garminconnect>=0.3.18",
+    "pydantic>=2.14.1",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=9.1.1",
+]
+
+[build-system]
+requires = ["uv_build>=0.11,<0.12"]
+build-backend = "uv_build"
+
+[tool.pytest.ini_options]
+pythonpath = ["tests"]
+testpaths = ["tests"]

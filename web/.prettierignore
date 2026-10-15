@@ -1,0 +1,4 @@
+package-lock.json
+/static/
+src/lib/data/types.ts
+src/lib/data/schema.json
