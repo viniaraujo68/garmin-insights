@@ -13,8 +13,12 @@ quando a análise é feita com o Claude. O site não lê o banco: lê os JSON pu
 
 ## Site lendo JSON a cada requisição (adapter-node)
 
-Depois de um sync basta recarregar a página, sem rebuild. Também é o caminho para rodar num VPS
-com login no futuro.
+Depois de um sync basta recarregar a página, sem rebuild.
+
+## Só local (2026-10-16)
+
+O site roda em localhost e os dados são atualizados quando o usuário quiser, rodando o pipeline.
+Não vai para VPS: sem login, sem multiusuário e sem sync agendado.
 
 ## Faixas de técnica e limites de referência
 
