@@ -1,0 +1,4580 @@
+{
+ "activities": {
+  "additionalProperties": false,
+  "properties": {
+   "activity_id": {
+    "title": "Activity Id",
+    "type": "string"
+   },
+   "aerobic_te": {
+    "anyOf": [
+     {
+      "type": "number"
+     },
+     {
+      "type": "null"
+     }
+    ],
+    "title": "Aerobic Te"
+   },
+   "anaerobic_te": {
+    "anyOf": [
+     {
+      "type": "number"
+     },
+     {
+      "type": "null"
+     }
+    ],
+    "title": "Anaerobic Te"
+   },
+   "avg_hr": {
+    "anyOf": [
+     {
+      "type": "number"
+     },
+     {
+      "type": "null"
+     }
+    ],
+    "title": "Avg Hr"
+   },
+   "body_battery_impact": {
+    "anyOf": [
+     {
+      "type": "number"
+     },
+     {
+      "type": "null"
+     }
+    ],
+    "title": "Body Battery Impact"
+   },
+   "cadence": {
+    "anyOf": [
+     {
+      "type": "number"
+     },
+     {
+      "type": "null"
+     }
+    ],
+    "title": "Cadence"
+   },
+   "date": {
+    "title": "Date",
+    "type": "string"
+   },
+   "dew_point_c": {
+    "anyOf": [
+     {
+      "type": "number"
+     },
+     {
+      "type": "null"
+     }
+    ],
+    "title": "Dew Point C"
+   },
+   "distance_km": {
+    "anyOf": [
+     {
+      "type": "number"
+     },
+     {
+      "type": "null"
+     }
+    ],
+    "title": "Distance Km"
+   },
+   "duration_min": {
+    "anyOf": [
+     {
+      "type": "number"
+     },
+     {
+      "type": "null"
+     }
+    ],
+    "title": "Duration Min"
+   },
+   "elevation_gain_m": {
+    "anyOf": [
+     {
+      "type": "number"
+     },
+     {
+      "type": "null"
+     }
+    ],
+    "title": "Elevation Gain M"
+   },
+   "feel": {
+    "anyOf": [
+     {
+      "type": "number"
+     },
+     {
+      "type": "null"
+     }
+    ],
+    "title": "Feel"
+   },
+   "feels_like_c": {
+    "anyOf": [
+     {
+      "type": "number"
+     },
+     {
+      "type": "null"
+     }
+    ],
+    "title": "Feels Like C"
+   },
+   "gap_pace_s_km": {
+    "anyOf": [
+     {
+      "type": "integer"
+     },
+     {
+      "type": "null"
+     }
+    ],
+    "title": "Gap Pace S Km"
+   },
+   "ground_contact_ms": {
+    "anyOf": [
+     {
+      "type": "number"
+     },
+     {
+      "type": "null"
+     }
+    ],
+    "title": "Ground Contact Ms"
+   },
+   "has_gps": {
+    "title": "Has Gps",
+    "type": "boolean"
+   },
+   "heat_adjusted_pace_s_km": {
+    "anyOf": [
+     {
+      "type": "integer"
+     },
+     {
+      "type": "null"
+     }
+    ],
+    "title": "Heat Adjusted Pace S Km"
+   },
+   "heat_slowdown_pct": {
+    "anyOf": [
+     {
+      "type": "number"
+     },
+     {
+      "type": "null"
+     }
+    ],
+    "title": "Heat Slowdown Pct"
+   },
+   "humidity_pct": {
+    "anyOf": [
+     {
+      "type": "number"
+     },
+     {
+      "type": "null"
+     }
+    ],
+    "title": "Humidity Pct"
+   },
+   "max_hr": {
+    "anyOf": [
+     {
+      "type": "number"
+     },
+     {
+      "type": "null"
+     }
+    ],
+    "title": "Max Hr"
+   },
+   "meters_per_beat": {
+    "anyOf": [
+     {
+      "type": "number"
+     },
+     {
+      "type": "null"
+     }
+    ],
+    "title": "Meters Per Beat"
+   },
+   "name": {
+    "anyOf": [
+     {
+      "type": "string"
+     },
+     {
+      "type": "null"
+     }
+    ],
+    "title": "Name"
+   },
+   "pace_s_km": {
+    "anyOf": [
+     {
+      "type": "integer"
+     },
+     {
+      "type": "null"
+     }
+    ],
+    "title": "Pace S Km"
+   },
+   "performance_condition": {
+    "anyOf": [
+     {
+      "type": "number"
+     },
+     {
+      "type": "null"
+     }
+    ],
+    "title": "Performance Condition"
+   },
+   "power_w": {
+    "anyOf": [
+     {
+      "type": "number"
+     },
+     {
+      "type": "null"
+     }
+    ],
+    "title": "Power W"
+   },
+   "recovery_hr": {
+    "anyOf": [
+     {
+      "type": "number"
+     },
+     {
+      "type": "null"
+     }
+    ],
+    "title": "Recovery Hr"
+   },
+   "rpe": {
+    "anyOf": [
+     {
+      "type": "number"
+     },
+     {
+      "type": "null"
+     }
+    ],
+    "title": "Rpe"
+   },
+   "sport": {
+    "title": "Sport",
+    "type": "string"
+   },
+   "start_local": {
+    "title": "Start Local",
+    "type": "string"
+   },
+   "stride_m": {
+    "anyOf": [
+     {
+      "type": "number"
+     },
+     {
+      "type": "null"
+     }
+    ],
+    "title": "Stride M"
+   },
+   "temperature_c": {
+    "anyOf": [
+     {
+      "type": "number"
+     },
+     {
+      "type": "null"
+     }
+    ],
+    "title": "Temperature C"
+   },
+   "training_effect_label": {
+    "anyOf": [
+     {
+      "type": "string"
+     },
+     {
+      "type": "null"
+     }
+    ],
+    "title": "Training Effect Label"
+   },
+   "training_load": {
+    "anyOf": [
+     {
+      "type": "number"
+     },
+     {
+      "type": "null"
+     }
+    ],
+    "title": "Training Load"
+   },
+   "type_key": {
+    "title": "Type Key",
+    "type": "string"
+   },
+   "vertical_oscillation_cm": {
+    "anyOf": [
+     {
+      "type": "number"
+     },
+     {
+      "type": "null"
+     }
+    ],
+    "title": "Vertical Oscillation Cm"
+   },
+   "vertical_ratio_pct": {
+    "anyOf": [
+     {
+      "type": "number"
+     },
+     {
+      "type": "null"
+     }
+    ],
+    "title": "Vertical Ratio Pct"
+   },
+   "zone_minutes": {
+    "items": {
+     "type": "number"
+    },
+    "title": "Zone Minutes",
+    "type": "array"
+   }
+  },
+  "required": [
+   "activity_id",
+   "date",
+   "start_local",
+   "sport",
+   "type_key",
+   "name",
+   "distance_km",
+   "duration_min",
+   "pace_s_km",
+   "gap_pace_s_km",
+   "heat_adjusted_pace_s_km",
+   "heat_slowdown_pct",
+   "avg_hr",
+   "max_hr",
+   "recovery_hr",
+   "meters_per_beat",
+   "cadence",
+   "stride_m",
+   "ground_contact_ms",
+   "vertical_oscillation_cm",
+   "vertical_ratio_pct",
+   "power_w",
+   "elevation_gain_m",
+   "performance_condition",
+   "training_load",
+   "aerobic_te",
+   "anaerobic_te",
+   "training_effect_label",
+   "zone_minutes",
+   "temperature_c",
+   "feels_like_c",
+   "dew_point_c",
+   "humidity_pct",
+   "rpe",
+   "feel",
+   "body_battery_impact",
+   "has_gps"
+  ],
+  "title": "ActivitySummary",
+  "type": "object"
+ },
+ "activity": {
+  "$defs": {
+   "ActivitySummary": {
+    "additionalProperties": false,
+    "properties": {
+     "activity_id": {
+      "title": "Activity Id",
+      "type": "string"
+     },
+     "aerobic_te": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Aerobic Te"
+     },
+     "anaerobic_te": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Anaerobic Te"
+     },
+     "avg_hr": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Avg Hr"
+     },
+     "body_battery_impact": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Body Battery Impact"
+     },
+     "cadence": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Cadence"
+     },
+     "date": {
+      "title": "Date",
+      "type": "string"
+     },
+     "dew_point_c": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Dew Point C"
+     },
+     "distance_km": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Distance Km"
+     },
+     "duration_min": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Duration Min"
+     },
+     "elevation_gain_m": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Elevation Gain M"
+     },
+     "feel": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Feel"
+     },
+     "feels_like_c": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Feels Like C"
+     },
+     "gap_pace_s_km": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Gap Pace S Km"
+     },
+     "ground_contact_ms": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Ground Contact Ms"
+     },
+     "has_gps": {
+      "title": "Has Gps",
+      "type": "boolean"
+     },
+     "heat_adjusted_pace_s_km": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Heat Adjusted Pace S Km"
+     },
+     "heat_slowdown_pct": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Heat Slowdown Pct"
+     },
+     "humidity_pct": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Humidity Pct"
+     },
+     "max_hr": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Max Hr"
+     },
+     "meters_per_beat": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Meters Per Beat"
+     },
+     "name": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Name"
+     },
+     "pace_s_km": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Pace S Km"
+     },
+     "performance_condition": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Performance Condition"
+     },
+     "power_w": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Power W"
+     },
+     "recovery_hr": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Recovery Hr"
+     },
+     "rpe": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Rpe"
+     },
+     "sport": {
+      "title": "Sport",
+      "type": "string"
+     },
+     "start_local": {
+      "title": "Start Local",
+      "type": "string"
+     },
+     "stride_m": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Stride M"
+     },
+     "temperature_c": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Temperature C"
+     },
+     "training_effect_label": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Training Effect Label"
+     },
+     "training_load": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Training Load"
+     },
+     "type_key": {
+      "title": "Type Key",
+      "type": "string"
+     },
+     "vertical_oscillation_cm": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Vertical Oscillation Cm"
+     },
+     "vertical_ratio_pct": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Vertical Ratio Pct"
+     },
+     "zone_minutes": {
+      "items": {
+       "type": "number"
+      },
+      "title": "Zone Minutes",
+      "type": "array"
+     }
+    },
+    "required": [
+     "activity_id",
+     "date",
+     "start_local",
+     "sport",
+     "type_key",
+     "name",
+     "distance_km",
+     "duration_min",
+     "pace_s_km",
+     "gap_pace_s_km",
+     "heat_adjusted_pace_s_km",
+     "heat_slowdown_pct",
+     "avg_hr",
+     "max_hr",
+     "recovery_hr",
+     "meters_per_beat",
+     "cadence",
+     "stride_m",
+     "ground_contact_ms",
+     "vertical_oscillation_cm",
+     "vertical_ratio_pct",
+     "power_w",
+     "elevation_gain_m",
+     "performance_condition",
+     "training_load",
+     "aerobic_te",
+     "anaerobic_te",
+     "training_effect_label",
+     "zone_minutes",
+     "temperature_c",
+     "feels_like_c",
+     "dew_point_c",
+     "humidity_pct",
+     "rpe",
+     "feel",
+     "body_battery_impact",
+     "has_gps"
+    ],
+    "title": "ActivitySummary",
+    "type": "object"
+   },
+   "Lap": {
+    "additionalProperties": false,
+    "properties": {
+     "avg_hr": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Avg Hr"
+     },
+     "cadence": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Cadence"
+     },
+     "distance_m": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Distance M"
+     },
+     "duration_s": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Duration S"
+     },
+     "elevation_gain_m": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Elevation Gain M"
+     },
+     "elevation_loss_m": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Elevation Loss M"
+     },
+     "gap_pace_s_km": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Gap Pace S Km"
+     },
+     "ground_contact_ms": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Ground Contact Ms"
+     },
+     "lap": {
+      "title": "Lap",
+      "type": "integer"
+     },
+     "max_hr": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Max Hr"
+     },
+     "pace_s_km": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Pace S Km"
+     },
+     "power_w": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Power W"
+     },
+     "stride_m": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Stride M"
+     }
+    },
+    "required": [
+     "lap",
+     "distance_m",
+     "duration_s",
+     "pace_s_km",
+     "gap_pace_s_km",
+     "avg_hr",
+     "max_hr",
+     "cadence",
+     "stride_m",
+     "ground_contact_ms",
+     "power_w",
+     "elevation_gain_m",
+     "elevation_loss_m"
+    ],
+    "title": "Lap",
+    "type": "object"
+   },
+   "Streams": {
+    "additionalProperties": false,
+    "properties": {
+     "cadence": {
+      "items": {
+       "anyOf": [
+        {
+         "type": "number"
+        },
+        {
+         "type": "null"
+        }
+       ]
+      },
+      "title": "Cadence",
+      "type": "array"
+     },
+     "distance_m": {
+      "items": {
+       "anyOf": [
+        {
+         "type": "number"
+        },
+        {
+         "type": "null"
+        }
+       ]
+      },
+      "title": "Distance M",
+      "type": "array"
+     },
+     "elapsed_s": {
+      "items": {
+       "anyOf": [
+        {
+         "type": "number"
+        },
+        {
+         "type": "null"
+        }
+       ]
+      },
+      "title": "Elapsed S",
+      "type": "array"
+     },
+     "elevation": {
+      "items": {
+       "anyOf": [
+        {
+         "type": "number"
+        },
+        {
+         "type": "null"
+        }
+       ]
+      },
+      "title": "Elevation",
+      "type": "array"
+     },
+     "gap_pace_s_km": {
+      "items": {
+       "anyOf": [
+        {
+         "type": "number"
+        },
+        {
+         "type": "null"
+        }
+       ]
+      },
+      "title": "Gap Pace S Km",
+      "type": "array"
+     },
+     "grade_pct": {
+      "items": {
+       "anyOf": [
+        {
+         "type": "number"
+        },
+        {
+         "type": "null"
+        }
+       ]
+      },
+      "title": "Grade Pct",
+      "type": "array"
+     },
+     "hr": {
+      "items": {
+       "anyOf": [
+        {
+         "type": "number"
+        },
+        {
+         "type": "null"
+        }
+       ]
+      },
+      "title": "Hr",
+      "type": "array"
+     },
+     "lat": {
+      "items": {
+       "anyOf": [
+        {
+         "type": "number"
+        },
+        {
+         "type": "null"
+        }
+       ]
+      },
+      "title": "Lat",
+      "type": "array"
+     },
+     "lon": {
+      "items": {
+       "anyOf": [
+        {
+         "type": "number"
+        },
+        {
+         "type": "null"
+        }
+       ]
+      },
+      "title": "Lon",
+      "type": "array"
+     },
+     "pace_s_km": {
+      "items": {
+       "anyOf": [
+        {
+         "type": "number"
+        },
+        {
+         "type": "null"
+        }
+       ]
+      },
+      "title": "Pace S Km",
+      "type": "array"
+     },
+     "performance_condition": {
+      "items": {
+       "anyOf": [
+        {
+         "type": "number"
+        },
+        {
+         "type": "null"
+        }
+       ]
+      },
+      "title": "Performance Condition",
+      "type": "array"
+     },
+     "power": {
+      "items": {
+       "anyOf": [
+        {
+         "type": "number"
+        },
+        {
+         "type": "null"
+        }
+       ]
+      },
+      "title": "Power",
+      "type": "array"
+     }
+    },
+    "required": [
+     "elapsed_s",
+     "distance_m",
+     "lat",
+     "lon",
+     "pace_s_km",
+     "gap_pace_s_km",
+     "hr",
+     "cadence",
+     "power",
+     "elevation",
+     "grade_pct",
+     "performance_condition"
+    ],
+    "title": "Streams",
+    "type": "object"
+   },
+   "Weather": {
+    "additionalProperties": false,
+    "properties": {
+     "description": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Description"
+     },
+     "dew_point_c": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Dew Point C"
+     },
+     "feels_like_c": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Feels Like C"
+     },
+     "humidity_pct": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Humidity Pct"
+     },
+     "temperature_c": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Temperature C"
+     },
+     "wind_kmh": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Wind Kmh"
+     }
+    },
+    "required": [
+     "temperature_c",
+     "feels_like_c",
+     "dew_point_c",
+     "humidity_pct",
+     "wind_kmh",
+     "description"
+    ],
+    "title": "Weather",
+    "type": "object"
+   },
+   "ZoneTime": {
+    "additionalProperties": false,
+    "properties": {
+     "ceiling_bpm": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Ceiling Bpm"
+     },
+     "floor_bpm": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Floor Bpm"
+     },
+     "seconds": {
+      "title": "Seconds",
+      "type": "number"
+     },
+     "zone": {
+      "title": "Zone",
+      "type": "integer"
+     }
+    },
+    "required": [
+     "zone",
+     "floor_bpm",
+     "ceiling_bpm",
+     "seconds"
+    ],
+    "title": "ZoneTime",
+    "type": "object"
+   }
+  },
+  "additionalProperties": false,
+  "properties": {
+   "laps": {
+    "items": {
+     "$ref": "#/$defs/Lap"
+    },
+    "title": "Laps",
+    "type": "array"
+   },
+   "streams": {
+    "$ref": "#/$defs/Streams"
+   },
+   "summary": {
+    "$ref": "#/$defs/ActivitySummary"
+   },
+   "weather": {
+    "$ref": "#/$defs/Weather"
+   },
+   "zones": {
+    "items": {
+     "$ref": "#/$defs/ZoneTime"
+    },
+    "title": "Zones",
+    "type": "array"
+   }
+  },
+  "required": [
+   "summary",
+   "laps",
+   "zones",
+   "streams",
+   "weather"
+  ],
+  "title": "ActivityDetail",
+  "type": "object"
+ },
+ "day": {
+  "$defs": {
+   "BaselineTile": {
+    "additionalProperties": false,
+    "properties": {
+     "band_high": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Band High"
+     },
+     "band_low": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Band Low"
+     },
+     "baseline_label": {
+      "title": "Baseline Label",
+      "type": "string"
+     },
+     "delta_display": {
+      "title": "Delta Display",
+      "type": "string"
+     },
+     "display": {
+      "title": "Display",
+      "type": "string"
+     },
+     "key": {
+      "title": "Key",
+      "type": "string"
+     },
+     "label": {
+      "title": "Label",
+      "type": "string"
+     },
+     "spark": {
+      "items": {
+       "$ref": "#/$defs/SparkPoint"
+      },
+      "title": "Spark",
+      "type": "array"
+     },
+     "status": {
+      "enum": [
+       "good",
+       "typical",
+       "attention",
+       "bad",
+       "unknown"
+      ],
+      "title": "Status",
+      "type": "string"
+     },
+     "status_label": {
+      "title": "Status Label",
+      "type": "string"
+     },
+     "value": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Value"
+     }
+    },
+    "required": [
+     "key",
+     "label",
+     "value",
+     "display",
+     "baseline_label",
+     "delta_display",
+     "status",
+     "status_label",
+     "band_low",
+     "band_high",
+     "spark"
+    ],
+    "title": "BaselineTile",
+    "type": "object"
+   },
+   "IllnessSignal": {
+    "additionalProperties": false,
+    "properties": {
+     "flagged": {
+      "title": "Flagged",
+      "type": "boolean"
+     },
+     "key": {
+      "title": "Key",
+      "type": "string"
+     },
+     "label": {
+      "title": "Label",
+      "type": "string"
+     },
+     "median": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Median"
+     },
+     "unit": {
+      "title": "Unit",
+      "type": "string"
+     },
+     "value": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Value"
+     },
+     "z": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Z"
+     }
+    },
+    "required": [
+     "key",
+     "label",
+     "unit",
+     "value",
+     "median",
+     "z",
+     "flagged"
+    ],
+    "title": "IllnessSignal",
+    "type": "object"
+   },
+   "IllnessWatch": {
+    "additionalProperties": false,
+    "properties": {
+     "message": {
+      "title": "Message",
+      "type": "string"
+     },
+     "reference_nights": {
+      "title": "Reference Nights",
+      "type": "integer"
+     },
+     "signals": {
+      "items": {
+       "$ref": "#/$defs/IllnessSignal"
+      },
+      "title": "Signals",
+      "type": "array"
+     },
+     "status": {
+      "enum": [
+       "ok",
+       "watch",
+       "alert",
+       "insufficient"
+      ],
+      "title": "Status",
+      "type": "string"
+     }
+    },
+    "required": [
+     "status",
+     "message",
+     "reference_nights",
+     "signals"
+    ],
+    "title": "IllnessWatch",
+    "type": "object"
+   },
+   "Readiness": {
+    "additionalProperties": false,
+    "properties": {
+     "date": {
+      "title": "Date",
+      "type": "string"
+     },
+     "factors": {
+      "items": {
+       "$ref": "#/$defs/ReadinessFactor"
+      },
+      "title": "Factors",
+      "type": "array"
+     },
+     "feedback": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Feedback"
+     },
+     "level": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Level"
+     },
+     "recovery_time_h": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Recovery Time H"
+     },
+     "score": {
+      "title": "Score",
+      "type": "number"
+     }
+    },
+    "required": [
+     "date",
+     "score",
+     "level",
+     "feedback",
+     "recovery_time_h",
+     "factors"
+    ],
+    "title": "Readiness",
+    "type": "object"
+   },
+   "ReadinessFactor": {
+    "additionalProperties": false,
+    "properties": {
+     "key": {
+      "title": "Key",
+      "type": "string"
+     },
+     "label": {
+      "title": "Label",
+      "type": "string"
+     },
+     "pct": {
+      "title": "Pct",
+      "type": "number"
+     }
+    },
+    "required": [
+     "key",
+     "label",
+     "pct"
+    ],
+    "title": "ReadinessFactor",
+    "type": "object"
+   },
+   "Signal": {
+    "additionalProperties": false,
+    "properties": {
+     "detail": {
+      "title": "Detail",
+      "type": "string"
+     },
+     "display": {
+      "title": "Display",
+      "type": "string"
+     },
+     "key": {
+      "title": "Key",
+      "type": "string"
+     },
+     "label": {
+      "title": "Label",
+      "type": "string"
+     },
+     "status": {
+      "enum": [
+       "good",
+       "typical",
+       "attention",
+       "bad",
+       "unknown"
+      ],
+      "title": "Status",
+      "type": "string"
+     }
+    },
+    "required": [
+     "key",
+     "label",
+     "display",
+     "detail",
+     "status"
+    ],
+    "title": "Signal",
+    "type": "object"
+   },
+   "SparkPoint": {
+    "additionalProperties": false,
+    "properties": {
+     "date": {
+      "title": "Date",
+      "type": "string"
+     },
+     "value": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Value"
+     }
+    },
+    "required": [
+     "date",
+     "value"
+    ],
+    "title": "SparkPoint",
+    "type": "object"
+   },
+   "WeekActivity": {
+    "additionalProperties": false,
+    "properties": {
+     "activity_id": {
+      "title": "Activity Id",
+      "type": "string"
+     },
+     "distance_km": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Distance Km"
+     },
+     "duration_min": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Duration Min"
+     },
+     "sport": {
+      "title": "Sport",
+      "type": "string"
+     },
+     "training_load": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Training Load"
+     }
+    },
+    "required": [
+     "activity_id",
+     "sport",
+     "distance_km",
+     "duration_min",
+     "training_load"
+    ],
+    "title": "WeekActivity",
+    "type": "object"
+   },
+   "WeekDay": {
+    "additionalProperties": false,
+    "properties": {
+     "activities": {
+      "items": {
+       "$ref": "#/$defs/WeekActivity"
+      },
+      "title": "Activities",
+      "type": "array"
+     },
+     "date": {
+      "title": "Date",
+      "type": "string"
+     }
+    },
+    "required": [
+     "date",
+     "activities"
+    ],
+    "title": "WeekDay",
+    "type": "object"
+   }
+  },
+  "additionalProperties": false,
+  "properties": {
+   "date": {
+    "title": "Date",
+    "type": "string"
+   },
+   "illness": {
+    "$ref": "#/$defs/IllnessWatch"
+   },
+   "last_activity_id": {
+    "anyOf": [
+     {
+      "type": "string"
+     },
+     {
+      "type": "null"
+     }
+    ],
+    "title": "Last Activity Id"
+   },
+   "readiness": {
+    "anyOf": [
+     {
+      "$ref": "#/$defs/Readiness"
+     },
+     {
+      "type": "null"
+     }
+    ]
+   },
+   "signals": {
+    "items": {
+     "$ref": "#/$defs/Signal"
+    },
+    "title": "Signals",
+    "type": "array"
+   },
+   "tiles": {
+    "items": {
+     "$ref": "#/$defs/BaselineTile"
+    },
+    "title": "Tiles",
+    "type": "array"
+   },
+   "training_status": {
+    "anyOf": [
+     {
+      "type": "string"
+     },
+     {
+      "type": "null"
+     }
+    ],
+    "title": "Training Status"
+   },
+   "week": {
+    "items": {
+     "$ref": "#/$defs/WeekDay"
+    },
+    "title": "Week",
+    "type": "array"
+   }
+  },
+  "required": [
+   "date",
+   "readiness",
+   "training_status",
+   "tiles",
+   "illness",
+   "week",
+   "signals",
+   "last_activity_id"
+  ],
+  "title": "Today",
+  "type": "object"
+ },
+ "intraday": {
+  "$defs": {
+   "DaySpan": {
+    "additionalProperties": false,
+    "properties": {
+     "activity_id": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Activity Id"
+     },
+     "end_ms": {
+      "title": "End Ms",
+      "type": "integer"
+     },
+     "kind": {
+      "enum": [
+       "sleep",
+       "activity",
+       "motion"
+      ],
+      "title": "Kind",
+      "type": "string"
+     },
+     "label": {
+      "title": "Label",
+      "type": "string"
+     },
+     "start_ms": {
+      "title": "Start Ms",
+      "type": "integer"
+     }
+    },
+    "required": [
+     "kind",
+     "start_ms",
+     "end_ms",
+     "label",
+     "activity_id"
+    ],
+    "title": "DaySpan",
+    "type": "object"
+   },
+   "IntradayPoint": {
+    "additionalProperties": false,
+    "properties": {
+     "ts_ms": {
+      "title": "Ts Ms",
+      "type": "integer"
+     },
+     "value": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Value"
+     }
+    },
+    "required": [
+     "ts_ms",
+     "value"
+    ],
+    "title": "IntradayPoint",
+    "type": "object"
+   },
+   "StepBucket": {
+    "additionalProperties": false,
+    "properties": {
+     "end_ms": {
+      "title": "End Ms",
+      "type": "integer"
+     },
+     "start_ms": {
+      "title": "Start Ms",
+      "type": "integer"
+     },
+     "steps": {
+      "title": "Steps",
+      "type": "integer"
+     }
+    },
+    "required": [
+     "start_ms",
+     "end_ms",
+     "steps"
+    ],
+    "title": "StepBucket",
+    "type": "object"
+   },
+   "StressShare": {
+    "additionalProperties": false,
+    "properties": {
+     "key": {
+      "enum": [
+       "rest",
+       "low",
+       "medium",
+       "high"
+      ],
+      "title": "Key",
+      "type": "string"
+     },
+     "label": {
+      "title": "Label",
+      "type": "string"
+     },
+     "minutes": {
+      "title": "Minutes",
+      "type": "number"
+     }
+    },
+    "required": [
+     "key",
+     "label",
+     "minutes"
+    ],
+    "title": "StressShare",
+    "type": "object"
+   }
+  },
+  "additionalProperties": false,
+  "properties": {
+   "body_battery": {
+    "items": {
+     "$ref": "#/$defs/IntradayPoint"
+    },
+    "title": "Body Battery",
+    "type": "array"
+   },
+   "body_battery_charged": {
+    "anyOf": [
+     {
+      "type": "number"
+     },
+     {
+      "type": "null"
+     }
+    ],
+    "title": "Body Battery Charged"
+   },
+   "body_battery_drained": {
+    "anyOf": [
+     {
+      "type": "number"
+     },
+     {
+      "type": "null"
+     }
+    ],
+    "title": "Body Battery Drained"
+   },
+   "body_battery_high": {
+    "anyOf": [
+     {
+      "type": "number"
+     },
+     {
+      "type": "null"
+     }
+    ],
+    "title": "Body Battery High"
+   },
+   "body_battery_low": {
+    "anyOf": [
+     {
+      "type": "number"
+     },
+     {
+      "type": "null"
+     }
+    ],
+    "title": "Body Battery Low"
+   },
+   "date": {
+    "title": "Date",
+    "type": "string"
+   },
+   "end_ms": {
+    "title": "End Ms",
+    "type": "integer"
+   },
+   "hr": {
+    "items": {
+     "$ref": "#/$defs/IntradayPoint"
+    },
+    "title": "Hr",
+    "type": "array"
+   },
+   "hr_max": {
+    "anyOf": [
+     {
+      "type": "number"
+     },
+     {
+      "type": "null"
+     }
+    ],
+    "title": "Hr Max"
+   },
+   "hr_min": {
+    "anyOf": [
+     {
+      "type": "number"
+     },
+     {
+      "type": "null"
+     }
+    ],
+    "title": "Hr Min"
+   },
+   "hr_resting": {
+    "anyOf": [
+     {
+      "type": "number"
+     },
+     {
+      "type": "null"
+     }
+    ],
+    "title": "Hr Resting"
+   },
+   "last_sample_ms": {
+    "anyOf": [
+     {
+      "type": "integer"
+     },
+     {
+      "type": "null"
+     }
+    ],
+    "title": "Last Sample Ms"
+   },
+   "spans": {
+    "items": {
+     "$ref": "#/$defs/DaySpan"
+    },
+    "title": "Spans",
+    "type": "array"
+   },
+   "start_ms": {
+    "title": "Start Ms",
+    "type": "integer"
+   },
+   "steps": {
+    "items": {
+     "$ref": "#/$defs/StepBucket"
+    },
+    "title": "Steps",
+    "type": "array"
+   },
+   "steps_total": {
+    "anyOf": [
+     {
+      "type": "integer"
+     },
+     {
+      "type": "null"
+     }
+    ],
+    "title": "Steps Total"
+   },
+   "stress": {
+    "items": {
+     "$ref": "#/$defs/IntradayPoint"
+    },
+    "title": "Stress",
+    "type": "array"
+   },
+   "stress_avg": {
+    "anyOf": [
+     {
+      "type": "number"
+     },
+     {
+      "type": "null"
+     }
+    ],
+    "title": "Stress Avg"
+   },
+   "stress_shares": {
+    "items": {
+     "$ref": "#/$defs/StressShare"
+    },
+    "title": "Stress Shares",
+    "type": "array"
+   }
+  },
+  "required": [
+   "date",
+   "start_ms",
+   "end_ms",
+   "last_sample_ms",
+   "hr",
+   "stress",
+   "body_battery",
+   "steps",
+   "spans",
+   "hr_min",
+   "hr_max",
+   "hr_resting",
+   "stress_avg",
+   "stress_shares",
+   "steps_total",
+   "body_battery_high",
+   "body_battery_low",
+   "body_battery_charged",
+   "body_battery_drained"
+  ],
+  "title": "Intraday",
+  "type": "object"
+ },
+ "load": {
+  "$defs": {
+   "CalendarDay": {
+    "additionalProperties": false,
+    "properties": {
+     "date": {
+      "title": "Date",
+      "type": "string"
+     },
+     "load": {
+      "title": "Load",
+      "type": "number"
+     },
+     "sports": {
+      "items": {
+       "type": "string"
+      },
+      "title": "Sports",
+      "type": "array"
+     }
+    },
+    "required": [
+     "date",
+     "load",
+     "sports"
+    ],
+    "title": "CalendarDay",
+    "type": "object"
+   },
+   "FocusRow": {
+    "additionalProperties": false,
+    "properties": {
+     "focus": {
+      "title": "Focus",
+      "type": "string"
+     },
+     "label": {
+      "title": "Label",
+      "type": "string"
+     },
+     "load": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Load"
+     },
+     "status": {
+      "enum": [
+       "good",
+       "typical",
+       "attention",
+       "bad",
+       "unknown"
+      ],
+      "title": "Status",
+      "type": "string"
+     },
+     "target_max": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Target Max"
+     },
+     "target_min": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Target Min"
+     }
+    },
+    "required": [
+     "focus",
+     "label",
+     "load",
+     "target_min",
+     "target_max",
+     "status"
+    ],
+    "title": "FocusRow",
+    "type": "object"
+   },
+   "LoadDay": {
+    "additionalProperties": false,
+    "properties": {
+     "acute": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Acute"
+     },
+     "acwr": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Acwr"
+     },
+     "chronic": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Chronic"
+     },
+     "chronic_max": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Chronic Max"
+     },
+     "chronic_min": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Chronic Min"
+     },
+     "daily_load": {
+      "title": "Daily Load",
+      "type": "number"
+     },
+     "date": {
+      "title": "Date",
+      "type": "string"
+     },
+     "fatigue": {
+      "title": "Fatigue",
+      "type": "number"
+     },
+     "fitness": {
+      "title": "Fitness",
+      "type": "number"
+     },
+     "form": {
+      "title": "Form",
+      "type": "number"
+     }
+    },
+    "required": [
+     "date",
+     "daily_load",
+     "acute",
+     "chronic",
+     "chronic_min",
+     "chronic_max",
+     "acwr",
+     "fitness",
+     "fatigue",
+     "form"
+    ],
+    "title": "LoadDay",
+    "type": "object"
+   },
+   "LoadSummary": {
+    "additionalProperties": false,
+    "properties": {
+     "detail": {
+      "title": "Detail",
+      "type": "string"
+     },
+     "easy_line": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Easy Line"
+     },
+     "headline": {
+      "title": "Headline",
+      "type": "string"
+     },
+     "status": {
+      "enum": [
+       "good",
+       "typical",
+       "attention",
+       "bad",
+       "unknown"
+      ],
+      "title": "Status",
+      "type": "string"
+     }
+    },
+    "required": [
+     "status",
+     "headline",
+     "detail",
+     "easy_line"
+    ],
+    "title": "LoadSummary",
+    "type": "object"
+   },
+   "WeekLoad": {
+    "additionalProperties": false,
+    "properties": {
+     "easy_min": {
+      "title": "Easy Min",
+      "type": "number"
+     },
+     "easy_pct": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Easy Pct"
+     },
+     "hard_min": {
+      "title": "Hard Min",
+      "type": "number"
+     },
+     "km": {
+      "title": "Km",
+      "type": "number"
+     },
+     "load": {
+      "title": "Load",
+      "type": "number"
+     },
+     "minutes_football": {
+      "title": "Minutes Football",
+      "type": "number"
+     },
+     "minutes_gym": {
+      "title": "Minutes Gym",
+      "type": "number"
+     },
+     "minutes_other": {
+      "title": "Minutes Other",
+      "type": "number"
+     },
+     "minutes_run": {
+      "title": "Minutes Run",
+      "type": "number"
+     },
+     "moderate_min": {
+      "title": "Moderate Min",
+      "type": "number"
+     },
+     "monotony": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Monotony"
+     },
+     "runs": {
+      "title": "Runs",
+      "type": "integer"
+     },
+     "strain": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Strain"
+     },
+     "verdict": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Verdict"
+     },
+     "week": {
+      "title": "Week",
+      "type": "string"
+     }
+    },
+    "required": [
+     "week",
+     "km",
+     "runs",
+     "minutes_run",
+     "minutes_football",
+     "minutes_gym",
+     "minutes_other",
+     "load",
+     "easy_min",
+     "moderate_min",
+     "hard_min",
+     "easy_pct",
+     "verdict",
+     "monotony",
+     "strain"
+    ],
+    "title": "WeekLoad",
+    "type": "object"
+   }
+  },
+  "additionalProperties": false,
+  "properties": {
+   "calendar": {
+    "items": {
+     "$ref": "#/$defs/CalendarDay"
+    },
+    "title": "Calendar",
+    "type": "array"
+   },
+   "days": {
+    "items": {
+     "$ref": "#/$defs/LoadDay"
+    },
+    "title": "Days",
+    "type": "array"
+   },
+   "focus": {
+    "items": {
+     "$ref": "#/$defs/FocusRow"
+    },
+    "title": "Focus",
+    "type": "array"
+   },
+   "summary": {
+    "$ref": "#/$defs/LoadSummary"
+   },
+   "weeks": {
+    "items": {
+     "$ref": "#/$defs/WeekLoad"
+    },
+    "title": "Weeks",
+    "type": "array"
+   }
+  },
+  "required": [
+   "summary",
+   "days",
+   "weeks",
+   "focus",
+   "calendar"
+  ],
+  "title": "Load",
+  "type": "object"
+ },
+ "meta": {
+  "additionalProperties": false,
+  "properties": {
+   "activity_count": {
+    "title": "Activity Count",
+    "type": "integer"
+   },
+   "days": {
+    "items": {
+     "type": "string"
+    },
+    "title": "Days",
+    "type": "array"
+   },
+   "device": {
+    "anyOf": [
+     {
+      "type": "string"
+     },
+     {
+      "type": "null"
+     }
+    ],
+    "title": "Device"
+   },
+   "first_day": {
+    "anyOf": [
+     {
+      "type": "string"
+     },
+     {
+      "type": "null"
+     }
+    ],
+    "title": "First Day"
+   },
+   "generated_at": {
+    "title": "Generated At",
+    "type": "string"
+   },
+   "last_activity_date": {
+    "anyOf": [
+     {
+      "type": "string"
+     },
+     {
+      "type": "null"
+     }
+    ],
+    "title": "Last Activity Date"
+   },
+   "last_day": {
+    "anyOf": [
+     {
+      "type": "string"
+     },
+     {
+      "type": "null"
+     }
+    ],
+    "title": "Last Day"
+   },
+   "today": {
+    "title": "Today",
+    "type": "string"
+   }
+  },
+  "required": [
+   "generated_at",
+   "today",
+   "first_day",
+   "last_day",
+   "last_activity_date",
+   "activity_count",
+   "device",
+   "days"
+  ],
+  "title": "Meta",
+  "type": "object"
+ },
+ "performance": {
+  "$defs": {
+   "EfficiencyPoint": {
+    "additionalProperties": false,
+    "properties": {
+     "activity_id": {
+      "title": "Activity Id",
+      "type": "string"
+     },
+     "avg_hr": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Avg Hr"
+     },
+     "date": {
+      "title": "Date",
+      "type": "string"
+     },
+     "distance_km": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Distance Km"
+     },
+     "feels_like_c": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Feels Like C"
+     },
+     "heat_adjusted_meters_per_beat": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Heat Adjusted Meters Per Beat"
+     },
+     "heat_adjusted_pace_s_km": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Heat Adjusted Pace S Km"
+     },
+     "heat_slowdown_pct": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Heat Slowdown Pct"
+     },
+     "meters_per_beat": {
+      "title": "Meters Per Beat",
+      "type": "number"
+     },
+     "pace_s_km": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Pace S Km"
+     }
+    },
+    "required": [
+     "activity_id",
+     "date",
+     "distance_km",
+     "pace_s_km",
+     "heat_adjusted_pace_s_km",
+     "avg_hr",
+     "meters_per_beat",
+     "heat_adjusted_meters_per_beat",
+     "feels_like_c",
+     "heat_slowdown_pct"
+    ],
+    "title": "EfficiencyPoint",
+    "type": "object"
+   },
+   "FitnessAge": {
+    "additionalProperties": false,
+    "properties": {
+     "achievable_age": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Achievable Age"
+     },
+     "chronological_age": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Chronological Age"
+     },
+     "fitness_age": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Fitness Age"
+     },
+     "vigorous_days_per_week": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Vigorous Days Per Week"
+     },
+     "vigorous_days_target": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Vigorous Days Target"
+     },
+     "vigorous_minutes_per_week": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Vigorous Minutes Per Week"
+     },
+     "vigorous_minutes_target": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Vigorous Minutes Target"
+     }
+    },
+    "required": [
+     "fitness_age",
+     "chronological_age",
+     "achievable_age",
+     "vigorous_days_per_week",
+     "vigorous_days_target",
+     "vigorous_minutes_per_week",
+     "vigorous_minutes_target"
+    ],
+    "title": "FitnessAge",
+    "type": "object"
+   },
+   "FormMetric": {
+    "additionalProperties": false,
+    "properties": {
+     "current": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Current"
+     },
+     "digits": {
+      "title": "Digits",
+      "type": "integer"
+     },
+     "earlier_count": {
+      "title": "Earlier Count",
+      "type": "integer"
+     },
+     "fit_intercept": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Fit Intercept"
+     },
+     "fit_slope": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Fit Slope"
+     },
+     "key": {
+      "title": "Key",
+      "type": "string"
+     },
+     "label": {
+      "title": "Label",
+      "type": "string"
+     },
+     "lower_is_better": {
+      "anyOf": [
+       {
+        "type": "boolean"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Lower Is Better"
+     },
+     "points": {
+      "items": {
+       "$ref": "#/$defs/FormPoint"
+      },
+      "title": "Points",
+      "type": "array"
+     },
+     "recent_count": {
+      "title": "Recent Count",
+      "type": "integer"
+     },
+     "recent_delta": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Recent Delta"
+     },
+     "reference_speed_kmh": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Reference Speed Kmh"
+     },
+     "unit": {
+      "title": "Unit",
+      "type": "string"
+     },
+     "verdict": {
+      "title": "Verdict",
+      "type": "string"
+     }
+    },
+    "required": [
+     "key",
+     "label",
+     "unit",
+     "digits",
+     "lower_is_better",
+     "recent_delta",
+     "recent_count",
+     "earlier_count",
+     "verdict",
+     "fit_slope",
+     "fit_intercept",
+     "reference_speed_kmh",
+     "current",
+     "points"
+    ],
+    "title": "FormMetric",
+    "type": "object"
+   },
+   "FormPoint": {
+    "additionalProperties": false,
+    "properties": {
+     "adjusted": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Adjusted"
+     },
+     "date": {
+      "title": "Date",
+      "type": "string"
+     },
+     "recent": {
+      "title": "Recent",
+      "type": "boolean"
+     },
+     "speed_kmh": {
+      "title": "Speed Kmh",
+      "type": "number"
+     },
+     "value": {
+      "title": "Value",
+      "type": "number"
+     }
+    },
+    "required": [
+     "date",
+     "speed_kmh",
+     "value",
+     "adjusted",
+     "recent"
+    ],
+    "title": "FormPoint",
+    "type": "object"
+   },
+   "RaceDistance": {
+    "additionalProperties": false,
+    "properties": {
+     "current_seconds": {
+      "title": "Current Seconds",
+      "type": "number"
+     },
+     "delta_8w_seconds": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Delta 8W Seconds"
+     },
+     "distance": {
+      "title": "Distance",
+      "type": "string"
+     },
+     "km": {
+      "title": "Km",
+      "type": "number"
+     },
+     "label": {
+      "title": "Label",
+      "type": "string"
+     },
+     "projection": {
+      "anyOf": [
+       {
+        "items": {
+         "$ref": "#/$defs/SeriesPoint"
+        },
+        "type": "array"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Projection"
+     },
+     "record_seconds": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Record Seconds"
+     },
+     "riegel_seconds": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Riegel Seconds"
+     },
+     "series": {
+      "items": {
+       "$ref": "#/$defs/SeriesPoint"
+      },
+      "title": "Series",
+      "type": "array"
+     }
+    },
+    "required": [
+     "distance",
+     "label",
+     "km",
+     "current_seconds",
+     "delta_8w_seconds",
+     "series",
+     "projection",
+     "record_seconds",
+     "riegel_seconds"
+    ],
+    "title": "RaceDistance",
+    "type": "object"
+   },
+   "RecordRow": {
+    "additionalProperties": false,
+    "properties": {
+     "activity_id": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Activity Id"
+     },
+     "date": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Date"
+     },
+     "label": {
+      "title": "Label",
+      "type": "string"
+     },
+     "type_id": {
+      "title": "Type Id",
+      "type": "integer"
+     },
+     "value": {
+      "title": "Value",
+      "type": "number"
+     },
+     "value_display": {
+      "title": "Value Display",
+      "type": "string"
+     }
+    },
+    "required": [
+     "type_id",
+     "label",
+     "value",
+     "value_display",
+     "date",
+     "activity_id"
+    ],
+    "title": "RecordRow",
+    "type": "object"
+   },
+   "SeriesPoint": {
+    "additionalProperties": false,
+    "properties": {
+     "date": {
+      "title": "Date",
+      "type": "string"
+     },
+     "value": {
+      "title": "Value",
+      "type": "number"
+     }
+    },
+    "required": [
+     "date",
+     "value"
+    ],
+    "title": "SeriesPoint",
+    "type": "object"
+   },
+   "TrendLine": {
+    "additionalProperties": false,
+    "properties": {
+     "end_date": {
+      "title": "End Date",
+      "type": "string"
+     },
+     "end_value": {
+      "title": "End Value",
+      "type": "number"
+     },
+     "per_30_days": {
+      "title": "Per 30 Days",
+      "type": "number"
+     },
+     "start_date": {
+      "title": "Start Date",
+      "type": "string"
+     },
+     "start_value": {
+      "title": "Start Value",
+      "type": "number"
+     }
+    },
+    "required": [
+     "start_date",
+     "end_date",
+     "start_value",
+     "end_value",
+     "per_30_days"
+    ],
+    "title": "TrendLine",
+    "type": "object"
+   }
+  },
+  "additionalProperties": false,
+  "properties": {
+   "efficiency": {
+    "items": {
+     "$ref": "#/$defs/EfficiencyPoint"
+    },
+    "title": "Efficiency",
+    "type": "array"
+   },
+   "efficiency_trend": {
+    "anyOf": [
+     {
+      "$ref": "#/$defs/TrendLine"
+     },
+     {
+      "type": "null"
+     }
+    ]
+   },
+   "fitness_age": {
+    "anyOf": [
+     {
+      "$ref": "#/$defs/FitnessAge"
+     },
+     {
+      "type": "null"
+     }
+    ]
+   },
+   "form": {
+    "items": {
+     "$ref": "#/$defs/FormMetric"
+    },
+    "title": "Form",
+    "type": "array"
+   },
+   "form_window_days": {
+    "title": "Form Window Days",
+    "type": "integer"
+   },
+   "heat_adjusted_trend": {
+    "anyOf": [
+     {
+      "$ref": "#/$defs/TrendLine"
+     },
+     {
+      "type": "null"
+     }
+    ]
+   },
+   "projection_note": {
+    "title": "Projection Note",
+    "type": "string"
+   },
+   "races": {
+    "items": {
+     "$ref": "#/$defs/RaceDistance"
+    },
+    "title": "Races",
+    "type": "array"
+   },
+   "records": {
+    "items": {
+     "$ref": "#/$defs/RecordRow"
+    },
+    "title": "Records",
+    "type": "array"
+   },
+   "vo2max": {
+    "items": {
+     "$ref": "#/$defs/SeriesPoint"
+    },
+    "title": "Vo2Max",
+    "type": "array"
+   },
+   "vo2max_per_30_days": {
+    "anyOf": [
+     {
+      "type": "number"
+     },
+     {
+      "type": "null"
+     }
+    ],
+    "title": "Vo2Max Per 30 Days"
+   },
+   "vo2max_projection": {
+    "anyOf": [
+     {
+      "items": {
+       "$ref": "#/$defs/SeriesPoint"
+      },
+      "type": "array"
+     },
+     {
+      "type": "null"
+     }
+    ],
+    "title": "Vo2Max Projection"
+   }
+  },
+  "required": [
+   "efficiency",
+   "efficiency_trend",
+   "heat_adjusted_trend",
+   "vo2max",
+   "vo2max_per_30_days",
+   "vo2max_projection",
+   "projection_note",
+   "races",
+   "form_window_days",
+   "form",
+   "records",
+   "fitness_age"
+  ],
+  "title": "Performance",
+  "type": "object"
+ },
+ "recovery": {
+  "$defs": {
+   "GlanceCell": {
+    "additionalProperties": false,
+    "properties": {
+     "display": {
+      "title": "Display",
+      "type": "string"
+     },
+     "key": {
+      "title": "Key",
+      "type": "string"
+     },
+     "status": {
+      "enum": [
+       "good",
+       "typical",
+       "attention",
+       "bad",
+       "unknown"
+      ],
+      "title": "Status",
+      "type": "string"
+     },
+     "value": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Value"
+     },
+     "z": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Z"
+     }
+    },
+    "required": [
+     "key",
+     "value",
+     "display",
+     "z",
+     "status"
+    ],
+    "title": "GlanceCell",
+    "type": "object"
+   },
+   "GlanceDay": {
+    "additionalProperties": false,
+    "properties": {
+     "cells": {
+      "items": {
+       "$ref": "#/$defs/GlanceCell"
+      },
+      "title": "Cells",
+      "type": "array"
+     },
+     "date": {
+      "title": "Date",
+      "type": "string"
+     }
+    },
+    "required": [
+     "date",
+     "cells"
+    ],
+    "title": "GlanceDay",
+    "type": "object"
+   },
+   "Night": {
+    "additionalProperties": false,
+    "properties": {
+     "awake_h": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Awake H"
+     },
+     "bedtime": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Bedtime"
+     },
+     "bedtime_minutes": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Bedtime Minutes"
+     },
+     "date": {
+      "title": "Date",
+      "type": "string"
+     },
+     "deep_h": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Deep H"
+     },
+     "feedback": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Feedback"
+     },
+     "light_h": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Light H"
+     },
+     "need_h": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Need H"
+     },
+     "rem_h": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Rem H"
+     },
+     "respiration": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Respiration"
+     },
+     "score": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Score"
+     },
+     "sleep_h": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Sleep H"
+     },
+     "wake_minutes": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Wake Minutes"
+     },
+     "wake_time": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Wake Time"
+     }
+    },
+    "required": [
+     "date",
+     "score",
+     "sleep_h",
+     "deep_h",
+     "light_h",
+     "rem_h",
+     "awake_h",
+     "need_h",
+     "bedtime",
+     "wake_time",
+     "bedtime_minutes",
+     "wake_minutes",
+     "feedback",
+     "respiration"
+    ],
+    "title": "Night",
+    "type": "object"
+   },
+   "RecoveryTrend": {
+    "additionalProperties": false,
+    "properties": {
+     "digits": {
+      "title": "Digits",
+      "type": "integer"
+     },
+     "help": {
+      "title": "Help",
+      "type": "string"
+     },
+     "higher_is_better": {
+      "anyOf": [
+       {
+        "type": "boolean"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Higher Is Better"
+     },
+     "key": {
+      "title": "Key",
+      "type": "string"
+     },
+     "label": {
+      "title": "Label",
+      "type": "string"
+     },
+     "points": {
+      "items": {
+       "$ref": "#/$defs/TrendPoint"
+      },
+      "title": "Points",
+      "type": "array"
+     },
+     "unit": {
+      "title": "Unit",
+      "type": "string"
+     }
+    },
+    "required": [
+     "key",
+     "label",
+     "unit",
+     "digits",
+     "higher_is_better",
+     "help",
+     "points"
+    ],
+    "title": "RecoveryTrend",
+    "type": "object"
+   },
+   "TrendPoint": {
+    "additionalProperties": false,
+    "properties": {
+     "band_high": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Band High"
+     },
+     "band_low": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Band Low"
+     },
+     "date": {
+      "title": "Date",
+      "type": "string"
+     },
+     "mean7": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Mean7"
+     },
+     "value": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Value"
+     }
+    },
+    "required": [
+     "date",
+     "value",
+     "mean7",
+     "band_low",
+     "band_high"
+    ],
+    "title": "TrendPoint",
+    "type": "object"
+   }
+  },
+  "additionalProperties": false,
+  "properties": {
+   "glance": {
+    "items": {
+     "$ref": "#/$defs/GlanceDay"
+    },
+    "title": "Glance",
+    "type": "array"
+   },
+   "glance_labels": {
+    "items": {
+     "type": "string"
+    },
+    "title": "Glance Labels",
+    "type": "array"
+   },
+   "glance_metrics": {
+    "items": {
+     "type": "string"
+    },
+    "title": "Glance Metrics",
+    "type": "array"
+   },
+   "nights": {
+    "items": {
+     "$ref": "#/$defs/Night"
+    },
+    "title": "Nights",
+    "type": "array"
+   },
+   "trends": {
+    "items": {
+     "$ref": "#/$defs/RecoveryTrend"
+    },
+    "title": "Trends",
+    "type": "array"
+   }
+  },
+  "required": [
+   "trends",
+   "nights",
+   "glance_metrics",
+   "glance_labels",
+   "glance"
+  ],
+  "title": "Recovery",
+  "type": "object"
+ },
+ "routes": {
+  "$defs": {
+   "Privacy": {
+    "additionalProperties": false,
+    "properties": {
+     "lat": {
+      "title": "Lat",
+      "type": "number"
+     },
+     "lon": {
+      "title": "Lon",
+      "type": "number"
+     },
+     "radius_m": {
+      "title": "Radius M",
+      "type": "number"
+     }
+    },
+    "required": [
+     "lat",
+     "lon",
+     "radius_m"
+    ],
+    "title": "Privacy",
+    "type": "object"
+   },
+   "RouteTrace": {
+    "additionalProperties": false,
+    "properties": {
+     "activity_id": {
+      "title": "Activity Id",
+      "type": "string"
+     },
+     "date": {
+      "title": "Date",
+      "type": "string"
+     },
+     "distance_km": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Distance Km"
+     },
+     "pace_s_km": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Pace S Km"
+     },
+     "points": {
+      "items": {
+       "items": {
+        "anyOf": [
+         {
+          "type": "number"
+         },
+         {
+          "type": "null"
+         }
+        ]
+       },
+       "type": "array"
+      },
+      "title": "Points",
+      "type": "array"
+     }
+    },
+    "required": [
+     "activity_id",
+     "date",
+     "distance_km",
+     "pace_s_km",
+     "points"
+    ],
+    "title": "RouteTrace",
+    "type": "object"
+   }
+  },
+  "additionalProperties": false,
+  "properties": {
+   "privacy": {
+    "anyOf": [
+     {
+      "$ref": "#/$defs/Privacy"
+     },
+     {
+      "type": "null"
+     }
+    ]
+   },
+   "routes": {
+    "items": {
+     "$ref": "#/$defs/RouteTrace"
+    },
+    "title": "Routes",
+    "type": "array"
+   }
+  },
+  "required": [
+   "privacy",
+   "routes"
+  ],
+  "title": "Routes",
+  "type": "object"
+ },
+ "sleep": {
+  "$defs": {
+   "Night": {
+    "additionalProperties": false,
+    "properties": {
+     "awake_h": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Awake H"
+     },
+     "bedtime": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Bedtime"
+     },
+     "bedtime_minutes": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Bedtime Minutes"
+     },
+     "date": {
+      "title": "Date",
+      "type": "string"
+     },
+     "deep_h": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Deep H"
+     },
+     "feedback": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Feedback"
+     },
+     "light_h": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Light H"
+     },
+     "need_h": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Need H"
+     },
+     "rem_h": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Rem H"
+     },
+     "respiration": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Respiration"
+     },
+     "score": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Score"
+     },
+     "sleep_h": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Sleep H"
+     },
+     "wake_minutes": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Wake Minutes"
+     },
+     "wake_time": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Wake Time"
+     }
+    },
+    "required": [
+     "date",
+     "score",
+     "sleep_h",
+     "deep_h",
+     "light_h",
+     "rem_h",
+     "awake_h",
+     "need_h",
+     "bedtime",
+     "wake_time",
+     "bedtime_minutes",
+     "wake_minutes",
+     "feedback",
+     "respiration"
+    ],
+    "title": "Night",
+    "type": "object"
+   },
+   "SleepSeriesPoint": {
+    "additionalProperties": false,
+    "properties": {
+     "ts_ms": {
+      "title": "Ts Ms",
+      "type": "integer"
+     },
+     "value": {
+      "title": "Value",
+      "type": "number"
+     }
+    },
+    "required": [
+     "ts_ms",
+     "value"
+    ],
+    "title": "SleepSeriesPoint",
+    "type": "object"
+   },
+   "SleepStage": {
+    "additionalProperties": false,
+    "properties": {
+     "end_ms": {
+      "title": "End Ms",
+      "type": "integer"
+     },
+     "stage": {
+      "title": "Stage",
+      "type": "string"
+     },
+     "start_ms": {
+      "title": "Start Ms",
+      "type": "integer"
+     }
+    },
+    "required": [
+     "start_ms",
+     "end_ms",
+     "stage"
+    ],
+    "title": "SleepStage",
+    "type": "object"
+   }
+  },
+  "additionalProperties": false,
+  "properties": {
+   "body_battery": {
+    "items": {
+     "$ref": "#/$defs/SleepSeriesPoint"
+    },
+    "title": "Body Battery",
+    "type": "array"
+   },
+   "date": {
+    "title": "Date",
+    "type": "string"
+   },
+   "hr": {
+    "items": {
+     "$ref": "#/$defs/SleepSeriesPoint"
+    },
+    "title": "Hr",
+    "type": "array"
+   },
+   "hrv": {
+    "items": {
+     "$ref": "#/$defs/SleepSeriesPoint"
+    },
+    "title": "Hrv",
+    "type": "array"
+   },
+   "night": {
+    "$ref": "#/$defs/Night"
+   },
+   "stages": {
+    "items": {
+     "$ref": "#/$defs/SleepStage"
+    },
+    "title": "Stages",
+    "type": "array"
+   },
+   "stress": {
+    "items": {
+     "$ref": "#/$defs/SleepSeriesPoint"
+    },
+    "title": "Stress",
+    "type": "array"
+   }
+  },
+  "required": [
+   "date",
+   "night",
+   "stages",
+   "hr",
+   "hrv",
+   "body_battery",
+   "stress"
+  ],
+  "title": "SleepNight",
+  "type": "object"
+ },
+ "sports": {
+  "$defs": {
+   "ExerciseSummary": {
+    "additionalProperties": false,
+    "properties": {
+     "category": {
+      "title": "Category",
+      "type": "string"
+     },
+     "estimated_1rm_kg": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Estimated 1Rm Kg"
+     },
+     "exercise": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Exercise"
+     },
+     "max_weight_kg": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Max Weight Kg"
+     },
+     "reps": {
+      "title": "Reps",
+      "type": "number"
+     },
+     "sets": {
+      "title": "Sets",
+      "type": "integer"
+     },
+     "volume_kg": {
+      "title": "Volume Kg",
+      "type": "number"
+     }
+    },
+    "required": [
+     "category",
+     "exercise",
+     "sets",
+     "reps",
+     "volume_kg",
+     "max_weight_kg",
+     "estimated_1rm_kg"
+    ],
+    "title": "ExerciseSummary",
+    "type": "object"
+   },
+   "FootballSession": {
+    "additionalProperties": false,
+    "properties": {
+     "activity_id": {
+      "title": "Activity Id",
+      "type": "string"
+     },
+     "aerobic_te": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Aerobic Te"
+     },
+     "anaerobic_te": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Anaerobic Te"
+     },
+     "avg_hr": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Avg Hr"
+     },
+     "date": {
+      "title": "Date",
+      "type": "string"
+     },
+     "distance_km": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Distance Km"
+     },
+     "duration_min": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Duration Min"
+     },
+     "high_speed_m": {
+      "title": "High Speed M",
+      "type": "number"
+     },
+     "max_hr": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Max Hr"
+     },
+     "max_speed_kmh": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Max Speed Kmh"
+     },
+     "positions": {
+      "items": {
+       "items": {
+        "type": "number"
+       },
+       "type": "array"
+      },
+      "title": "Positions",
+      "type": "array"
+     },
+     "sprints": {
+      "title": "Sprints",
+      "type": "integer"
+     },
+     "training_load": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Training Load"
+     },
+     "zone_minutes": {
+      "items": {
+       "type": "number"
+      },
+      "title": "Zone Minutes",
+      "type": "array"
+     }
+    },
+    "required": [
+     "activity_id",
+     "date",
+     "duration_min",
+     "distance_km",
+     "avg_hr",
+     "max_hr",
+     "training_load",
+     "aerobic_te",
+     "anaerobic_te",
+     "zone_minutes",
+     "max_speed_kmh",
+     "sprints",
+     "high_speed_m",
+     "positions"
+    ],
+    "title": "FootballSession",
+    "type": "object"
+   },
+   "GearItem": {
+    "additionalProperties": false,
+    "properties": {
+     "distance_km": {
+      "title": "Distance Km",
+      "type": "number"
+     },
+     "gear_id": {
+      "title": "Gear Id",
+      "type": "string"
+     },
+     "gear_type": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Gear Type"
+     },
+     "max_km": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Max Km"
+     },
+     "name": {
+      "title": "Name",
+      "type": "string"
+     },
+     "status": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Status"
+     }
+    },
+    "required": [
+     "gear_id",
+     "name",
+     "gear_type",
+     "distance_km",
+     "max_km",
+     "status"
+    ],
+    "title": "GearItem",
+    "type": "object"
+   },
+   "GymSession": {
+    "additionalProperties": false,
+    "properties": {
+     "activity_id": {
+      "title": "Activity Id",
+      "type": "string"
+     },
+     "avg_hr": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Avg Hr"
+     },
+     "date": {
+      "title": "Date",
+      "type": "string"
+     },
+     "duration_min": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Duration Min"
+     },
+     "exercises": {
+      "items": {
+       "$ref": "#/$defs/ExerciseSummary"
+      },
+      "title": "Exercises",
+      "type": "array"
+     },
+     "reps": {
+      "title": "Reps",
+      "type": "number"
+     },
+     "sets": {
+      "title": "Sets",
+      "type": "integer"
+     },
+     "training_load": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Training Load"
+     },
+     "volume_kg": {
+      "title": "Volume Kg",
+      "type": "number"
+     }
+    },
+    "required": [
+     "activity_id",
+     "date",
+     "duration_min",
+     "avg_hr",
+     "training_load",
+     "sets",
+     "reps",
+     "volume_kg",
+     "exercises"
+    ],
+    "title": "GymSession",
+    "type": "object"
+   },
+   "MuscleGroupSets": {
+    "additionalProperties": false,
+    "properties": {
+     "group": {
+      "title": "Group",
+      "type": "string"
+     },
+     "label": {
+      "title": "Label",
+      "type": "string"
+     },
+     "sets_28d": {
+      "title": "Sets 28D",
+      "type": "number"
+     },
+     "sets_7d": {
+      "title": "Sets 7D",
+      "type": "number"
+     }
+    },
+    "required": [
+     "group",
+     "label",
+     "sets_7d",
+     "sets_28d"
+    ],
+    "title": "MuscleGroupSets",
+    "type": "object"
+   },
+   "SeriesPoint": {
+    "additionalProperties": false,
+    "properties": {
+     "date": {
+      "title": "Date",
+      "type": "string"
+     },
+     "value": {
+      "title": "Value",
+      "type": "number"
+     }
+    },
+    "required": [
+     "date",
+     "value"
+    ],
+    "title": "SeriesPoint",
+    "type": "object"
+   },
+   "StrengthProgress": {
+    "additionalProperties": false,
+    "properties": {
+     "category": {
+      "title": "Category",
+      "type": "string"
+     },
+     "label": {
+      "title": "Label",
+      "type": "string"
+     },
+     "points": {
+      "items": {
+       "$ref": "#/$defs/SeriesPoint"
+      },
+      "title": "Points",
+      "type": "array"
+     }
+    },
+    "required": [
+     "category",
+     "label",
+     "points"
+    ],
+    "title": "StrengthProgress",
+    "type": "object"
+   }
+  },
+  "additionalProperties": false,
+  "properties": {
+   "football": {
+    "items": {
+     "$ref": "#/$defs/FootballSession"
+    },
+    "title": "Football",
+    "type": "array"
+   },
+   "gear": {
+    "items": {
+     "$ref": "#/$defs/GearItem"
+    },
+    "title": "Gear",
+    "type": "array"
+   },
+   "gym": {
+    "items": {
+     "$ref": "#/$defs/GymSession"
+    },
+    "title": "Gym",
+    "type": "array"
+   },
+   "muscles": {
+    "items": {
+     "$ref": "#/$defs/MuscleGroupSets"
+    },
+    "title": "Muscles",
+    "type": "array"
+   },
+   "progress": {
+    "items": {
+     "$ref": "#/$defs/StrengthProgress"
+    },
+    "title": "Progress",
+    "type": "array"
+   }
+  },
+  "required": [
+   "football",
+   "gym",
+   "muscles",
+   "progress",
+   "gear"
+  ],
+  "title": "Sports",
+  "type": "object"
+ }
+}
