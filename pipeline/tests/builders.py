@@ -18,6 +18,7 @@ def run_summary(start_local: str = "2026-10-13T20:30:05.0", distance: float = 50
             "distance": distance,
             "duration": distance / speed,
             "movingDuration": distance / speed,
+            "elapsedDuration": distance / speed + 600,
             "averageSpeed": speed,
             "avgGradeAdjustedSpeed": speed,
             "averageHR": hr,
@@ -79,4 +80,12 @@ def make_raw(root: Path) -> Path:
         {"timestamp": "2026-10-13T06:30:00.0", "inputContext": "AFTER_WAKEUP_RESET", "score": 45, "level": "LOW"},
     ])
     write(raw / "daily/2026-10-13/stats.json", {"totalSteps": 6972, "dailyStepGoal": 4870, "averageStressLevel": -1})
+    write(raw / "daily/2026-10-13/heart_rate.json", {"heartRateValues": [[1791860400000, 62], [1791860520000, None], [1791860520000, 64]]})
+    write(raw / "daily/2026-10-13/stress.json", {
+        "stressValuesArray": [[1791860400000, 30], [1791860580000, -1], [1791860760000, -2], [1791860940000, -2], [1791861120000, 40]],
+        "bodyBatteryValuesArray": [[1791860400000, "MEASURED", 55, 3.0], [1791860580000, "MEASURED", None, 3.0]],
+    })
+    write(raw / "daily/2026-10-13/steps.json", [
+        {"startGMT": "2026-10-13T03:00:00.0", "endGMT": "2026-10-13T03:15:00.0", "steps": 120, "primaryActivityLevel": "sedentary"},
+    ])
     return raw

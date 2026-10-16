@@ -8,6 +8,7 @@ from pydantic import BaseModel, TypeAdapter
 
 from passada import config
 from passada.calc.activities import activity_details, activity_summaries, routes_document, samples_by_activity
+from passada.calc.intraday import intraday_documents
 from passada.calc.load import load_document
 from passada.calc.performance import performance_document
 from passada.calc.recovery import recovery_document, sleep_nights
@@ -108,6 +109,8 @@ def publish_site(db_path: Path, site_dir: Path, today: date) -> dict[str, int]:
             documents[f"day/{day}"] = briefing
         for night_date, night in sleep_nights(connection).items():
             documents[f"sleep/{night_date}"] = night
+        for day, intraday in intraday_documents(connection).items():
+            documents[f"intraday/{day}"] = intraday
     finally:
         connection.close()
     for name, payload in documents.items():

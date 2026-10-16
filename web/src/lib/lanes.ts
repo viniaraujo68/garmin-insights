@@ -18,6 +18,13 @@ export interface LaneReference {
   label: string;
 }
 
+export interface LaneSpan {
+  from: number;
+  to: number;
+  color: string;
+  label?: string;
+}
+
 export interface LaneBand {
   from: number;
   to: number;
@@ -48,11 +55,13 @@ export const nearestPoint = (points: LanePoint[], x: number): LanePoint | null =
 
 export const clockLabel = (timestampMs: number): string => hourFormat.format(new Date(timestampMs));
 
-export const hourTicks = (startMs: number, endMs: number): LaneTick[] => {
+export const hourTicks = (startMs: number, endMs: number, stepHours = 1): LaneTick[] => {
   const ticks: LaneTick[] = [];
   const first = Math.ceil(startMs / 3_600_000) * 3_600_000;
-  for (let value = first; value <= endMs; value += 3_600_000)
-    ticks.push({ value, label: clockLabel(value) });
+  for (let value = first; value <= endMs; value += 3_600_000) {
+    const label = clockLabel(value);
+    if (Number.parseInt(label, 10) % stepHours === 0) ticks.push({ value, label });
+  }
   return ticks;
 };
 

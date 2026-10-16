@@ -510,6 +510,53 @@ class Sports(Contract):
     gear: list[GearItem]
 
 
+class IntradayPoint(Contract):
+    ts_ms: int
+    value: float | None
+
+
+class StepBucket(Contract):
+    start_ms: int
+    end_ms: int
+    steps: int
+
+
+class DaySpan(Contract):
+    kind: Literal["sleep", "activity", "motion"]
+    start_ms: int
+    end_ms: int
+    label: str
+    activity_id: str | None
+
+
+class StressShare(Contract):
+    key: Literal["rest", "low", "medium", "high"]
+    label: str
+    minutes: float
+
+
+class Intraday(Contract):
+    date: str
+    start_ms: int
+    end_ms: int
+    last_sample_ms: int | None
+    hr: list[IntradayPoint]
+    stress: list[IntradayPoint]
+    body_battery: list[IntradayPoint]
+    steps: list[StepBucket]
+    spans: list[DaySpan]
+    hr_min: float | None
+    hr_max: float | None
+    hr_resting: float | None
+    stress_avg: float | None
+    stress_shares: list[StressShare]
+    steps_total: int | None
+    body_battery_high: float | None
+    body_battery_low: float | None
+    body_battery_charged: float | None
+    body_battery_drained: float | None
+
+
 DOCUMENTS: dict[str, type[Contract]] = {
     "meta": Meta,
     "activities": ActivitySummary,
@@ -520,5 +567,6 @@ DOCUMENTS: dict[str, type[Contract]] = {
     "load": Load,
     "recovery": Recovery,
     "sleep": SleepNight,
+    "intraday": Intraday,
     "sports": Sports,
 }

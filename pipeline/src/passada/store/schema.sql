@@ -10,6 +10,7 @@ CREATE TABLE activities (
     distance_m REAL,
     duration_s REAL,
     moving_s REAL,
+    elapsed_s REAL,
     avg_speed REAL,
     max_speed REAL,
     gap_speed REAL,
@@ -171,6 +172,23 @@ CREATE TABLE sleep_series (
     ts_ms INTEGER NOT NULL,
     value REAL NOT NULL,
     PRIMARY KEY (date, metric, ts_ms)
+);
+
+CREATE TABLE day_series (
+    date TEXT NOT NULL,
+    metric TEXT NOT NULL,
+    ts_ms INTEGER NOT NULL,
+    value REAL NOT NULL,
+    PRIMARY KEY (date, metric, ts_ms)
+);
+
+CREATE TABLE day_steps (
+    date TEXT NOT NULL,
+    start_ms INTEGER NOT NULL,
+    end_ms INTEGER NOT NULL,
+    steps INTEGER NOT NULL,
+    level TEXT,
+    PRIMARY KEY (date, start_ms)
 );
 
 CREATE TABLE load_daily (

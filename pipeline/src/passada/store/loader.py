@@ -86,6 +86,7 @@ def activity_row(activity_dir: Path) -> dict[str, Any]:
         "distance_m": summary.get("distance"),
         "duration_s": summary.get("duration"),
         "moving_s": summary.get("movingDuration"),
+        "elapsed_s": summary.get("elapsedDuration"),
         "avg_speed": summary.get("averageSpeed"),
         "max_speed": summary.get("maxSpeed"),
         "gap_speed": summary.get("avgGradeAdjustedSpeed"),
@@ -275,6 +276,36 @@ def sleep_series_rows(day_dir: Path) -> Iterator[dict[str, Any]]:
             yield {"date": day_dir.name, "metric": metric, "ts_ms": int(point["startGMT"]), "value": point["value"]}
 
 
+def day_series_rows(day_dir: Path) -> Iterator[dict[str, Any]]:
+    heart_rate = read_json(day_dir / "heart_rate.json") or {}
+    stress = read_json(day_dir / "stress.json") or {}
+    series = {
+        "hr": ((point[0], point[1]) for point in heart_rate.get("heartRateValues") or []),
+        "stress": ((point[0], point[1]) for point in stress.get("stressValuesArray") or []),
+        "body_battery": ((point[0], point[2]) for point in stress.get("bodyBatteryValuesArray") or [] if len(point) > 2),
+    }
+    for metric, points in series.items():
+        seen = set()
+        for timestamp, value in points:
+            if value is None or timestamp in seen:
+                continue
+            seen.add(timestamp)
+            yield {"date": day_dir.name, "metric": metric, "ts_ms": int(timestamp), "value": value}
+
+
+def day_step_rows(day_dir: Path) -> Iterator[dict[str, Any]]:
+    for bucket in read_json(day_dir / "steps.json") or []:
+        if bucket.get("steps") is None:
+            continue
+        yield {
+            "date": day_dir.name,
+            "start_ms": gmt_ms(bucket["startGMT"]),
+            "end_ms": gmt_ms(bucket["endGMT"]),
+            "steps": bucket["steps"],
+            "level": bucket.get("primaryActivityLevel"),
+        }
+
+
 def load_daily_rows(raw: Path) -> Iterator[dict[str, Any]]:
     payload = read_json(raw / "ranges" / "training_status_weekly.json") or {}
     report = ((payload.get("weeklyTrainingStatus") or {}).get("payload") or {}).get("reportData") or {}
@@ -437,6 +468,8 @@ def build_database(raw: Path, db_path: Path) -> dict[str, int]:
             "daily": insert(connection, "daily", (daily_row(path) for path in days)),
             "sleep_stages": insert(connection, "sleep_stages", (row for path in days for row in sleep_stage_rows(path))),
             "sleep_series": insert(connection, "sleep_series", (row for path in days for row in sleep_series_rows(path))),
+            "day_series": insert(connection, "day_series", (row for path in days for row in day_series_rows(path))),
+            "day_steps": insert(connection, "day_steps", (row for path in days for row in day_step_rows(path))),
             "load_daily": insert(connection, "load_daily", load_daily_rows(raw)),
             "vo2max": insert(connection, "vo2max", vo2max_rows(raw)),
             "race_predictions": insert(connection, "race_predictions", race_prediction_rows(raw)),

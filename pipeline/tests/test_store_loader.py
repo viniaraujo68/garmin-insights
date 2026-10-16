@@ -49,3 +49,12 @@ def test_rebuild_replaces_the_previous_database(tmp_path):
     build_database(raw, db_path)
     assert len(query(db_path, "SELECT * FROM activities")) == 1
     assert not (tmp_path / "passada.db.part").exists()
+
+
+def test_day_series_keeps_stress_codes_and_drops_empty_values(tmp_path):
+    db_path = tmp_path / "passada.db"
+    build_database(make_raw(tmp_path), db_path)
+    assert [row["value"] for row in query(db_path, "SELECT value FROM day_series WHERE metric = 'hr' ORDER BY ts_ms")] == [62, 64]
+    assert [row["value"] for row in query(db_path, "SELECT value FROM day_series WHERE metric = 'stress' ORDER BY ts_ms")] == [30, -1, -2, -2, 40]
+    assert len(query(db_path, "SELECT * FROM day_series WHERE metric = 'body_battery'")) == 1
+    assert query(db_path, "SELECT steps FROM day_steps")[0]["steps"] == 120

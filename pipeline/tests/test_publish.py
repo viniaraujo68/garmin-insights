@@ -58,3 +58,16 @@ def test_each_day_gets_a_briefing_that_ignores_later_activities(tmp_path):
     after = json.loads((site_dir / "day" / "2026-10-13.json").read_text())
     assert before["last_activity_id"] is None
     assert after["last_activity_id"] == "1001"
+
+
+def test_intraday_breaks_stress_at_motion_and_marks_spans(site):
+    intraday = json.loads((site / "intraday" / "2026-10-13.json").read_text())
+    assert [point["value"] for point in intraday["stress"]] == [30, None, None, None, 40]
+    motion = [span for span in intraday["spans"] if span["kind"] == "motion"]
+    assert len(motion) == 1 and motion[0]["end_ms"] - motion[0]["start_ms"] == 2 * 180_000
+    activity = [span for span in intraday["spans"] if span["kind"] == "activity"]
+    assert activity[0]["activity_id"] == "1001"
+    assert activity[0]["end_ms"] - activity[0]["start_ms"] == round((5000 / 3.2 + 600) * 1000)
+    assert intraday["steps"][0]["steps"] == 120
+    assert intraday["end_ms"] - intraday["start_ms"] == 86_400_000
+    assert intraday["last_sample_ms"] == 1791861120000

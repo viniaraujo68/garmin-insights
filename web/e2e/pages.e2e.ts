@@ -16,6 +16,13 @@ test("hoje mostra a prontidão e os cards", async ({ page }) => {
   await expect(page.getByRole("heading", { name: "Hoje", level: 1 })).toBeVisible();
   await expect(page.getByText("Prontidão para treinar")).toBeVisible();
   await expect(page.getByRole("heading", { name: "Últimos 7 dias" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "O dia em detalhe" })).toBeVisible();
+  const heartRate = page.getByRole("img", { name: "FC ao longo do dia" });
+  await heartRate.scrollIntoViewIfNeeded();
+  const box = await heartRate.boundingBox();
+  if (!box) throw new Error("heart rate lane not rendered");
+  await heartRate.hover({ position: { x: box.width * 0.2, y: box.height / 2 } });
+  await expect(page.locator("p").filter({ hasText: /^\s*\d{2}:\d{2}( · .+)?\s*$/ })).toBeVisible();
   expect(errors).toEqual([]);
 });
 
@@ -64,11 +71,11 @@ test("evolução mostra eficiência, provas e técnica", async ({ page }) => {
   expect(errors).toEqual([]);
 });
 
-test("carga mostra faixa ótima, frescor e calendário", async ({ page }) => {
+test("carga mostra faixa ótima, frescor e intensidade", async ({ page }) => {
   const errors = collectErrors(page);
   await page.goto("/carga");
   await expect(page.getByRole("heading", { name: "Carga aguda e a faixa ótima" })).toBeVisible();
-  await expect(page.getByRole("img", { name: "Calendário de treinos" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Leve × forte por semana" })).toBeVisible();
   expect(await page.locator("canvas").count()).toBeGreaterThanOrEqual(5);
   expect(errors).toEqual([]);
 });

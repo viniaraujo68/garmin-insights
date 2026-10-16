@@ -3,12 +3,13 @@
   import { resolve } from "$app/paths";
   import { Combobox } from "@viniaraujo68/plinth/components";
   import BaselineTileCard from "$lib/components/BaselineTileCard.svelte";
+  import DayDetail from "$lib/components/DayDetail.svelte";
   import IllnessCard from "$lib/components/IllnessCard.svelte";
   import PageFrame from "$lib/components/PageFrame.svelte";
   import ReadinessHero from "$lib/components/ReadinessHero.svelte";
   import SignalCard from "$lib/components/SignalCard.svelte";
   import WeekStrip from "$lib/components/WeekStrip.svelte";
-  import type { ActivitySummary, Meta, Today } from "$lib/data/types";
+  import type { ActivitySummary, Intraday, Meta, Today } from "$lib/data/types";
   import { date, datetime, dayTitle, km, number, pace, weekdayShort } from "$lib/format";
   import { labelOf, SPORT, TRAINING_EFFECT } from "$lib/labels";
 
@@ -18,6 +19,7 @@
     data: {
       meta: Meta;
       today: Today;
+      intraday: Intraday | null;
       lastActivity: ActivitySummary | null;
       previousDay: string | null;
       nextDay: string | null;
@@ -81,6 +83,10 @@
       {/each}
     </div>
   </section>
+
+  {#if data.intraday}
+    <DayDetail day={data.intraday} partial={isLatest} />
+  {/if}
 
   <IllnessCard watch={today.illness} />
 

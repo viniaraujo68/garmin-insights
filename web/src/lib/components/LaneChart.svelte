@@ -6,6 +6,7 @@
     type LaneMarker,
     type LanePoint,
     type LaneReference,
+    type LaneSpan,
     type LaneTick,
   } from "$lib/lanes";
 
@@ -24,6 +25,8 @@
     references = [],
     bands = [],
     markers = [],
+    spans = [],
+    barWidth = null,
     showXLabels = false,
     hover = $bindable(null),
     height = 72,
@@ -42,6 +45,8 @@
     references?: LaneReference[];
     bands?: LaneBand[];
     markers?: LaneMarker[];
+    spans?: LaneSpan[];
+    barWidth?: number | null;
     showXLabels?: boolean;
     hover?: number | null;
     height?: number;
@@ -120,6 +125,11 @@
       })
       .join("");
   });
+  const tickAnchor = (value: number): "start" | "middle" | "end" => {
+    if (x(value) > width - RIGHT - 16) return "end";
+    if (x(value) < LEFT + 16) return "start";
+    return "middle";
+  };
   const visibleBands = $derived(bands.filter((band) => Math.abs(y(band.from) - y(band.to)) >= 6));
   const referenceLabelY = (value: number): number =>
     y(value) - TOP < 12 ? y(value) + 10 : y(value) - 3;
@@ -149,6 +159,21 @@
       height={plotBottom - TOP}
       class="fill-base-content/[0.03]"
     />
+    {#each spans as span, index (index)}
+      <rect
+        x={x(span.from)}
+        y={TOP}
+        width={Math.max(1, x(span.to) - x(span.from))}
+        height={plotBottom - TOP}
+        fill={span.color}
+        fill-opacity="0.14"
+      />
+      {#if span.label && x(span.to) - x(span.from) > 48}
+        <text x={x(span.from) + 3} y={TOP + 10} class="fill-base-content/60 text-[9px]"
+          >{span.label}</text
+        >
+      {/if}
+    {/each}
     {#each visibleBands as band (band.from)}
       <rect
         x={LEFT}
@@ -179,7 +204,7 @@
         <text
           x={x(tick.value)}
           y={totalHeight - 4}
-          text-anchor="middle"
+          text-anchor={tickAnchor(tick.value)}
           class="fill-base-content/60 text-[10px] tabular-nums">{tick.label}</text
         >
       {/if}
@@ -234,17 +259,32 @@
         stroke-width="1.2"
       />
     {/if}
-    <path
-      d={line}
-      fill="none"
-      stroke={color}
-      stroke-width="1.8"
-      stroke-linejoin="round"
-      stroke-linecap="round"
-    />
+    {#if barWidth === null}
+      <path
+        d={line}
+        fill="none"
+        stroke={color}
+        stroke-width="1.8"
+        stroke-linejoin="round"
+        stroke-linecap="round"
+      />
+    {:else}
+      {#each points as point (point.x)}
+        {#if point.y !== null && point.y > 0}
+          <rect
+            x={x(point.x - barWidth / 2) + 0.5}
+            y={y(point.y)}
+            width={Math.max(1, x(point.x + barWidth / 2) - x(point.x - barWidth / 2) - 1)}
+            height={Math.max(0, plotBottom - y(point.y))}
+            fill={color}
+            fill-opacity={hovered === point ? 1 : 0.75}
+          />
+        {/if}
+      {/each}
+    {/if}
     {#if hover !== null}
       <line x1={x(hover)} x2={x(hover)} y1={TOP} y2={plotBottom} class="stroke-base-content/60" />
-      {#if hovered && hovered.y !== null}
+      {#if hovered && hovered.y !== null && barWidth === null}
         <circle
           cx={x(hovered.x)}
           cy={y(hovered.y)}

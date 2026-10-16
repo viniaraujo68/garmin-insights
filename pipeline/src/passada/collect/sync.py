@@ -10,6 +10,9 @@ DAILY_ENDPOINTS = {
     "hrv": lambda client, day: client.get_hrv_data(day),
     "readiness": lambda client, day: client.get_training_readiness(day),
     "stats": lambda client, day: client.get_stats(day),
+    "heart_rate": lambda client, day: client.get_heart_rates(day),
+    "stress": lambda client, day: client.get_stress_data(day),
+    "steps": lambda client, day: client.get_steps_data(day),
 }
 
 

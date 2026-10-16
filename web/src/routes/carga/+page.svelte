@@ -4,7 +4,6 @@
   import PageFrame from "$lib/components/PageFrame.svelte";
   import StatusText from "$lib/components/StatusText.svelte";
   import TimeChart from "$lib/components/TimeChart.svelte";
-  import TrainingCalendar from "$lib/components/TrainingCalendar.svelte";
   import { dayMonth, delta, number } from "$lib/format";
 
   const { data } = $props();
@@ -169,33 +168,6 @@
         />
       </div>
     </section>
-    <section class="card border border-base-content/10 bg-base-100" aria-labelledby="esportes">
-      <div class="card-body gap-3 p-5">
-        <h2 id="esportes" class="text-base font-semibold">Minutos por esporte</h2>
-        <p class="text-xs text-base-content/70">
-          Futebol e academia só aparecem quando a atividade é gravada no relógio.
-        </p>
-        <BarChart
-          labels={weekLabels}
-          series={[
-            { label: "Corrida", values: load.weeks.map((week) => week.minutes_run), slot: 0 },
-            { label: "Futebol", values: load.weeks.map((week) => week.minutes_football), slot: 2 },
-            { label: "Academia", values: load.weeks.map((week) => week.minutes_gym), slot: 6 },
-            { label: "Outros", values: load.weeks.map((week) => week.minutes_other), slot: 3 },
-          ]}
-          stacked
-          format={(value) => `${number(value)} min`}
-          extraTooltip={(index) => {
-            const week = load.weeks[index];
-            return week ? [`${number(week.km, 1)} km em ${week.runs} corrida(s)`] : [];
-          }}
-          ariaLabel="Minutos por esporte por semana"
-        />
-      </div>
-    </section>
-  </div>
-
-  <div class="grid gap-4 xl:grid-cols-2">
     <section class="card border border-base-content/10 bg-base-100" aria-labelledby="foco">
       <div class="card-body gap-3 p-5">
         <h2 id="foco" class="text-base font-semibold">Foco da carga nas últimas 4 semanas</h2>
@@ -206,35 +178,27 @@
         <FocusBars rows={load.focus} />
       </div>
     </section>
-    <section class="card border border-base-content/10 bg-base-100" aria-labelledby="monotonia">
-      <div class="card-body gap-3 p-5">
-        <h2 id="monotonia" class="text-base font-semibold">Monotonia e tensão</h2>
-        <p class="text-xs text-base-content/70">
-          Monotonia é a carga média do dia dividida pela variação entre os dias da semana: treinar
-          igual todo dia aumenta o risco de lesão e doença. Tensão é a carga da semana vezes a
-          monotonia.
-        </p>
-        <BarChart
-          labels={weekLabels}
-          series={[{ label: "Tensão", values: load.weeks.map((week) => week.strain), slot: 6 }]}
-          format={(value) => number(value)}
-          extraTooltip={(index) => {
-            const week = load.weeks[index];
-            return week?.monotony === null || !week
-              ? []
-              : [`monotonia ${number(week.monotony, 2)}`];
-          }}
-          height="h-48"
-          ariaLabel="Tensão por semana"
-        />
-      </div>
-    </section>
   </div>
 
-  <section class="card border border-base-content/10 bg-base-100" aria-labelledby="calendario">
+  <section class="card border border-base-content/10 bg-base-100" aria-labelledby="monotonia">
     <div class="card-body gap-3 p-5">
-      <h2 id="calendario" class="text-base font-semibold">Calendário de treinos</h2>
-      <TrainingCalendar days={load.calendar} />
+      <h2 id="monotonia" class="text-base font-semibold">Monotonia e tensão</h2>
+      <p class="text-xs text-base-content/70">
+        Monotonia é a carga média do dia dividida pela variação entre os dias da semana: treinar
+        igual todo dia aumenta o risco de lesão e doença. Tensão é a carga da semana vezes a
+        monotonia.
+      </p>
+      <BarChart
+        labels={weekLabels}
+        series={[{ label: "Tensão", values: load.weeks.map((week) => week.strain), slot: 6 }]}
+        format={(value) => number(value)}
+        extraTooltip={(index) => {
+          const week = load.weeks[index];
+          return week?.monotony === null || !week ? [] : [`monotonia ${number(week.monotony, 2)}`];
+        }}
+        height="h-48"
+        ariaLabel="Tensão por semana"
+      />
     </div>
   </section>
 </PageFrame>

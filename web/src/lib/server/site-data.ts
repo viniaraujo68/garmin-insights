@@ -18,3 +18,12 @@ export const readDocument = async <T>(name: string): Promise<T> => {
     throw cause;
   }
 };
+
+export const readOptionalDocument = async <T>(name: string): Promise<T | null> => {
+  try {
+    return JSON.parse(await readFile(path.join(siteDir(), `${name}.json`), "utf8")) as T;
+  } catch (cause) {
+    if ((cause as NodeJS.ErrnoException).code === "ENOENT") return null;
+    throw cause;
+  }
+};

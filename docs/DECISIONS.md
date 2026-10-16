@@ -42,3 +42,14 @@ Theil-Sen amortecida pela metade. Com menos dados a extrapolação seria ruído.
 
 O `AppShell` do plinth não lista rotas com parâmetro. Por isso `/recuperacao` existe como rota
 própria (no menu) e cada noite fica em `/recuperacao/[noite]`, compartilhando o mesmo componente.
+
+## O dia em detalhe
+
+Três chamadas a mais por dia na coleta: FC a cada 2 min, estresse e Body Battery a cada 3 min e
+passos a cada 15 min. O estresse vem com códigos negativos: -1 é sem leitura e -2 é movimento
+demais para medir. Os dois quebram a linha; os trechos de -2 viram a faixa "em movimento". As
+atividades ocupam o tempo decorrido (com pausas), não o tempo em movimento. O dia de hoje só tem
+dados até a última sincronização do relógio com o Garmin e do pipeline.
+
+Minutos por esporte e calendário de treinos saíram da Carga (2026-10-16): sem futebol e academia
+gravados no relógio, não diziam nada. Os campos continuam no `load.json` para quando voltarem.
