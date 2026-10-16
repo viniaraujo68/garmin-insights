@@ -232,7 +232,7 @@ def simplified(points: list[sqlite3.Row]) -> list[list[float | None]]:
         if last is not None and traveled is not None and traveled - last < ROUTE_STEP_M:
             continue
         last = traveled
-        kept.append([round(row["lat"], 5), round(row["lon"], 5), stream_pace(row["speed"])])
+        kept.append([round(row["lat"], 5), round(row["lon"], 5), stream_pace(row["speed"]), row["hr"]])
     return kept
 
 

@@ -363,6 +363,83 @@ class Load(Contract):
     calendar: list[CalendarDay]
 
 
+class TrendPoint(Contract):
+    date: str
+    value: float | None
+    mean7: float | None
+    band_low: float | None
+    band_high: float | None
+
+
+class RecoveryTrend(Contract):
+    key: str
+    label: str
+    unit: str
+    digits: int
+    higher_is_better: bool | None
+    help: str
+    points: list[TrendPoint]
+
+
+class Night(Contract):
+    date: str
+    score: float | None
+    sleep_h: float | None
+    deep_h: float | None
+    light_h: float | None
+    rem_h: float | None
+    awake_h: float | None
+    need_h: float | None
+    bedtime: str | None
+    wake_time: str | None
+    bedtime_minutes: float | None
+    wake_minutes: float | None
+    feedback: str | None
+    respiration: float | None
+
+
+class GlanceCell(Contract):
+    key: str
+    value: float | None
+    display: str
+    z: float | None
+    status: Status
+
+
+class GlanceDay(Contract):
+    date: str
+    cells: list[GlanceCell]
+
+
+class Recovery(Contract):
+    trends: list[RecoveryTrend]
+    nights: list[Night]
+    glance_metrics: list[str]
+    glance_labels: list[str]
+    glance: list[GlanceDay]
+
+
+class SleepStage(Contract):
+    start_ms: int
+    end_ms: int
+    stage: str
+
+
+class SleepSeriesPoint(Contract):
+    ts_ms: int
+    value: float
+
+
+class SleepNight(Contract):
+    date: str
+    night: Night
+    stages: list[SleepStage]
+    hr: list[SleepSeriesPoint]
+    hrv: list[SleepSeriesPoint]
+    body_battery: list[SleepSeriesPoint]
+    stress: list[SleepSeriesPoint]
+
+
 DOCUMENTS: dict[str, type[Contract]] = {
     "meta": Meta,
     "activities": ActivitySummary,
@@ -371,4 +448,6 @@ DOCUMENTS: dict[str, type[Contract]] = {
     "routes": Routes,
     "performance": Performance,
     "load": Load,
+    "recovery": Recovery,
+    "sleep": SleepNight,
 }

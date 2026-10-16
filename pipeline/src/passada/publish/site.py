@@ -10,6 +10,7 @@ from passada import config
 from passada.calc.activities import activity_details, activity_summaries, routes_document, samples_by_activity
 from passada.calc.load import load_document
 from passada.calc.performance import performance_document
+from passada.calc.recovery import recovery_document, sleep_nights
 from passada.calc.today import today_document
 from passada.publish.contract import DOCUMENTS, Contract, Meta
 
@@ -67,6 +68,11 @@ def verify_site(site_dir: Path) -> None:
     missing = [item["activity_id"] for item in activities if not (site_dir / "activity" / f"{item['activity_id']}.json").exists()]
     if missing:
         raise ValueError(f"activities without a detail file: {missing}")
+    if (site_dir / "recovery.json").exists():
+        nights = json.loads((site_dir / "recovery.json").read_text())["nights"]
+        lost = [night["date"] for night in nights if not (site_dir / "sleep" / f"{night['date']}.json").exists()]
+        if lost:
+            raise ValueError(f"nights without a sleep file: {lost}")
 
 
 def write_schema(site_dir: Path) -> None:
@@ -89,9 +95,12 @@ def publish_site(db_path: Path, site_dir: Path, today: date) -> dict[str, int]:
             "routes": routes_document(activities, samples),
             "performance": performance_document(connection, activities, today),
             "load": load_document(connection, activities, today),
+            "recovery": recovery_document(connection),
         }
         for activity_id, detail in activity_details(connection, activities, samples).items():
             documents[f"activity/{activity_id}"] = detail
+        for night_date, night in sleep_nights(connection).items():
+            documents[f"sleep/{night_date}"] = night
     finally:
         connection.close()
     for name, payload in documents.items():

@@ -40,6 +40,7 @@
     max,
     height = "h-64",
     legend = true,
+    zero = true,
   }: {
     series: TimeSeries[];
     band?: TimeBand;
@@ -51,6 +52,7 @@
     max?: number;
     height?: string;
     legend?: boolean;
+    zero?: boolean;
   } = $props();
 
   const theme = getThemeContext();
@@ -179,7 +181,7 @@
           },
           y: {
             reverse,
-            min: min ?? (allY.length && Math.min(...allY) >= 0 && !reverse ? 0 : undefined),
+            min: min ?? (zero && allY.length && Math.min(...allY) >= 0 && !reverse ? 0 : undefined),
             max,
             grace: "6%",
             grid: { color: colors.grid },

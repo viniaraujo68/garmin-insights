@@ -72,3 +72,30 @@ test("carga mostra faixa ótima, frescor e calendário", async ({ page }) => {
   expect(await page.locator("canvas").count()).toBeGreaterThanOrEqual(5);
   expect(errors).toEqual([]);
 });
+
+test("recuperação mostra tendências, hipnograma e mês", async ({ page }) => {
+  const errors = collectErrors(page);
+  await page.goto("/recuperacao");
+  await expect(page.getByRole("heading", { name: "VFC da noite" })).toBeVisible();
+  await expect(page.getByRole("img", { name: "Fases do sono ao longo da noite" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Mês num relance" })).toBeVisible();
+  await page.getByRole("button", { name: "4 semanas", exact: true }).click();
+  await expect(
+    page
+      .getByRole("navigation", { name: "Navegação principal" })
+      .getByRole("link", { name: "Recuperação" }),
+  ).toBeVisible();
+  const response = await page.goto("/recuperacao/2026-09-01");
+  expect(response?.status()).toBe(200);
+  await expect(page.getByText(/Dormiu \d{2}:\d{2}/)).toBeVisible();
+  expect(errors).toEqual([]);
+});
+
+test("mapas desenha todas as corridas e troca a cor", async ({ page }) => {
+  const errors = collectErrors(page);
+  await page.goto("/mapas");
+  await expect(page.locator(".leaflet-container")).toBeVisible();
+  await page.getByRole("button", { name: "Pace", exact: true }).click();
+  await expect(page.getByText(/\(rápido\)/)).toBeVisible();
+  expect(errors).toEqual([]);
+});
