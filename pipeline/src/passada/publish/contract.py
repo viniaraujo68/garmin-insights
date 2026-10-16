@@ -440,6 +440,75 @@ class SleepNight(Contract):
     stress: list[SleepSeriesPoint]
 
 
+class FootballSession(Contract):
+    activity_id: str
+    date: str
+    duration_min: float | None
+    distance_km: float | None
+    avg_hr: float | None
+    max_hr: float | None
+    training_load: float | None
+    aerobic_te: float | None
+    anaerobic_te: float | None
+    zone_minutes: list[float]
+    max_speed_kmh: float | None
+    sprints: int
+    high_speed_m: float
+    positions: list[list[float]]
+
+
+class ExerciseSummary(Contract):
+    category: str
+    exercise: str | None
+    sets: int
+    reps: float
+    volume_kg: float
+    max_weight_kg: float | None
+    estimated_1rm_kg: float | None
+
+
+class GymSession(Contract):
+    activity_id: str
+    date: str
+    duration_min: float | None
+    avg_hr: float | None
+    training_load: float | None
+    sets: int
+    reps: float
+    volume_kg: float
+    exercises: list[ExerciseSummary]
+
+
+class MuscleGroupSets(Contract):
+    group: str
+    label: str
+    sets_7d: float
+    sets_28d: float
+
+
+class StrengthProgress(Contract):
+    category: str
+    label: str
+    points: list[SeriesPoint]
+
+
+class GearItem(Contract):
+    gear_id: str
+    name: str
+    gear_type: str | None
+    distance_km: float
+    max_km: float | None
+    status: str | None
+
+
+class Sports(Contract):
+    football: list[FootballSession]
+    gym: list[GymSession]
+    muscles: list[MuscleGroupSets]
+    progress: list[StrengthProgress]
+    gear: list[GearItem]
+
+
 DOCUMENTS: dict[str, type[Contract]] = {
     "meta": Meta,
     "activities": ActivitySummary,
@@ -450,4 +519,5 @@ DOCUMENTS: dict[str, type[Contract]] = {
     "load": Load,
     "recovery": Recovery,
     "sleep": SleepNight,
+    "sports": Sports,
 }

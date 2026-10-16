@@ -11,6 +11,7 @@ from passada.calc.activities import activity_details, activity_summaries, routes
 from passada.calc.load import load_document
 from passada.calc.performance import performance_document
 from passada.calc.recovery import recovery_document, sleep_nights
+from passada.calc.sports import sports_document
 from passada.calc.today import today_document
 from passada.publish.contract import DOCUMENTS, Contract, Meta
 
@@ -96,6 +97,7 @@ def publish_site(db_path: Path, site_dir: Path, today: date) -> dict[str, int]:
             "performance": performance_document(connection, activities, today),
             "load": load_document(connection, activities, today),
             "recovery": recovery_document(connection),
+            "sports": sports_document(connection, activities, samples, today),
         }
         for activity_id, detail in activity_details(connection, activities, samples).items():
             documents[f"activity/{activity_id}"] = detail

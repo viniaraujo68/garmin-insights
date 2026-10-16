@@ -99,3 +99,18 @@ test("mapas desenha todas as corridas e troca a cor", async ({ page }) => {
   await expect(page.getByText(/\(rápido\)/)).toBeVisible();
   expect(errors).toEqual([]);
 });
+
+test("esportes explica como registrar quando não há dados", async ({ page }) => {
+  const errors = collectErrors(page);
+  await page.goto("/esportes");
+  await expect(page.getByRole("heading", { name: "Futebol" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Academia" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Tênis" })).toBeVisible();
+  expect(errors).toEqual([]);
+});
+
+test("guia lista as métricas por seção", async ({ page }) => {
+  await page.goto("/guia");
+  await expect(page.getByRole("heading", { name: "Técnica (dinâmica de corrida)" })).toBeVisible();
+  await expect(page.getByText("Regra 80/20")).toBeVisible();
+});

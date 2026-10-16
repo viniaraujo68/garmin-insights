@@ -38,6 +38,20 @@ O sync é incremental: busca de novo só os últimos `LOOKBACK_DAYS` dias (sono,
 revisados pela Garmin depois) e completa o que faltar. Cada resposta da Garmin vira um arquivo em
 `data/raw/`; o banco e o site são reconstruídos a partir dele a cada execução.
 
+## Telas
+
+| Rota | O que responde |
+|---|---|
+| `/` Hoje | Prontidão e o que pesou, cards comparados à sua média, alerta de doença, semana e alertas de carga |
+| `/corridas` | Explorador de corridas por qualquer métrica, galeria de percursos e tabela |
+| `/corridas/[id]` | Mapa colorido por pace, FC, zona ou inclinação, curvas sincronizadas, splits, zonas, clima e técnica |
+| `/evolucao` | Eficiência com e sem o calor, VO2max, previsões de prova, técnica no mesmo ritmo, recordes e idade fitness |
+| `/carga` | Carga aguda na faixa ótima, condicionamento/fadiga/frescor, 80/20, minutos por esporte, foco, monotonia e calendário |
+| `/recuperacao` | Tendências com a sua faixa normal, fases e regularidade do sono, hipnograma por noite e mês num relance |
+| `/mapas` | Todas as corridas sobrepostas por frequência, pace ou FC |
+| `/esportes` | Futebol (piques e posições), academia (mapa muscular e 1RM) e quilometragem dos tênis |
+| `/guia` | O que cada métrica significa e as faixas de referência |
+
 ## Pastas
 
 | Pasta | O que tem |

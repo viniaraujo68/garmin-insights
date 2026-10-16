@@ -26,3 +26,19 @@ mais.
 
 A Garmin devolve `heatAltitudeAcclimation` vazio para o Forerunner 265S desta conta, então o painel
 usa o clima de cada corrida (temperatura e ponto de orvalho) para corrigir o pace.
+
+## Mapas e privacidade
+
+O site usa os blocos do OpenStreetMap (a CARTO passou a exigir chave). A zona de privacidade é
+detectada pelo ponto onde mais corridas começam ou terminam (pelo menos três, num raio de 300 m)
+e esconde 400 m em volta dele quando ligada.
+
+## Projeções
+
+VO2max e previsões de prova só ganham projeção com 8 semanas de histórico, pela tendência de
+Theil-Sen amortecida pela metade. Com menos dados a extrapolação seria ruído.
+
+## Rotas com parâmetro e o menu do plinth
+
+O `AppShell` do plinth não lista rotas com parâmetro. Por isso `/recuperacao` existe como rota
+própria (no menu) e cada noite fica em `/recuperacao/[noite]`, compartilhando o mesmo componente.
