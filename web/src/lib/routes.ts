@@ -6,6 +6,8 @@ export const routes: RoutingConfig<RouteId> = {
     "/": { title: "Hoje", icon: "today" },
     "/corridas": { title: "Corridas", icon: "runs" },
     "/corridas/[id]": { title: "Corrida" },
+    "/evolucao": { title: "Evolução", icon: "trend" },
+    "/carga": { title: "Carga", icon: "load" },
   },
 
   pages: import.meta.glob("/src/routes/**/+page.svelte"),

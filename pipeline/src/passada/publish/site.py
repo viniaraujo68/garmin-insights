@@ -8,6 +8,8 @@ from pydantic import BaseModel, TypeAdapter
 
 from passada import config
 from passada.calc.activities import activity_details, activity_summaries, routes_document, samples_by_activity
+from passada.calc.load import load_document
+from passada.calc.performance import performance_document
 from passada.calc.today import today_document
 from passada.publish.contract import DOCUMENTS, Contract, Meta
 
@@ -85,6 +87,8 @@ def publish_site(db_path: Path, site_dir: Path, today: date) -> dict[str, int]:
             "activities": activities,
             "today": today_document(connection, activities, today),
             "routes": routes_document(activities, samples),
+            "performance": performance_document(connection, activities, today),
+            "load": load_document(connection, activities, today),
         }
         for activity_id, detail in activity_details(connection, activities, samples).items():
             documents[f"activity/{activity_id}"] = detail

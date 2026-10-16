@@ -216,10 +216,159 @@ class Routes(Contract):
     routes: list[RouteTrace]
 
 
+class SeriesPoint(Contract):
+    date: str
+    value: float
+
+
+class TrendLine(Contract):
+    start_date: str
+    end_date: str
+    start_value: float
+    end_value: float
+    per_30_days: float
+
+
+class EfficiencyPoint(Contract):
+    activity_id: str
+    date: str
+    distance_km: float | None
+    pace_s_km: int | None
+    heat_adjusted_pace_s_km: int | None
+    avg_hr: float | None
+    meters_per_beat: float
+    heat_adjusted_meters_per_beat: float | None
+    feels_like_c: float | None
+    heat_slowdown_pct: float | None
+
+
+class RaceDistance(Contract):
+    distance: str
+    label: str
+    km: float
+    current_seconds: float
+    delta_8w_seconds: float | None
+    series: list[SeriesPoint]
+    projection: list[SeriesPoint] | None
+    record_seconds: float | None
+    riegel_seconds: float | None
+
+
+class FormPoint(Contract):
+    date: str
+    speed_kmh: float
+    value: float
+    recent: bool
+
+
+class FormMetric(Contract):
+    key: str
+    label: str
+    unit: str
+    digits: int
+    lower_is_better: bool | None
+    recent_delta: float | None
+    recent_count: int
+    earlier_count: int
+    verdict: str
+    fit_slope: float | None
+    fit_intercept: float | None
+    points: list[FormPoint]
+
+
+class RecordRow(Contract):
+    type_id: int
+    label: str
+    value: float
+    value_display: str
+    date: str | None
+    activity_id: str | None
+
+
+class FitnessAge(Contract):
+    fitness_age: float | None
+    chronological_age: float | None
+    achievable_age: float | None
+    vigorous_days_per_week: float | None
+    vigorous_days_target: float | None
+    vigorous_minutes_per_week: float | None
+    vigorous_minutes_target: float | None
+
+
+class Performance(Contract):
+    efficiency: list[EfficiencyPoint]
+    efficiency_trend: TrendLine | None
+    heat_adjusted_trend: TrendLine | None
+    vo2max: list[SeriesPoint]
+    vo2max_per_30_days: float | None
+    vo2max_projection: list[SeriesPoint] | None
+    projection_note: str
+    races: list[RaceDistance]
+    form_window_days: int
+    form: list[FormMetric]
+    records: list[RecordRow]
+    fitness_age: FitnessAge | None
+
+
+class LoadDay(Contract):
+    date: str
+    daily_load: float
+    acute: float | None
+    chronic: float | None
+    chronic_min: float | None
+    chronic_max: float | None
+    acwr: float | None
+    fitness: float
+    fatigue: float
+    form: float
+
+
+class WeekLoad(Contract):
+    week: str
+    km: float
+    runs: int
+    minutes_run: float
+    minutes_football: float
+    minutes_gym: float
+    minutes_other: float
+    load: float
+    easy_min: float
+    moderate_min: float
+    hard_min: float
+    easy_pct: float | None
+    verdict: str | None
+    monotony: float | None
+    strain: float | None
+
+
+class FocusRow(Contract):
+    focus: str
+    label: str
+    load: float | None
+    target_min: float | None
+    target_max: float | None
+    status: Status
+
+
+class CalendarDay(Contract):
+    date: str
+    load: float
+    sports: list[str]
+
+
+class Load(Contract):
+    days: list[LoadDay]
+    weeks: list[WeekLoad]
+    focus: list[FocusRow]
+    calendar: list[CalendarDay]
+
+
 DOCUMENTS: dict[str, type[Contract]] = {
     "meta": Meta,
     "activities": ActivitySummary,
     "activity": ActivityDetail,
     "today": Today,
     "routes": Routes,
+    "performance": Performance,
+    "load": Load,
 }

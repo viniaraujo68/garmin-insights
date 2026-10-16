@@ -52,3 +52,23 @@ test("corrida inexistente responde 404", async ({ page }) => {
   const response = await page.goto("/corridas/123");
   expect(response?.status()).toBe(404);
 });
+
+test("evolução mostra eficiência, provas e técnica", async ({ page }) => {
+  const errors = collectErrors(page);
+  await page.goto("/evolucao");
+  await expect(page.getByRole("heading", { name: "Metros por batimento" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Previsões de prova" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Técnica no mesmo ritmo" })).toBeVisible();
+  await page.getByRole("button", { name: "Como medido", exact: true }).click();
+  await expect(page.getByRole("img", { name: "Eficiência por corrida" })).toBeVisible();
+  expect(errors).toEqual([]);
+});
+
+test("carga mostra faixa ótima, frescor e calendário", async ({ page }) => {
+  const errors = collectErrors(page);
+  await page.goto("/carga");
+  await expect(page.getByRole("heading", { name: "Carga aguda e a faixa ótima" })).toBeVisible();
+  await expect(page.getByRole("img", { name: "Calendário de treinos" })).toBeVisible();
+  expect(await page.locator("canvas").count()).toBeGreaterThanOrEqual(5);
+  expect(errors).toEqual([]);
+});
