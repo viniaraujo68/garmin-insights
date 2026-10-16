@@ -3,10 +3,10 @@ import sqlite3
 from datetime import date, timedelta
 from statistics import median
 
-from passada.calc.stats import mean, rounded
-from passada.calc.trend import linear_fit, ordinal, projection, theil_sen, trend_per_30_days
-from passada.calc.trend import PROJECTION_MIN_SPAN_DAYS
-from passada.publish.contract import (
+from garmin_insights.calc.stats import mean, rounded
+from garmin_insights.calc.trend import linear_fit, ordinal, projection, theil_sen, trend_per_30_days
+from garmin_insights.calc.trend import PROJECTION_MIN_SPAN_DAYS
+from garmin_insights.publish.contract import (
     ActivitySummary,
     EfficiencyPoint,
     FitnessAge,

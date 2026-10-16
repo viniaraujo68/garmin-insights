@@ -2,10 +2,10 @@ from datetime import date, timedelta
 
 import pytest
 
-from passada.calc.load import easy_line, load_verdict, verdict, weeks_of
-from passada.calc.performance import form_metrics, riegel
-from passada.calc.trend import projection, theil_sen
-from passada.publish.contract import ActivitySummary, LoadDay
+from garmin_insights.calc.load import easy_line, load_verdict, verdict, weeks_of
+from garmin_insights.calc.performance import form_metrics, riegel
+from garmin_insights.calc.trend import projection, theil_sen
+from garmin_insights.publish.contract import ActivitySummary, LoadDay
 
 
 def summary(day: str, **values) -> ActivitySummary:

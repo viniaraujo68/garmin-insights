@@ -2,8 +2,8 @@ from datetime import date, timedelta
 
 from garminconnect import Garmin
 
-from passada import config
-from passada.collect.client import RawStore
+from garmin_insights import config
+from garmin_insights.collect.client import RawStore
 
 DAILY_ENDPOINTS = {
     "sleep": lambda client, day: client.get_sleep_data(day),

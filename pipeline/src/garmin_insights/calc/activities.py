@@ -1,10 +1,10 @@
 import math
 import sqlite3
 
-from passada import config
-from passada.calc.heat import heat_adjusted_pace, heat_slowdown_pct
-from passada.calc.stats import mean, pace_seconds, rounded
-from passada.publish.contract import (
+from garmin_insights import config
+from garmin_insights.calc.heat import heat_adjusted_pace, heat_slowdown_pct
+from garmin_insights.calc.stats import mean, pace_seconds, rounded
+from garmin_insights.publish.contract import (
     ActivityDetail,
     ActivitySummary,
     Lap,

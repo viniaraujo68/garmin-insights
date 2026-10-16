@@ -2,10 +2,10 @@ from datetime import date, timedelta
 
 import pytest
 
-from passada.calc.activities import distance_m, grades, home_privacy
-from passada.calc.heat import heat_adjusted_pace, heat_slowdown_pct
-from passada.calc.stats import robust_z
-from passada.calc.today import illness_watch
+from garmin_insights.calc.activities import distance_m, grades, home_privacy
+from garmin_insights.calc.heat import heat_adjusted_pace, heat_slowdown_pct
+from garmin_insights.calc.stats import robust_z
+from garmin_insights.calc.today import illness_watch
 
 
 def test_heat_slowdown_follows_the_hadley_table():

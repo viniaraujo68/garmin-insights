@@ -112,6 +112,6 @@
   {columns}
   rowKey={(lap) => lap.lap}
   label="Splits por km"
-  storageKey="passada:splits"
+  storageKey="garmin-insights:splits"
   sortLabel={(column) => `Ordenar por ${column.label}`}
 />

@@ -3,10 +3,10 @@ from datetime import date
 
 from builders import details, run_summary, write
 
-from passada.calc.recovery import glance_status, minutes_of
-from passada.calc.sports import epley, sprint_stats
-from passada.publish.site import publish_site
-from passada.store.loader import build_database
+from garmin_insights.calc.recovery import glance_status, minutes_of
+from garmin_insights.calc.sports import epley, sprint_stats
+from garmin_insights.publish.site import publish_site
+from garmin_insights.store.loader import build_database
 
 
 class Row(dict):
@@ -54,7 +54,7 @@ def make_sports_raw(root):
 
 
 def test_sports_document_from_raw(tmp_path):
-    db_path = tmp_path / "passada.db"
+    db_path = tmp_path / "garmin.db"
     build_database(make_sports_raw(tmp_path), db_path)
     publish_site(db_path, tmp_path / "site", date(2026, 10, 15))
     import json

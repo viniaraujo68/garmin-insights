@@ -3,7 +3,7 @@ import path from "node:path";
 import { error } from "@sveltejs/kit";
 import { env } from "$env/dynamic/private";
 
-const siteDir = (): string => path.resolve(env.PASSADA_SITE_DIR ?? "../data/site");
+const siteDir = (): string => path.resolve(env.SITE_DIR ?? "../data/site");
 
 export const readDocument = async <T>(name: string): Promise<T> => {
   const file = path.join(siteDir(), `${name}.json`);
@@ -13,7 +13,7 @@ export const readDocument = async <T>(name: string): Promise<T> => {
     if ((cause as NodeJS.ErrnoException).code === "ENOENT")
       error(
         503,
-        `Dados não encontrados em ${file}. Rode o pipeline: cd pipeline && uv run --frozen python -m passada.run`,
+        `Dados não encontrados em ${file}. Rode o pipeline: cd pipeline && uv run --frozen python -m garmin_insights.run`,
       );
     throw cause;
   }

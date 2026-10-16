@@ -1,11 +1,11 @@
 import sys
 from datetime import datetime
 
-from passada import config
-from passada.collect.client import RawStore, connect
-from passada.collect.sync import collect
-from passada.publish.site import publish_site
-from passada.store.loader import build_database
+from garmin_insights import config
+from garmin_insights.collect.client import RawStore, connect
+from garmin_insights.collect.sync import collect
+from garmin_insights.publish.site import publish_site
+from garmin_insights.store.loader import build_database
 
 STAGES = ("collect", "store", "publish")
 TODAY = datetime.now(config.TIMEZONE).date()

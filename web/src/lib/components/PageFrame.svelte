@@ -18,7 +18,7 @@
 </script>
 
 <svelte:head>
-  <title>{title} · passada</title>
+  <title>{title} · garmin insights</title>
 </svelte:head>
 
 <div class="mx-auto flex w-full max-w-7xl flex-col gap-1 p-4 sm:p-6">

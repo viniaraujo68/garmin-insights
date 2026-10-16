@@ -5,7 +5,7 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any
 
-from passada import config
+from garmin_insights import config
 
 SCHEMA = Path(__file__).with_name("schema.sql")
 SLEEP_LEVELS = {0: "deep", 1: "light", 2: "rem", 3: "awake"}

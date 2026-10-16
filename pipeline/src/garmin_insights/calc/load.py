@@ -3,9 +3,9 @@ import sqlite3
 from datetime import date, timedelta
 from statistics import median, pstdev
 
-from passada import config
-from passada.calc.stats import rounded
-from passada.publish.contract import ActivitySummary, CalendarDay, FocusRow, Load, LoadDay, LoadSummary, WeekLoad
+from garmin_insights import config
+from garmin_insights.calc.stats import rounded
+from garmin_insights.publish.contract import ActivitySummary, CalendarDay, FocusRow, Load, LoadDay, LoadSummary, WeekLoad
 
 FITNESS_DAYS = 42
 FATIGUE_DAYS = 7

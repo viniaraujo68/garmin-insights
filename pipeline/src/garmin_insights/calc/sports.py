@@ -2,8 +2,8 @@ import sqlite3
 from collections import defaultdict
 from datetime import date
 
-from passada.calc.stats import rounded
-from passada.publish.contract import (
+from garmin_insights.calc.stats import rounded
+from garmin_insights.publish.contract import (
     ActivitySummary,
     ExerciseSummary,
     FootballSession,

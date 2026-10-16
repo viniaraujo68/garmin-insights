@@ -2,7 +2,7 @@ import sqlite3
 
 from builders import make_raw
 
-from passada.store.loader import build_database
+from garmin_insights.store.loader import build_database
 
 
 def query(db_path, sql):
@@ -15,7 +15,7 @@ def query(db_path, sql):
 
 
 def test_build_database_loads_activity_with_converted_units(tmp_path):
-    db_path = tmp_path / "passada.db"
+    db_path = tmp_path / "garmin.db"
     counts = build_database(make_raw(tmp_path), db_path)
     assert counts["activities"] == 1 and counts["laps"] == 1 and counts["samples"] == 3
     activity = query(db_path, "SELECT * FROM activities")[0]
@@ -27,7 +27,7 @@ def test_build_database_loads_activity_with_converted_units(tmp_path):
 
 
 def test_daily_row_uses_the_morning_readiness_and_drops_negative_stress(tmp_path):
-    db_path = tmp_path / "passada.db"
+    db_path = tmp_path / "garmin.db"
     build_database(make_raw(tmp_path), db_path)
     day = query(db_path, "SELECT * FROM daily")[0]
     assert day["readiness_score"] == 45
@@ -36,23 +36,23 @@ def test_daily_row_uses_the_morning_readiness_and_drops_negative_stress(tmp_path
 
 
 def test_sleep_series_drops_duplicate_timestamps(tmp_path):
-    db_path = tmp_path / "passada.db"
+    db_path = tmp_path / "garmin.db"
     build_database(make_raw(tmp_path), db_path)
     assert len(query(db_path, "SELECT * FROM sleep_series WHERE metric = 'hr'")) == 1
     assert query(db_path, "SELECT stage FROM sleep_stages")[0]["stage"] == "light"
 
 
 def test_rebuild_replaces_the_previous_database(tmp_path):
-    db_path = tmp_path / "passada.db"
+    db_path = tmp_path / "garmin.db"
     raw = make_raw(tmp_path)
     build_database(raw, db_path)
     build_database(raw, db_path)
     assert len(query(db_path, "SELECT * FROM activities")) == 1
-    assert not (tmp_path / "passada.db.part").exists()
+    assert not (tmp_path / "garmin.db.part").exists()
 
 
 def test_day_series_keeps_stress_codes_and_drops_empty_values(tmp_path):
-    db_path = tmp_path / "passada.db"
+    db_path = tmp_path / "garmin.db"
     build_database(make_raw(tmp_path), db_path)
     assert [row["value"] for row in query(db_path, "SELECT value FROM day_series WHERE metric = 'hr' ORDER BY ts_ms")] == [62, 64]
     assert [row["value"] for row in query(db_path, "SELECT value FROM day_series WHERE metric = 'stress' ORDER BY ts_ms")] == [30, -1, -2, -2, 40]

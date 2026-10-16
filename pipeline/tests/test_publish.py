@@ -5,13 +5,13 @@ import pytest
 from builders import make_raw
 from pydantic import ValidationError
 
-from passada.publish.site import publish_site, verify_site
-from passada.store.loader import build_database
+from garmin_insights.publish.site import publish_site, verify_site
+from garmin_insights.store.loader import build_database
 
 
 @pytest.fixture
 def site(tmp_path):
-    db_path = tmp_path / "passada.db"
+    db_path = tmp_path / "garmin.db"
     build_database(make_raw(tmp_path), db_path)
     site_dir = tmp_path / "site"
     publish_site(db_path, site_dir, date(2026, 10, 15))
@@ -48,7 +48,7 @@ def test_each_day_gets_a_briefing_that_ignores_later_activities(tmp_path):
 
     raw = make_raw(tmp_path)
     write(raw / "daily/2026-10-12/stats.json", {"totalSteps": 4000, "dailyStepGoal": 5000})
-    db_path = tmp_path / "passada.db"
+    db_path = tmp_path / "garmin.db"
     build_database(raw, db_path)
     site_dir = tmp_path / "site"
     publish_site(db_path, site_dir, date(2026, 10, 15))

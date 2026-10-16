@@ -1,8 +1,8 @@
 import sqlite3
 from datetime import date, datetime, time, timedelta
 
-from passada import config
-from passada.publish.contract import DaySpan, Intraday, IntradayPoint, StepBucket, StressShare
+from garmin_insights import config
+from garmin_insights.publish.contract import DaySpan, Intraday, IntradayPoint, StepBucket, StressShare
 
 STRESS_SAMPLE_MS = 3 * 60 * 1000
 STRESS_NO_DATA = -1

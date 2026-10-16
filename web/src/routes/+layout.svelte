@@ -55,7 +55,7 @@
     logoutLabel="Sair"
   >
     {#snippet brand({ collapsed }: { collapsed: boolean })}
-      <span class="text-lg font-bold tracking-tight">{collapsed ? "P" : "passada"}</span>
+      <span class="text-lg font-bold tracking-tight">{collapsed ? "G" : "garmin insights"}</span>
     {/snippet}
 
     {#snippet icon(route: ResolvedRoute)}

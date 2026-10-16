@@ -6,15 +6,15 @@ from pathlib import Path
 
 from pydantic import BaseModel, TypeAdapter
 
-from passada import config
-from passada.calc.activities import activity_details, activity_summaries, routes_document, samples_by_activity
-from passada.calc.intraday import intraday_documents
-from passada.calc.load import load_document
-from passada.calc.performance import performance_document
-from passada.calc.recovery import recovery_document, sleep_nights
-from passada.calc.sports import sports_document
-from passada.calc.today import day_documents
-from passada.publish.contract import DOCUMENTS, Contract, Meta
+from garmin_insights import config
+from garmin_insights.calc.activities import activity_details, activity_summaries, routes_document, samples_by_activity
+from garmin_insights.calc.intraday import intraday_documents
+from garmin_insights.calc.load import load_document
+from garmin_insights.calc.performance import performance_document
+from garmin_insights.calc.recovery import recovery_document, sleep_nights
+from garmin_insights.calc.sports import sports_document
+from garmin_insights.calc.today import day_documents
+from garmin_insights.publish.contract import DOCUMENTS, Contract, Meta
 
 
 def open_database(db_path: Path) -> sqlite3.Connection:

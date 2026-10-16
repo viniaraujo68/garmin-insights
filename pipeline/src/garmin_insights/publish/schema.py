@@ -1,7 +1,7 @@
 import json
 
-from passada import config
-from passada.publish.contract import DOCUMENTS
+from garmin_insights import config
+from garmin_insights.publish.contract import DOCUMENTS
 
 SCHEMA_FILE = config.REPO_ROOT / "web" / "src" / "lib" / "data" / "schema.json"
 

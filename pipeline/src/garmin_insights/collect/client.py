@@ -7,7 +7,7 @@ from typing import Any
 
 from garminconnect import Garmin, GarminConnectTooManyRequestsError
 
-from passada import config
+from garmin_insights import config
 
 
 def connect(token_dir: Path = config.TOKEN_DIR) -> Garmin:

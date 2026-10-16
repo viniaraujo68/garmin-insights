@@ -160,7 +160,7 @@
         rowKey={(run) => run.activity_id}
         onRowClick={(run) => goto(resolve("/corridas/[id]", { id: run.activity_id }))}
         label="Corridas"
-        storageKey="passada:runs-table"
+        storageKey="garmin-insights:runs-table"
         sortLabel={(column) => `Ordenar por ${column.label}`}
       />
     </div>

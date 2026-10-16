@@ -1,8 +1,8 @@
 from datetime import date
 
-from passada import config
-from passada.collect.client import RawStore
-from passada.collect.sync import refresh_window_start
+from garmin_insights import config
+from garmin_insights.collect.client import RawStore
+from garmin_insights.collect.sync import refresh_window_start
 
 
 def test_window_starts_at_history_start_on_first_sync(tmp_path):

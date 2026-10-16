@@ -2,9 +2,9 @@ import sqlite3
 from datetime import date, timedelta
 from statistics import median
 
-from passada import config
-from passada.calc.stats import mean, robust_z, rounded
-from passada.publish.contract import (
+from garmin_insights import config
+from garmin_insights.calc.stats import mean, robust_z, rounded
+from garmin_insights.publish.contract import (
     ActivitySummary,
     BaselineTile,
     IllnessSignal,

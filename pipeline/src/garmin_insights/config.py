@@ -5,7 +5,7 @@ from zoneinfo import ZoneInfo
 REPO_ROOT = Path(__file__).resolve().parents[3]
 DATA_DIR = REPO_ROOT / "data"
 RAW_DIR = DATA_DIR / "raw"
-DB_PATH = DATA_DIR / "passada.db"
+DB_PATH = DATA_DIR / "garmin.db"
 SITE_DIR = DATA_DIR / "site"
 TOKEN_DIR = Path.home() / ".garminconnect"
 

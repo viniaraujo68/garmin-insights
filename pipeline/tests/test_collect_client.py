@@ -2,7 +2,7 @@ import json
 
 from garminconnect import GarminConnectTooManyRequestsError
 
-from passada.collect.client import RawStore
+from garmin_insights.collect.client import RawStore
 
 
 def make_store(tmp_path):

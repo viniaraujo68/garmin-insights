@@ -110,7 +110,7 @@
       L.marker(point(index), {
         interactive: false,
         icon: L.divIcon({
-          className: "passada-km",
+          className: "km-label",
           html: String(Math.round(nextKm / 1000)),
           iconSize: [22, 22],
         }),
@@ -259,7 +259,7 @@
     background: var(--color-base-200);
     font: inherit;
   }
-  .map-wrap :global(.passada-km) {
+  .map-wrap :global(.km-label) {
     display: grid;
     place-items: center;
     border-radius: 9999px;
