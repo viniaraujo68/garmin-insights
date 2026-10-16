@@ -180,7 +180,7 @@
           Passe o mouse em qualquer faixa ou no mapa: todas mostram o mesmo ponto.
         </p>
       </div>
-      <MetricLanes streams={data.detail.streams} bind:hover />
+      <MetricLanes streams={data.detail.streams} zones={data.detail.zones} bind:hover />
     </div>
   </section>
 

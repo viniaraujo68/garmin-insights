@@ -21,13 +21,36 @@
   type Period = "4" | "12" | "26" | "52";
   let period = $state<Period>("12");
 
+  const BOUNDS: Record<string, { min?: number; max?: number }> = {
+    sleep_score: { min: 0, max: 100 },
+    readiness_score: { min: 0, max: 100 },
+    body_battery_high: { min: 0, max: 100 },
+    stress_avg: { min: 0, max: 100 },
+    steps: { min: 0 },
+  };
+
   const SLEEP_FEEDBACK: Record<string, string> = {
     NEGATIVE_NOT_RESTORATIVE: "pouco reparador",
     NEGATIVE_NOT_ENOUGH_REM: "pouco REM",
     NEGATIVE_LONG_BUT_NOT_ENOUGH_REM: "longo, mas pouco REM",
+    NEGATIVE_LONG_BUT_NOT_RESTORATIVE: "longo, mas pouco reparador",
+    NEGATIVE_LONG_BUT_DISCONTINUOUS: "longo, mas interrompido",
     NEGATIVE_SHORT: "curto",
+    NEGATIVE_SHORT_AND_NONRECOVERING: "curto e pouco recuperador",
+    NEGATIVE_SHORT_AND_POOR_QUALITY: "curto e de baixa qualidade",
     NEGATIVE_LATE_BED_TIME: "dormiu tarde",
     POSITIVE_LONG_AND_DEEP: "longo e profundo",
+    POSITIVE_LONG_AND_CALM: "longo e tranquilo",
+    POSITIVE_LONG_AND_CONTINUOUS: "longo e contínuo",
+    POSITIVE_LONG_AND_RECOVERING: "longo e recuperador",
+    POSITIVE_LONG_AND_REFRESHING: "longo e revigorante",
+    POSITIVE_SHORT_BUT_DEEP: "curto, mas profundo",
+    POSITIVE_SHORT_BUT_REFRESHING: "curto, mas revigorante",
+    POSITIVE_HIGHLY_RECOVERING: "muito recuperador",
+    POSITIVE_RECOVERING: "recuperador",
+    POSITIVE_REFRESHING: "revigorante",
+    POSITIVE_OPTIMAL_STRUCTURE: "estrutura ideal",
+    POSITIVE_CALM: "tranquilo",
     POSITIVE_DEEP: "profundo",
     POSITIVE_RESTFUL: "reparador",
     POSITIVE_CONTINUOUS: "contínuo",
@@ -160,6 +183,8 @@
             ariaLabel="{trend.label} por dia"
             legend={false}
             zero={false}
+            min={BOUNDS[trend.key]?.min}
+            max={BOUNDS[trend.key]?.max}
             height="h-40"
           />
           <p class="text-xs text-base-content/60">{trend.help}</p>
@@ -221,8 +246,9 @@
               {hours((data.night.night.sleep_h ?? 0) * 3600)} · pontuação {number(
                 data.night.night.score,
               )}
-              {#if data.night.night.feedback}· {SLEEP_FEEDBACK[data.night.night.feedback] ??
-                  data.night.night.feedback.toLowerCase().replaceAll("_", " ")}{/if}
+              {#if data.night.night.feedback && SLEEP_FEEDBACK[data.night.night.feedback]}· {SLEEP_FEEDBACK[
+                  data.night.night.feedback
+                ]}{/if}
             </p>
           </div>
           <div class="w-72 max-w-full">

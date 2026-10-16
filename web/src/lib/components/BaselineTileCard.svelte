@@ -1,9 +1,21 @@
 <script lang="ts">
   import type { BaselineTile } from "$lib/data/types";
-  import Sparkline from "./Sparkline.svelte";
   import StatusText from "./StatusText.svelte";
+  import TileChart from "./TileChart.svelte";
 
   const { tile }: { tile: BaselineTile } = $props();
+
+  const UNIT: Record<string, string> = {
+    hrv: "ms",
+    resting_hr: "bpm",
+    sleep: "pontos",
+    steps: "passos",
+  };
+  const FIXED: Record<string, [number, number]> = {
+    sleep: [0, 100],
+    body_battery: [0, 100],
+    stress: [0, 100],
+  };
 </script>
 
 <article class="card border border-base-content/10 bg-base-100">
@@ -15,10 +27,12 @@
     </div>
     <StatusText status={tile.status} label={tile.status_label} />
     <p class="text-xs text-base-content/60">{tile.baseline_label}</p>
-    <Sparkline
-      values={tile.spark.map((point) => point.value)}
+    <TileChart
+      points={tile.spark}
       bandLow={tile.band_low}
       bandHigh={tile.band_high}
+      unit={UNIT[tile.key] ?? ""}
+      yDomain={FIXED[tile.key] ?? null}
       label="{tile.label} nos últimos 14 dias"
     />
   </div>
