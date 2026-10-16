@@ -3,14 +3,12 @@
   import { SegmentedControl } from "@viniaraujo68/plinth/components";
   import MetricLanes from "$lib/components/MetricLanes.svelte";
   import PageFrame from "$lib/components/PageFrame.svelte";
-  import PrivacyToggle from "$lib/components/PrivacyToggle.svelte";
   import RouteMap from "$lib/components/RouteMap.svelte";
   import SplitsTable from "$lib/components/SplitsTable.svelte";
   import TechniqueGrid from "$lib/components/TechniqueGrid.svelte";
   import ZoneBar from "$lib/components/ZoneBar.svelte";
   import { clock, dayTitle, delta, km, number, pace } from "$lib/format";
   import { labelOf, TRAINING_EFFECT } from "$lib/labels";
-  import { privacySetting } from "$lib/privacy.svelte";
   import { COLOR_BY_OPTIONS, type ColorBy } from "$lib/streams";
 
   const { data } = $props();
@@ -92,15 +90,7 @@
           />
         </div>
         {#if run.has_gps}
-          <RouteMap
-            streams={data.detail.streams}
-            zones={data.detail.zones}
-            {colorBy}
-            privacy={data.privacy}
-            hideHome={privacySetting.hideHome}
-            bind:hover
-          />
-          <PrivacyToggle radius={data.privacy?.radius_m ?? null} />
+          <RouteMap streams={data.detail.streams} zones={data.detail.zones} {colorBy} bind:hover />
         {:else}
           <p class="text-sm text-base-content/70">Corrida sem GPS.</p>
         {/if}

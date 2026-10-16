@@ -2,9 +2,7 @@
   import { SegmentedControl } from "@viniaraujo68/plinth/components";
   import AllRoutesMap, { type RoutesMode } from "$lib/components/AllRoutesMap.svelte";
   import PageFrame from "$lib/components/PageFrame.svelte";
-  import PrivacyToggle from "$lib/components/PrivacyToggle.svelte";
   import { number } from "$lib/format";
-  import { privacySetting } from "$lib/privacy.svelte";
 
   const { data } = $props();
   let mode = $state<RoutesMode>("frequency");
@@ -42,8 +40,7 @@
           size="sm"
         />
       </div>
-      <AllRoutesMap routes={data.routes} {mode} hideHome={privacySetting.hideHome} />
-      <PrivacyToggle radius={data.routes.privacy?.radius_m ?? null} />
+      <AllRoutesMap routes={data.routes} {mode} />
     </div>
   </section>
 </PageFrame>

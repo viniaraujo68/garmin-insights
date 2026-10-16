@@ -100,17 +100,18 @@ test("mapas desenha todas as corridas e troca a cor", async ({ page }) => {
   expect(errors).toEqual([]);
 });
 
-test("esportes explica como registrar quando não há dados", async ({ page }) => {
+test("hoje navega para outros dias", async ({ page }) => {
   const errors = collectErrors(page);
-  await page.goto("/esportes");
-  await expect(page.getByRole("heading", { name: "Futebol" })).toBeVisible();
-  await expect(page.getByRole("heading", { name: "Academia" })).toBeVisible();
-  await expect(page.getByRole("heading", { name: "Tênis" })).toBeVisible();
+  await page.goto("/");
+  await expect(page.getByRole("heading", { name: "Hoje", level: 1 })).toBeVisible();
+  await page.getByRole("link", { name: "← dia anterior" }).click();
+  await expect(page).toHaveURL(/\/dia\/\d{4}-\d{2}-\d{2}$/);
+  await expect(page.getByRole("link", { name: "próximo dia →" })).toBeVisible();
+  await expect(page.getByRole("heading", { level: 1 })).not.toHaveText("Hoje");
+  const response = await page.goto("/dia/2026-09-01");
+  expect(response?.status()).toBe(200);
+  await expect(page.getByText("Prontidão para treinar")).toBeVisible();
   expect(errors).toEqual([]);
-});
-
-test("guia lista as métricas por seção", async ({ page }) => {
-  await page.goto("/guia");
-  await expect(page.getByRole("heading", { name: "Técnica (dinâmica de corrida)" })).toBeVisible();
-  await expect(page.getByText("Regra 80/20")).toBeVisible();
+  const missing = await page.goto("/dia/2020-01-01");
+  expect(missing?.status()).toBe(404);
 });

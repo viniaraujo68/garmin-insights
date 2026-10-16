@@ -11,10 +11,8 @@
   import { interpolate, robustRange } from "$lib/color";
   import type { Routes } from "$lib/data/types";
   import { pace } from "$lib/format";
-  import { isPrivate } from "$lib/geo";
 
-  const { routes, mode, hideHome }: { routes: Routes; mode: RoutesMode; hideHome: boolean } =
-    $props();
+  const { routes, mode }: { routes: Routes; mode: RoutesMode } = $props();
 
   const TILE_URL = "https://tile.openstreetmap.org/{z}/{x}/{y}.png";
   const ATTRIBUTION = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>';
@@ -49,7 +47,6 @@
     const target = map;
     const host = container;
     const chosen = mode;
-    const hidden = hideHome;
     void theme.dark;
     if (!L || !target || !host) return;
     layer?.remove();
@@ -71,12 +68,12 @@
     };
     const bounds: [number, number][] = [];
     for (const route of routes.routes) {
-      const points = route.points.filter(
-        (point) =>
-          point[0] !== null &&
-          point[1] !== null &&
-          !(hidden && isPrivate(routes.privacy, point[0], point[1])),
-      ) as [number, number, number | null, number | null][];
+      const points = route.points.filter((point) => point[0] !== null && point[1] !== null) as [
+        number,
+        number,
+        number | null,
+        number | null,
+      ][];
       bounds.push(...points.map((point) => [point[0], point[1]] as [number, number]));
       if (chosen === "frequency") {
         L.polyline(

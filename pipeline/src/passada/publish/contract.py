@@ -17,6 +17,7 @@ class Meta(Contract):
     last_activity_date: str | None
     activity_count: int
     device: str | None
+    days: list[str]
 
 
 class ActivitySummary(Contract):
@@ -513,7 +514,7 @@ DOCUMENTS: dict[str, type[Contract]] = {
     "meta": Meta,
     "activities": ActivitySummary,
     "activity": ActivityDetail,
-    "today": Today,
+    "day": Today,
     "routes": Routes,
     "performance": Performance,
     "load": Load,

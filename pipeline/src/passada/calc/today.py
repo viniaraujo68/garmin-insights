@@ -339,7 +339,9 @@ def run_km(summaries: list[ActivitySummary], start: date, end: date) -> float:
 
 def signals_of(connection: sqlite3.Connection, summaries: list[ActivitySummary], day: date) -> list[Signal]:
     signals = []
-    load = connection.execute("SELECT * FROM load_daily WHERE acwr IS NOT NULL ORDER BY date DESC LIMIT 1").fetchone()
+    load = connection.execute(
+        "SELECT * FROM load_daily WHERE acwr IS NOT NULL AND date <= ? ORDER BY date DESC LIMIT 1", (str(day),)
+    ).fetchone()
     if load:
         ratio = load["acwr"]
         if ratio < 0.8:
@@ -360,7 +362,7 @@ def signals_of(connection: sqlite3.Connection, summaries: list[ActivitySummary],
         detail=f"média das 4 semanas anteriores: {number(prior, 1)} km",
         status="typical",
     ))
-    runs = [summary for summary in summaries if summary.sport == "run"]
+    runs = [summary for summary in summaries if summary.sport == "run" and summary.date <= str(day)]
     if runs:
         last = runs[-1]
         since = (day - date.fromisoformat(last.date)).days
@@ -389,20 +391,23 @@ def signals_of(connection: sqlite3.Connection, summaries: list[ActivitySummary],
     return signals
 
 
-def training_status_label(connection: sqlite3.Connection) -> str | None:
-    row = connection.execute("SELECT training_status FROM load_daily WHERE training_status IS NOT NULL ORDER BY date DESC LIMIT 1").fetchone()
+def training_status_label(connection: sqlite3.Connection, day: date) -> str | None:
+    row = connection.execute(
+        "SELECT training_status FROM load_daily WHERE training_status IS NOT NULL AND date <= ? ORDER BY date DESC LIMIT 1",
+        (str(day),),
+    ).fetchone()
     if not row:
         return None
     key = row[0].rsplit("_", 1)[0] if row[0].rsplit("_", 1)[-1].isdigit() else row[0]
     return TRAINING_STATUS.get(key, key.replace("_", " ").capitalize())
 
 
-def today_document(connection: sqlite3.Connection, summaries: list[ActivitySummary], day: date) -> Today:
-    days = daily_rows(connection)
+def day_document(connection: sqlite3.Connection, summaries: list[ActivitySummary], days: dict[str, sqlite3.Row], day: date) -> Today:
+    until = [summary for summary in summaries if summary.date <= str(day)]
     return Today(
         date=str(day),
         readiness=readiness_of(days, day),
-        training_status=training_status_label(connection),
+        training_status=training_status_label(connection, day),
         tiles=[
             hrv_tile(days, day),
             resting_hr_tile(days, day),
@@ -414,5 +419,10 @@ def today_document(connection: sqlite3.Connection, summaries: list[ActivitySumma
         illness=illness_watch(days, day),
         week=week_of(summaries, day),
         signals=signals_of(connection, summaries, day),
-        last_activity_id=summaries[-1].activity_id if summaries else None,
+        last_activity_id=until[-1].activity_id if until else None,
     )
+
+
+def day_documents(connection: sqlite3.Connection, summaries: list[ActivitySummary]) -> dict[str, Today]:
+    days = daily_rows(connection)
+    return {day: day_document(connection, summaries, days, date.fromisoformat(day)) for day in days}

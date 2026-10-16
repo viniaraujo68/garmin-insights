@@ -3,13 +3,11 @@
   import { goto } from "$app/navigation";
   import { DataTable, type Column } from "@viniaraujo68/plinth/table";
   import PageFrame from "$lib/components/PageFrame.svelte";
-  import PrivacyToggle from "$lib/components/PrivacyToggle.svelte";
   import RouteThumb from "$lib/components/RouteThumb.svelte";
   import RunExplorer from "$lib/components/RunExplorer.svelte";
   import type { ActivitySummary } from "$lib/data/types";
   import { date, delta, km, number, pace } from "$lib/format";
   import { labelOf, TRAINING_EFFECT } from "$lib/labels";
-  import { privacySetting } from "$lib/privacy.svelte";
 
   const { data } = $props();
 
@@ -127,7 +125,6 @@
           Colorido pelo ritmo de cada trecho: mais escuro é mais rápido.
         </p>
       </div>
-      <PrivacyToggle radius={data.routes.privacy?.radius_m ?? null} />
     </div>
     <ul class="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
       {#each runs as run (run.activity_id)}
@@ -138,11 +135,7 @@
             class="card block border border-base-content/10 bg-base-100 p-3 transition-colors hover:border-primary/50"
           >
             {#if route}
-              <RouteThumb
-                {route}
-                privacy={data.routes.privacy}
-                hideHome={privacySetting.hideHome}
-              />
+              <RouteThumb {route} />
             {:else}
               <div class="grid aspect-[4/3] place-items-center text-xs text-base-content/40">
                 sem GPS

@@ -4,24 +4,19 @@
   import { onMount } from "svelte";
   import { getThemeContext } from "@viniaraujo68/plinth/theme";
   import { readChartColors } from "$lib/charts/theme";
-  import type { Privacy, Streams, ZoneTime } from "$lib/data/types";
+  import type { Streams, ZoneTime } from "$lib/data/types";
   import { pace } from "$lib/format";
-  import { isPrivate } from "$lib/geo";
   import { colorScale, type ColorBy, type ColorScale } from "$lib/streams";
 
   let {
     streams,
     zones,
     colorBy,
-    privacy,
-    hideHome,
     hover = $bindable(null),
   }: {
     streams: Streams;
     zones: ZoneTime[];
     colorBy: ColorBy;
-    privacy: Privacy | null;
-    hideHome: boolean;
     hover?: number | null;
   } = $props();
 
@@ -38,7 +33,6 @@
   let scale = $state<ColorScale>();
   let visible: number[] = [];
   let fittedFor: Streams | undefined;
-  let fittedHidden: boolean | undefined;
 
   onMount(() => {
     let disposed = false;
@@ -62,7 +56,6 @@
     const target = map;
     const host = container;
     const by = colorBy;
-    const hidden = hideHome;
     void theme.dark;
     if (!L || !target || !host) return;
 
@@ -75,13 +68,7 @@
       .filter((index) => {
         const lat = streams.lat[index];
         const lon = streams.lon[index];
-        return (
-          lat !== null &&
-          lat !== undefined &&
-          lon !== null &&
-          lon !== undefined &&
-          !(hidden && isPrivate(privacy, lat, lon))
-        );
+        return lat !== null && lat !== undefined && lon !== null && lon !== undefined;
       });
     const layer = L.layerGroup().addTo(target);
     const point = (index: number): [number, number] => [
@@ -132,7 +119,7 @@
     }
     const first = visible[0];
     const last = visible[visible.length - 1];
-    if (!hidden && first !== undefined && last !== undefined) {
+    if (first !== undefined && last !== undefined) {
       L.circleMarker(point(first), {
         radius: 7,
         color: outline,
@@ -158,10 +145,9 @@
       fillOpacity: 1,
       interactive: false,
     });
-    if (visible.length && (fittedFor !== streams || fittedHidden !== hidden)) {
+    if (visible.length && fittedFor !== streams) {
       target.fitBounds(L.latLngBounds(visible.map(point)), { padding: [24, 24] });
       fittedFor = streams;
-      fittedHidden = hidden;
     }
     routeLayer = layer;
 

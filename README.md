@@ -42,15 +42,13 @@ revisados pela Garmin depois) e completa o que faltar. Cada resposta da Garmin v
 
 | Rota | O que responde |
 |---|---|
-| `/` Hoje | Prontidão e o que pesou, cards comparados à sua média, alerta de doença, semana e alertas de carga |
+| `/` Hoje e `/dia/[data]` | Prontidão e o que pesou, cards comparados à sua média, alerta de doença, semana e alertas de carga, para o dia mais recente ou qualquer dia anterior |
 | `/corridas` | Explorador de corridas por qualquer métrica, galeria de percursos e tabela |
 | `/corridas/[id]` | Mapa colorido por pace, FC, zona ou inclinação, curvas sincronizadas, splits, zonas, clima e técnica |
 | `/evolucao` | Eficiência com e sem o calor, VO2max, previsões de prova, técnica no mesmo ritmo, recordes e idade fitness |
 | `/carga` | Carga aguda na faixa ótima, condicionamento/fadiga/frescor, 80/20, minutos por esporte, foco, monotonia e calendário |
 | `/recuperacao` | Tendências com a sua faixa normal, fases e regularidade do sono, hipnograma por noite e mês num relance |
 | `/mapas` | Todas as corridas sobrepostas por frequência, pace ou FC |
-| `/esportes` | Futebol (piques e posições), academia (mapa muscular e 1RM) e quilometragem dos tênis |
-| `/guia` | O que cada métrica significa e as faixas de referência |
 
 ## Pastas
 
@@ -79,5 +77,9 @@ Um teste do pipeline falha se o esquema do site estiver desatualizado.
 ## Privacidade
 
 Tudo fica na sua máquina: `data/` não entra no git e o token da Garmin fica em
-`~/.garminconnect`. Os percursos GPS revelam onde você mora; o site tem uma zona de
-privacidade para esconder o início e o fim das corridas em prints.
+`~/.garminconnect`. Os percursos GPS revelam onde você mora: o pipeline já detecta essa
+região (`routes.json` → `privacy`) para quando o site for publicado, mas a versão local
+mostra os percursos inteiros.
+
+Futebol, academia e tênis já são calculados pelo pipeline (`sports.json`); a página deles
+volta quando houver atividades registradas.

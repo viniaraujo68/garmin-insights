@@ -1,13 +1,8 @@
 <script lang="ts">
-  import type { Privacy, RouteTrace } from "$lib/data/types";
+  import type { RouteTrace } from "$lib/data/types";
   import { robustRange } from "$lib/color";
-  import { isPrivate } from "$lib/geo";
 
-  const {
-    route,
-    privacy,
-    hideHome,
-  }: { route: RouteTrace; privacy: Privacy | null; hideHome: boolean } = $props();
+  const { route }: { route: RouteTrace } = $props();
 
   const WIDTH = 160;
   const HEIGHT = 120;
@@ -40,7 +35,6 @@
       const previous = projected[index];
       const point = points[index + 1];
       if (!previous || !point) return [];
-      if (hideHome && isPrivate(privacy, point[0], point[1])) return [];
       const pct = Math.min(100, Math.max(0, mix(point[2])));
       return [
         {

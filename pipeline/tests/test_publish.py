@@ -41,3 +41,20 @@ def test_verify_rejects_a_count_mismatch(site):
     (site / "meta.json").write_text(json.dumps(meta))
     with pytest.raises(ValueError):
         verify_site(site)
+
+
+def test_each_day_gets_a_briefing_that_ignores_later_activities(tmp_path):
+    from builders import write
+
+    raw = make_raw(tmp_path)
+    write(raw / "daily/2026-10-12/stats.json", {"totalSteps": 4000, "dailyStepGoal": 5000})
+    db_path = tmp_path / "passada.db"
+    build_database(raw, db_path)
+    site_dir = tmp_path / "site"
+    publish_site(db_path, site_dir, date(2026, 10, 15))
+    meta = json.loads((site_dir / "meta.json").read_text())
+    assert meta["days"] == ["2026-10-12", "2026-10-13"]
+    before = json.loads((site_dir / "day" / "2026-10-12.json").read_text())
+    after = json.loads((site_dir / "day" / "2026-10-13.json").read_text())
+    assert before["last_activity_id"] is None
+    assert after["last_activity_id"] == "1001"

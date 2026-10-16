@@ -12,7 +12,7 @@ from passada.calc.load import load_document
 from passada.calc.performance import performance_document
 from passada.calc.recovery import recovery_document, sleep_nights
 from passada.calc.sports import sports_document
-from passada.calc.today import today_document
+from passada.calc.today import day_documents
 from passada.publish.contract import DOCUMENTS, Contract, Meta
 
 
@@ -43,6 +43,7 @@ def build_meta(connection: sqlite3.Connection, today: date, activity_count: int)
         last_activity_date=last_activity,
         activity_count=activity_count,
         device=json.loads(device[0]) if device and device[0] else None,
+        days=[row[0] for row in connection.execute("SELECT date FROM daily ORDER BY date")],
     )
 
 
@@ -69,6 +70,9 @@ def verify_site(site_dir: Path) -> None:
     missing = [item["activity_id"] for item in activities if not (site_dir / "activity" / f"{item['activity_id']}.json").exists()]
     if missing:
         raise ValueError(f"activities without a detail file: {missing}")
+    missing_days = [day for day in meta.days if not (site_dir / "day" / f"{day}.json").exists()]
+    if missing_days:
+        raise ValueError(f"days without a briefing file: {missing_days}")
     if (site_dir / "recovery.json").exists():
         nights = json.loads((site_dir / "recovery.json").read_text())["nights"]
         lost = [night["date"] for night in nights if not (site_dir / "sleep" / f"{night['date']}.json").exists()]
@@ -92,7 +96,6 @@ def publish_site(db_path: Path, site_dir: Path, today: date) -> dict[str, int]:
         documents: dict[str, BaseModel | list] = {
             "meta": build_meta(connection, today, len(activities)),
             "activities": activities,
-            "today": today_document(connection, activities, today),
             "routes": routes_document(activities, samples),
             "performance": performance_document(connection, activities, today),
             "load": load_document(connection, activities, today),
@@ -101,6 +104,8 @@ def publish_site(db_path: Path, site_dir: Path, today: date) -> dict[str, int]:
         }
         for activity_id, detail in activity_details(connection, activities, samples).items():
             documents[f"activity/{activity_id}"] = detail
+        for day, briefing in day_documents(connection, activities).items():
+            documents[f"day/{day}"] = briefing
         for night_date, night in sleep_nights(connection).items():
             documents[f"sleep/{night_date}"] = night
     finally:
