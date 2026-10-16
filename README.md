@@ -17,6 +17,17 @@ Pré-requisitos: [uv](https://docs.astral.sh/uv/), Node 22+ e um login da Garmin
 `~/.garminconnect` (o mesmo token do MCP do Garmin; para gerar, rode
 `uvx --python 3.12 --from git+https://github.com/Taxuspt/garmin_mcp garmin-mcp-auth` num terminal).
 
+No dia a dia, um comando só sincroniza com a Garmin e sobe o site em http://localhost:5173:
+
+```bash
+./passada.sh
+```
+
+Se o site já estiver no ar, ele só atualiza os dados (basta recarregar a página). Para subir sem
+sincronizar, mude `SYNC=false` no topo do script.
+
+Para desenvolver:
+
 ```bash
 cd pipeline
 uv run --frozen pytest -q
