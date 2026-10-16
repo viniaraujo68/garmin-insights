@@ -2,10 +2,10 @@ from datetime import date, timedelta
 
 import pytest
 
-from passada.calc.load import verdict, weeks_of
+from passada.calc.load import easy_line, load_verdict, verdict, weeks_of
 from passada.calc.performance import form_metrics, riegel
 from passada.calc.trend import projection, theil_sen
-from passada.publish.contract import ActivitySummary
+from passada.publish.contract import ActivitySummary, LoadDay
 
 
 def summary(day: str, **values) -> ActivitySummary:
@@ -62,3 +62,38 @@ def test_form_compares_recent_runs_at_the_same_pace():
     assert contact.verdict.endswith("melhorou.")
     cadence = next(metric for metric in form_metrics(earlier + recent, today) if metric.key == "cadence")
     assert "melhorou" not in cadence.verdict and "piorou" not in cadence.verdict
+
+
+def test_form_adjusts_each_run_to_the_reference_speed():
+    today = date(2026, 10, 15)
+    runs = [summary(str(today - timedelta(days=n)), pace_s_km=pace, cadence=cadence) for n, (pace, cadence) in enumerate([(400, 150.0), (360, 155.0), (300, 165.0)])]
+    cadence = next(metric for metric in form_metrics(runs, today) if metric.key == "cadence")
+    assert cadence.reference_speed_kmh == 10.0
+    assert [point.adjusted for point in cadence.points] == pytest.approx([155.0, 155.0, 155.0], abs=0.1)
+    assert [point.date for point in cadence.points] == sorted(point.date for point in cadence.points)
+    assert cadence.lower_is_better is False
+
+
+def load_day(acute: float | None, low: float | None = 100.0, high: float | None = 200.0) -> LoadDay:
+    return LoadDay(date="2026-10-15", daily_load=0.0, acute=acute, chronic=150.0, chronic_min=low, chronic_max=high, acwr=None, fitness=0.0, fatigue=0.0, form=0.0)
+
+
+def test_load_verdict_counts_typical_runs_to_reach_the_band():
+    status, headline, detail = load_verdict([load_day(40.0)], typical=25.0)
+    assert status == "attention" and "menos" in headline
+    assert "Cerca de 3 corridas" in detail
+    assert load_verdict([load_day(150.0)], typical=25.0)[0] == "good"
+    assert load_verdict([load_day(260.0)], typical=25.0)[0] == "bad"
+    assert load_verdict([load_day(None)], typical=25.0)[0] == "unknown"
+
+
+def test_easy_line_sums_the_last_four_calendar_weeks():
+    runs = [
+        summary("2026-09-01", zone_minutes=[0.0, 0.0, 0.0, 40.0, 0.0]),
+        summary("2026-10-06", zone_minutes=[0.0, 30.0, 10.0, 0.0, 0.0]),
+        summary("2026-10-13", zone_minutes=[0.0, 30.0, 10.0, 0.0, 0.0]),
+    ]
+    weeks = weeks_of(runs, {}, date(2026, 8, 31), date(2026, 10, 14))
+    line = easy_line(weeks)
+    assert line is not None and line.startswith("Nas últimas 4 semanas, 75%")
+

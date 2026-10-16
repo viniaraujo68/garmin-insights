@@ -1,6 +1,7 @@
 import json
 import sqlite3
 from datetime import date, timedelta
+from statistics import median
 
 from passada.calc.stats import mean, rounded
 from passada.calc.trend import linear_fit, ordinal, projection, theil_sen, trend_per_30_days
@@ -20,6 +21,8 @@ from passada.publish.contract import (
 
 FORM_WINDOW_DAYS = 42
 FORM_MIN_RUNS = 3
+FORM_CURRENT_RUNS = 3
+FORM_SPEED_STEP_KMH = 0.5
 RIEGEL_EXPONENT = 1.06
 PROJECTION_HORIZONS = (30, 90)
 RACES = (("5K", "5 km", 5.0), ("10K", "10 km", 10.0), ("21K", "Meia maratona", 21.0975), ("42K", "Maratona", 42.195))
@@ -39,7 +42,7 @@ RECORD_TYPES = {
 }
 RECORD_TO_RACE = {3: "5K", 4: "10K", 5: "21K", 6: "42K"}
 FORM_METRICS = (
-    ("cadence", "Cadência", "ppm", 0, None),
+    ("cadence", "Cadência", "ppm", 0, False),
     ("stride_m", "Passada", "m", 2, None),
     ("ground_contact_ms", "Contato com o solo", "ms", 0, True),
     ("vertical_oscillation_cm", "Oscilação vertical", "cm", 1, True),
@@ -149,34 +152,51 @@ def races(connection: sqlite3.Connection, records: list[RecordRow]) -> list[Race
     return result
 
 
+def reference_speed(speeds: list[float]) -> float | None:
+    if not speeds:
+        return None
+    return round(median(speeds) / FORM_SPEED_STEP_KMH) * FORM_SPEED_STEP_KMH
+
+
+def at_reference(fit: tuple[float, float] | None, reference: float | None, speed: float, value: float, digits: int) -> float | None:
+    if fit is None or reference is None:
+        return None
+    return round(value - fit[0] * (speed - reference), digits + 1)
+
+
 def form_metrics(runs: list[ActivitySummary], today: date) -> list[FormMetric]:
     cutoff = str(today - timedelta(days=FORM_WINDOW_DAYS))
     metrics = []
     for key, label, unit, digits, lower_is_better in FORM_METRICS:
         usable = [run for run in runs if getattr(run, key) is not None and run.pace_s_km]
-        points = [
-            FormPoint(date=run.date, speed_kmh=round(3600 / run.pace_s_km, 2), value=getattr(run, key), recent=run.date > cutoff)
-            for run in usable
-        ]
-        fit = linear_fit([point.speed_kmh for point in points], [point.value for point in points])
+        speeds = [round(3600 / run.pace_s_km, 2) for run in usable]
+        values = [getattr(run, key) for run in usable]
+        fit = linear_fit(speeds, values)
+        reference = reference_speed(speeds)
+        points = sorted(
+            (
+                FormPoint(date=run.date, speed_kmh=speed, value=value, adjusted=at_reference(fit, reference, speed, value, digits), recent=run.date > cutoff)
+                for run, speed, value in zip(usable, speeds, values)
+            ),
+            key=lambda point: point.date,
+        )
         recent = [point for point in points if point.recent]
         earlier = [point for point in points if not point.recent]
         delta = None
-        verdict = f"Precisa de {FORM_MIN_RUNS} corridas antes e {FORM_MIN_RUNS} nas últimas {FORM_WINDOW_DAYS // 7} semanas."
+        verdict = f"Precisa de {FORM_MIN_RUNS} corridas antes e {FORM_MIN_RUNS} nas últimas {FORM_WINDOW_DAYS // 7} semanas para comparar."
         if fit is not None and len(recent) >= FORM_MIN_RUNS and len(earlier) >= FORM_MIN_RUNS:
-            slope, intercept = fit
-            residual = lambda point: point.value - (slope * point.speed_kmh + intercept)
-            delta = mean([residual(point) for point in recent]) - mean([residual(point) for point in earlier])
+            delta = mean([point.adjusted for point in recent]) - mean([point.adjusted for point in earlier])
             magnitude = f"{abs(delta):.{digits}f}".replace(".", ",")
             if round(delta, digits) == 0:
-                verdict = "Igual ao período anterior, no mesmo ritmo."
+                verdict = "Igual às semanas anteriores."
             else:
                 direction = "menos" if delta < 0 else "mais"
-                verdict = f"{magnitude} {unit} a {direction} no mesmo ritmo que antes"
+                verdict = f"{magnitude} {unit} a {direction} que nas semanas anteriores"
                 if lower_is_better is None:
                     verdict += "."
                 else:
                     verdict += f": {'melhorou' if (delta < 0) == lower_is_better else 'piorou'}."
+        latest = [point.adjusted for point in points[-FORM_CURRENT_RUNS:] if point.adjusted is not None]
         metrics.append(FormMetric(
             key=key,
             label=label,
@@ -189,6 +209,8 @@ def form_metrics(runs: list[ActivitySummary], today: date) -> list[FormMetric]:
             verdict=verdict,
             fit_slope=None if fit is None else round(fit[0], 4),
             fit_intercept=None if fit is None else round(fit[1], 4),
+            reference_speed_kmh=reference,
+            current=rounded(mean(latest), digits + 1) if latest else None,
             points=points,
         ))
     return metrics

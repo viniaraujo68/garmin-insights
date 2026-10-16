@@ -197,16 +197,17 @@
 
   <section class="flex flex-col gap-3" aria-labelledby="forma">
     <div>
-      <h2 id="forma" class="text-base font-semibold">Técnica no mesmo ritmo</h2>
+      <h2 id="forma" class="text-base font-semibold">Técnica</h2>
       <p class="text-xs text-base-content/70">
-        Correr mais rápido muda todas as métricas de técnica, então cada uma é comparada pela reta
-        da velocidade: o que mudou nas últimas {performance.form_window_days / 7} semanas em relação a
-        antes, no mesmo ritmo.
+        Cada ponto é uma corrida. Como correr mais rápido muda todas essas medidas, o valor de cada
+        corrida é ajustado para o mesmo ritmo, e assim treinos rápidos e lentos ficam comparáveis. A
+        faixa verde é a média dos corredores, segundo a Garmin. A comparação é entre as últimas {performance.form_window_days /
+          7} semanas e as anteriores.
       </p>
     </div>
     <div class="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
       {#each performance.form as metric (metric.key)}
-        <FormPanel {metric} windowDays={performance.form_window_days} />
+        <FormPanel {metric} />
       {/each}
     </div>
   </section>

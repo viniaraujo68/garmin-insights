@@ -57,3 +57,17 @@ dados até a última sincronização do relógio com o Garmin e do pipeline.
 
 Minutos por esporte e calendário de treinos saíram da Carga (2026-10-16): sem futebol e academia
 gravados no relógio, não diziam nada. Os campos continuam no `load.json` para quando voltarem.
+
+## Carga e técnica simplificadas (2026-10-16)
+
+A Carga virou uma resposta: um veredito em texto a partir da carga aguda da Garmin contra a faixa
+recomendada, com quantas corridas típicas (mediana da carga das corridas de 8 semanas) faltam
+para voltar a ela. Condicionamento/fadiga/frescor e monotonia/tensão saíram da tela porque não
+estabilizam com 2–3 treinos por semana; o foco de carga da Garmin saiu porque contradizia a
+conta de % leve (a Garmin classifica pelo efeito de treino, não pelas zonas). Os campos continuam
+no `load.json`.
+
+A técnica deixou de ser um gráfico contra a velocidade. Cada corrida é ajustada para o ritmo
+mediano (arredondado a 0,5 km/h) pela reta da velocidade e plotada no tempo, com o sentido do
+que é melhor e a faixa média dos corredores da Garmin ao fundo. Cadência passou a contar como
+"maior é melhor"; passada continua sem melhor ou pior.

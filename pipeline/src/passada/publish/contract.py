@@ -259,6 +259,7 @@ class FormPoint(Contract):
     date: str
     speed_kmh: float
     value: float
+    adjusted: float | None
     recent: bool
 
 
@@ -274,6 +275,8 @@ class FormMetric(Contract):
     verdict: str
     fit_slope: float | None
     fit_intercept: float | None
+    reference_speed_kmh: float | None
+    current: float | None
     points: list[FormPoint]
 
 
@@ -357,7 +360,15 @@ class CalendarDay(Contract):
     sports: list[str]
 
 
+class LoadSummary(Contract):
+    status: Status
+    headline: str
+    detail: str
+    easy_line: str | None
+
+
 class Load(Contract):
+    summary: LoadSummary
     days: list[LoadDay]
     weeks: list[WeekLoad]
     focus: list[FocusRow]

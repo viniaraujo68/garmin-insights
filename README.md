@@ -56,8 +56,8 @@ revisados pela Garmin depois) e completa o que faltar. Cada resposta da Garmin v
 | `/` Hoje e `/dia/[data]` | Prontidão e o que pesou, cards comparados à sua média, o dia em detalhe (FC, estresse, Body Battery e passos da meia-noite à meia-noite, com sono e atividades), alerta de doença, semana e alertas de carga, para o dia mais recente ou qualquer dia anterior |
 | `/corridas` | Explorador de corridas por qualquer métrica, galeria de percursos e tabela |
 | `/corridas/[id]` | Mapa colorido por pace, FC, zona ou inclinação, curvas sincronizadas, splits, zonas, clima e técnica |
-| `/evolucao` | Eficiência com e sem o calor, VO2max, previsões de prova, técnica no mesmo ritmo, recordes e idade fitness |
-| `/carga` | Carga aguda na faixa ótima, condicionamento/fadiga/frescor, 80/20, foco e monotonia |
+| `/evolucao` | Eficiência com e sem o calor, VO2max, previsões de prova, técnica corrida a corrida (ajustada para o mesmo ritmo, com o que é melhor e a média dos corredores), recordes e idade fitness |
+| `/carga` | Veredito em texto (treinando de menos, na medida ou demais), km por semana, % leve por semana e a carga dos últimos 7 dias contra a faixa recomendada |
 | `/recuperacao` | Tendências com a sua faixa normal, fases e regularidade do sono, hipnograma por noite e mês num relance |
 | `/mapas` | Todas as corridas sobrepostas por frequência, pace ou FC |
 

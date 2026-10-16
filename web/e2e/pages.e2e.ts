@@ -65,18 +65,20 @@ test("evolução mostra eficiência, provas e técnica", async ({ page }) => {
   await page.goto("/evolucao");
   await expect(page.getByRole("heading", { name: "Metros por batimento" })).toBeVisible();
   await expect(page.getByRole("heading", { name: "Previsões de prova" })).toBeVisible();
-  await expect(page.getByRole("heading", { name: "Técnica no mesmo ritmo" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Técnica", exact: true })).toBeVisible();
+  await expect(page.getByText("↓ menor é melhor").first()).toBeVisible();
   await page.getByRole("button", { name: "Como medido", exact: true }).click();
   await expect(page.getByRole("img", { name: "Eficiência por corrida" })).toBeVisible();
   expect(errors).toEqual([]);
 });
 
-test("carga mostra faixa ótima, frescor e intensidade", async ({ page }) => {
+test("carga mostra o veredito, o volume e a faixa", async ({ page }) => {
   const errors = collectErrors(page);
   await page.goto("/carga");
-  await expect(page.getByRole("heading", { name: "Carga aguda e a faixa ótima" })).toBeVisible();
-  await expect(page.getByRole("heading", { name: "Leve × forte por semana" })).toBeVisible();
-  expect(await page.locator("canvas").count()).toBeGreaterThanOrEqual(5);
+  await expect(page.getByTestId("load-summary").getByRole("heading", { level: 2 })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Quilômetros por semana" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Carga dos últimos 7 dias" })).toBeVisible();
+  expect(await page.locator("canvas").count()).toBe(3);
   expect(errors).toEqual([]);
 });
 
