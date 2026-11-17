@@ -19,16 +19,16 @@
   const STAGES = ["awake", "rem", "light", "deep"] as const;
   type Stage = (typeof STAGES)[number];
   const STAGE_LABEL: Record<Stage, string> = {
-    awake: "Acordado",
+    awake: "Awake",
     rem: "REM",
-    light: "Leve",
-    deep: "Profundo",
+    light: "Light",
+    deep: "Deep",
   };
   const STAGE_SHORT: Record<Stage, string> = {
-    awake: "acord.",
+    awake: "awake",
     rem: "REM",
-    light: "leve",
-    deep: "prof.",
+    light: "light",
+    deep: "deep",
   };
   const STAGE_COLOR: Record<Stage, string> = {
     awake: seriesVar(3),
@@ -65,15 +65,15 @@
   const toPoints = (series: SleepSeriesPoint[]): LanePoint[] =>
     series.map((point) => ({ x: point.ts_ms, y: point.value }));
   const stressBands: LaneReference[] = [
-    { y: 25, label: "descanso" },
-    { y: 50, label: "baixo" },
-    { y: 75, label: "médio" },
+    { y: 25, label: "rest" },
+    { y: 50, label: "low" },
+    { y: 75, label: "medium" },
   ];
   const lanes = $derived(
     [
       {
         key: "hr",
-        label: "FC",
+        label: "HR",
         unit: "bpm",
         points: toPoints(night.hr),
         color: "var(--series-8)",
@@ -82,7 +82,7 @@
       },
       {
         key: "hrv",
-        label: "VFC",
+        label: "HRV",
         unit: "ms",
         points: toPoints(night.hrv),
         color: "var(--series-1)",
@@ -100,7 +100,7 @@
       },
       {
         key: "stress",
-        label: "Estresse",
+        label: "Stress",
         unit: "0–100",
         points: toPoints(night.stress),
         color: "var(--series-4)",
@@ -140,10 +140,10 @@
 
     <div class="grid grid-cols-[7.5rem_1fr] items-start gap-2 sm:grid-cols-[10rem_1fr]">
       <div class="min-w-0 pt-1 text-xs">
-        <p class="text-base-content/70">Fase</p>
+        <p class="text-base-content/70">Stage</p>
         <p class="text-sm font-semibold">{hoverStage ? STAGE_LABEL[hoverStage] : "—"}</p>
         <p class="text-base-content/50 tabular-nums">
-          {hover === null ? "passe o mouse" : clockLabel(hover)}
+          {hover === null ? "hover to inspect" : clockLabel(hover)}
         </p>
       </div>
       <div bind:clientWidth={width} class="w-full">
@@ -152,7 +152,7 @@
           height={STAGE_HEIGHT}
           class="block touch-none select-none"
           role="img"
-          aria-label="Fases do sono ao longo da noite"
+          aria-label="Sleep stages over the night"
           onpointermove={onMove}
           onpointerleave={() => (hover = null)}
         >
@@ -222,8 +222,8 @@
           style:padding-left="{LEFT}px"
           style:padding-right="{RIGHT}px"
         >
-          <span>dormiu {clockLabel(start)}</span>
-          <span>acordou {clockLabel(end)}</span>
+          <span>asleep {clockLabel(start)}</span>
+          <span>woke {clockLabel(end)}</span>
         </div>
       </div>
     </div>
@@ -242,7 +242,7 @@
               )}{:else if hover === null && mean !== null}{number(mean)}{:else}—{/if}
           </p>
           <p class="text-base-content/50">
-            {hover === null ? "média da noite" : clockLabel(hover)}
+            {hover === null ? "night average" : clockLabel(hover)}
           </p>
         </div>
         <LaneChart
@@ -251,7 +251,7 @@
           xTicks={ticks}
           format={(value) => number(value)}
           color={lane.color}
-          label="{lane.label} durante o sono"
+          label="{lane.label} during sleep"
           yDomain={lane.yDomain}
           references={lane.references}
           showXLabels={index === lanes.length - 1}
@@ -261,5 +261,5 @@
     {/each}
   </div>
 {:else}
-  <p class="text-sm text-base-content/70">Sem fases registradas nesta noite.</p>
+  <p class="text-sm text-base-content/70">No sleep stages recorded for this night.</p>
 {/if}

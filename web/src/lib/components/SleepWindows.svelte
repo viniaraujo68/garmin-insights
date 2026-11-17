@@ -26,7 +26,7 @@
   const y = (minutes: number): number =>
     TOP +
     ((Math.min(END, Math.max(START, minutes)) - START) / (END - START)) * (HEIGHT - TOP - BOTTOM);
-  const label = (hour: number): string => `${String(hour % 24).padStart(2, "0")}h`;
+  const label = (hour: number): string => `${String(hour % 24).padStart(2, "0")}:00`;
   const tone = (score: number | null): string => {
     if (score === null) return "var(--color-base-300)";
     const pct = Math.round(Math.min(100, Math.max(0, ((score - 40) / 50) * 100)));
@@ -35,7 +35,7 @@
 </script>
 
 <div class="overflow-x-auto" bind:clientWidth={available}>
-  <svg {width} height={HEIGHT} role="img" aria-label="Horário de dormir e acordar por noite">
+  <svg {width} height={HEIGHT} role="img" aria-label="Bedtime and wake time per night">
     {#each TICKS as hour (hour)}
       <line
         x1={LEFT}
@@ -58,7 +58,7 @@
         style:fill={tone(night.score)}
       >
         <title
-          >{dayMonth(night.date)}: dormiu {night.bedtime}, acordou {night.wake_time} · pontuação {night.score ??
+          >{dayMonth(night.date)}: slept {night.bedtime}, woke {night.wake_time} · score {night.score ??
             "—"}</title
         >
       </rect>

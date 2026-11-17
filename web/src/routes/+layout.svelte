@@ -26,33 +26,33 @@
   setRoutingContext(new RoutingContext(routes, page));
 
   const THEME_LABELS: Record<ThemePreference, string> = {
-    system: "Sistema",
-    light: "Claro",
-    dark: "Escuro",
+    system: "System",
+    light: "Light",
+    dark: "Dark",
   };
 
   const themePreferenceLabel = (preference: ThemePreference): string => THEME_LABELS[preference];
 
   const themeLabel = (current: ThemePreference, next: ThemePreference): string =>
-    `Tema: ${THEME_LABELS[current]}. Mudar para ${THEME_LABELS[next]}.`;
+    `Theme: ${THEME_LABELS[current]}. Switch to ${THEME_LABELS[next]}.`;
 </script>
 
 <ThemeController />
 
 <a
-  href="#conteudo"
+  href="#content"
   class="btn sr-only btn-primary btn-sm focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50"
 >
-  Pular para o conteúdo
+  Skip to content
 </a>
 
 <div class="h-dvh">
   <AppShell
-    navLabel="Navegação principal"
-    collapseLabel="Recolher menu"
-    moreLabel="Mais"
-    closeLabel="Fechar"
-    logoutLabel="Sair"
+    navLabel="Main navigation"
+    collapseLabel="Collapse menu"
+    moreLabel="More"
+    closeLabel="Close"
+    logoutLabel="Log out"
   >
     {#snippet brand({ collapsed }: { collapsed: boolean })}
       <span class="text-lg font-bold tracking-tight">{collapsed ? "G" : "garmin insights"}</span>

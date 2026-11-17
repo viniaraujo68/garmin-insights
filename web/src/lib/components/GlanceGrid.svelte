@@ -17,7 +17,7 @@
   <table class="w-full border-separate border-spacing-1 text-xs tabular-nums">
     <thead>
       <tr>
-        <th class="text-left font-medium text-base-content/60">Dia</th>
+        <th class="text-left font-medium text-base-content/60">Day</th>
         {#each labels as label (label)}<th class="font-medium text-base-content/60">{label}</th
           >{/each}
       </tr>
@@ -27,14 +27,14 @@
         <tr>
           <th class="text-left font-normal whitespace-nowrap">
             <span class="text-base-content/60">{weekdayShort(day.date)}</span>
-            {dayMonth(day.date)}{day.date === today ? " (parcial)" : ""}
+            {dayMonth(day.date)}{day.date === today ? " (partial)" : ""}
           </th>
           {#each day.cells as cell (cell.key)}
             <td
               class={["rounded-field px-2 py-1 text-center", TONE[cell.status]]}
               title={cell.z === null
-                ? "sem referência"
-                : `${cell.z > 0 ? "+" : ""}${String(cell.z).replace(".", ",")} desvios do seu normal`}
+                ? "no reference"
+                : `${cell.z > 0 ? "+" : ""}${cell.z} standard deviations from your normal`}
               >{cell.display}</td
             >
           {/each}

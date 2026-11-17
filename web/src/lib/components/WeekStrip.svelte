@@ -23,7 +23,7 @@
       {#each day.activities as activity (activity.activity_id)}
         <a
           href={activity.sport === "run"
-            ? resolve("/corridas/[id]", { id: activity.activity_id })
+            ? resolve("/runs/[id]", { id: activity.activity_id })
             : undefined}
           class="block rounded-field px-1.5 py-1 text-[11px] leading-tight text-white"
           style:background={SPORT_VAR[activity.sport] ?? SPORT_VAR["other"]}
@@ -38,9 +38,8 @@
         </a>
       {:else}
         <span class="mt-auto text-[11px] text-base-content/30"
-          ><span class="hidden sm:inline">descanso</span><span
-            class="sm:hidden"
-            aria-label="descanso">—</span
+          ><span class="hidden sm:inline">rest</span><span class="sm:hidden" aria-label="rest"
+            >—</span
           ></span
         >
       {/each}

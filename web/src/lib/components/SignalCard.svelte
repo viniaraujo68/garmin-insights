@@ -7,9 +7,9 @@
   const STATUS_LABEL: Record<string, string> = {
     good: "ok",
     typical: "normal",
-    attention: "atenção",
-    bad: "risco",
-    unknown: "sem dado",
+    attention: "attention",
+    bad: "risk",
+    unknown: "no data",
   };
 </script>
 

@@ -11,8 +11,8 @@
   });
   const deltaText = $derived(
     race.delta_8w_seconds === null
-      ? "sem histórico de 8 semanas"
-      : `${race.delta_8w_seconds < 0 ? "−" : "+"}${clock(Math.abs(race.delta_8w_seconds))} em 8 semanas`,
+      ? "no 8-week history"
+      : `${race.delta_8w_seconds < 0 ? "−" : "+"}${clock(Math.abs(race.delta_8w_seconds))} over 8 weeks`,
   );
 </script>
 
@@ -28,26 +28,26 @@
     <p class={["text-xs tabular-nums", tone]}>{deltaText}</p>
     <TimeChart
       series={[
-        { label: "Previsão", points: race.series, slot: 0 },
+        { label: "Prediction", points: race.series, slot: 0 },
         ...(race.projection
-          ? [{ label: "Projeção", points: race.projection, slot: 0, dashed: true }]
+          ? [{ label: "Projection", points: race.projection, slot: 0, dashed: true }]
           : []),
       ]}
       format={(value) => clock(value)}
       reverse
       legend={false}
       height="h-32"
-      ariaLabel="Previsão de {race.label} ao longo do tempo"
+      ariaLabel="{race.label} prediction over time"
     />
     <dl class="grid grid-cols-2 gap-1 text-xs text-base-content/70">
       <div>
-        <dt>Seu recorde</dt>
+        <dt>Your record</dt>
         <dd class="font-semibold text-base-content tabular-nums">
           {race.record_seconds ? clock(race.record_seconds) : "—"}
         </dd>
       </div>
       <div>
-        <dt>Equivalente ao recorde (Riegel)</dt>
+        <dt>Record equivalent (Riegel)</dt>
         <dd class="font-semibold text-base-content tabular-nums">
           {race.riegel_seconds ? clock(race.riegel_seconds) : "—"}
         </dd>

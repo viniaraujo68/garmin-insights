@@ -7,14 +7,14 @@
   const total = $derived(zones.reduce((sum, zone) => sum + zone.seconds, 0) || 1);
   const shade = (zone: number): string =>
     `color-mix(in oklab, var(--ramp-hr-high) ${(zone - 1) * 25}%, var(--ramp-hr-low))`;
-  const NAMES = ["muito leve", "leve", "moderado", "limiar", "máximo"];
+  const NAMES = ["Warm up", "Easy", "Aerobic", "Threshold", "Maximum"];
 </script>
 
 <div class="flex flex-col gap-3">
   <div
     class="flex h-4 w-full overflow-hidden rounded-field"
     role="img"
-    aria-label="Tempo em cada zona de FC"
+    aria-label="Time in each HR zone"
   >
     {#each zones as zone (zone.zone)}
       {#if zone.seconds > 0}

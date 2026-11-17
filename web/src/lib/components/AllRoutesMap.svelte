@@ -102,8 +102,8 @@
       chosen === "frequency"
         ? null
         : {
-            from: chosen === "pace" ? `${pace(high)}/km (lento)` : `${Math.round(low)} bpm`,
-            to: chosen === "pace" ? `${pace(low)}/km (rápido)` : `${Math.round(high)} bpm`,
+            from: chosen === "pace" ? `${pace(high)}/km (slow)` : `${Math.round(low)} bpm`,
+            to: chosen === "pace" ? `${pace(low)}/km (fast)` : `${Math.round(high)} bpm`,
             stops: Array.from({ length: 6 }, (_, index) => ramp(index / 5)),
           };
     layer = group;
@@ -130,7 +130,7 @@
   </div>
 {:else}
   <p class="mt-2 text-xs text-base-content/70">
-    Onde as linhas se acumulam e escurecem é onde você mais corre.
+    Where the lines pile up and darken is where you run most.
   </p>
 {/if}
 

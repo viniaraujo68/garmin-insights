@@ -4,9 +4,9 @@ import type { ActivitySummary, Intraday, Meta, Today } from "$lib/data/types";
 
 export const loadDay = async (requested: string | null) => {
   const meta = await readDocument<Meta>("meta");
-  if (requested !== null && !meta.days.includes(requested)) error(404, "Dia sem dados");
+  if (requested !== null && !meta.days.includes(requested)) error(404, "No data for this day");
   const day = requested ?? meta.days.at(-1);
-  if (!day) error(503, "Ainda não há dias sincronizados");
+  if (!day) error(503, "No days synced yet");
   const [today, activities, intraday] = await Promise.all([
     readDocument<Today>(`day/${day}`),
     readDocument<ActivitySummary[]>("activities"),

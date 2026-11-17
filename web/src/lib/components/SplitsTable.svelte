@@ -38,35 +38,35 @@
     },
     {
       key: "gap_pace_s_km",
-      label: "Pace ajustado",
+      label: "Grade-adjusted pace",
       numeric: true,
       value: (lap) => pace(lap.gap_pace_s_km),
       sortBy: (lap) => lap.gap_pace_s_km,
     },
     {
       key: "avg_hr",
-      label: "FC",
+      label: "HR",
       numeric: true,
       value: (lap) => number(lap.avg_hr),
       sortBy: (lap) => lap.avg_hr,
     },
     {
       key: "cadence",
-      label: "Cadência",
+      label: "Cadence",
       numeric: true,
       value: (lap) => number(lap.cadence),
       sortBy: (lap) => lap.cadence,
     },
     {
       key: "stride_m",
-      label: "Passada",
+      label: "Stride",
       numeric: true,
       value: (lap) => number(lap.stride_m, 2),
       sortBy: (lap) => lap.stride_m,
     },
     {
       key: "ground_contact_ms",
-      label: "Contato",
+      label: "Contact",
       numeric: true,
       value: (lap) => number(lap.ground_contact_ms),
       sortBy: (lap) => lap.ground_contact_ms,
@@ -74,7 +74,7 @@
     },
     {
       key: "power_w",
-      label: "Potência",
+      label: "Power",
       numeric: true,
       value: (lap) => number(lap.power_w),
       sortBy: (lap) => lap.power_w,
@@ -82,7 +82,7 @@
     },
     {
       key: "elevation_gain_m",
-      label: "Subida",
+      label: "Elevation gain",
       numeric: true,
       value: (lap) => `${number(lap.elevation_gain_m)} m`,
       sortBy: (lap) => lap.elevation_gain_m,
@@ -111,7 +111,7 @@
   rows={laps}
   {columns}
   rowKey={(lap) => lap.lap}
-  label="Splits por km"
+  label="Splits per km"
   storageKey="garmin-insights:splits"
-  sortLabel={(column) => `Ordenar por ${column.label}`}
+  sortLabel={(column) => `Sort by ${column.label}`}
 />

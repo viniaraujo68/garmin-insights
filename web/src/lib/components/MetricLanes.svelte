@@ -71,7 +71,7 @@
         unit: "min/km",
         values: smooth(streams.pace_s_km, 6),
         secondary: smooth(streams.gap_pace_s_km, 6),
-        secondaryLabel: "ajustado à inclinação",
+        secondaryLabel: "grade-adjusted",
         format: (value: number) => `${pace(value)}/km`,
         tickFormat: (value: number) => pace(value),
         reverse: true,
@@ -79,7 +79,7 @@
       },
       {
         key: "hr",
-        label: "FC",
+        label: "HR",
         unit: "bpm",
         values: smooth(streams.hr, 2),
         format: (value: number) => `${number(value)} bpm`,
@@ -89,16 +89,16 @@
       },
       {
         key: "cadence",
-        label: "Cadência",
-        unit: "ppm",
+        label: "Cadence",
+        unit: "spm",
         values: smooth(streams.cadence, 4),
-        format: (value: number) => `${number(value)} ppm`,
+        format: (value: number) => `${number(value)} spm`,
         tickFormat: (value: number) => number(value),
         color: "var(--series-7)",
       },
       {
         key: "power",
-        label: "Potência",
+        label: "Power",
         unit: "W",
         values: smooth(streams.power, 4),
         format: (value: number) => `${number(value)} W`,
@@ -107,7 +107,7 @@
       },
       {
         key: "elevation",
-        label: "Altitude",
+        label: "Elevation",
         unit: "m",
         values: streams.elevation,
         format: (value: number) => `${number(value)} m`,
@@ -117,11 +117,11 @@
       },
       {
         key: "condition",
-        label: "Condição de desempenho",
+        label: "Performance Condition",
         unit: "",
         values: streams.performance_condition,
         format: (value: number) => delta(value),
-        references: [{ y: 0, label: "seu normal" }],
+        references: [{ y: 0, label: "your normal" }],
         color: "var(--series-2)",
       },
     ].filter((lane) => lane.values.some((value) => value !== null)),
@@ -176,7 +176,7 @@
             )}{:else}—{/if}
         </p>
         {#if hoverKm === null}
-          <p class="text-base-content/50">média</p>
+          <p class="text-base-content/50">average</p>
         {:else if hoveredSecondary && hoveredSecondary.y !== null}
           <p class="truncate text-base-content/60 tabular-nums">
             {item.lane.format(hoveredSecondary.y)}
@@ -184,7 +184,7 @@
           </p>
         {/if}
         {#if item.lane.key === "condition" && conditionLate !== null}
-          <p class="text-warning">medida a partir de {number(conditionLate, 1)} km</p>
+          <p class="text-warning">measured from {number(conditionLate, 1)} km</p>
         {/if}
       </div>
       <LaneChart
@@ -195,7 +195,7 @@
         format={item.lane.format}
         tickFormat={item.lane.tickFormat}
         color={item.lane.color}
-        label="{item.lane.label} ao longo da corrida"
+        label="{item.lane.label} over the run"
         reverse={item.lane.reverse}
         area={item.lane.area}
         references={item.lane.references}
@@ -210,7 +210,7 @@
   {/each}
   <p class="pl-[7.5rem] text-xs text-base-content/60 sm:pl-[10rem]">
     {hoverKm === null
-      ? "Passe o mouse para ver o valor de cada faixa no mesmo ponto."
+      ? "Hover to see each lane's value at the same point."
       : `km ${number(hoverKm, 2)}`}
   </p>
 </div>

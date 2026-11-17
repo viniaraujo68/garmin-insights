@@ -6,9 +6,9 @@ export type ColorBy = "pace" | "hr" | "zone" | "grade";
 
 export const COLOR_BY_OPTIONS: { id: ColorBy; label: string }[] = [
   { id: "pace", label: "Pace" },
-  { id: "hr", label: "FC" },
-  { id: "zone", label: "Zona de FC" },
-  { id: "grade", label: "Inclinação" },
+  { id: "hr", label: "HR" },
+  { id: "zone", label: "HR zone" },
+  { id: "grade", label: "Grade" },
 ];
 
 const GRADE_LIMIT = 8;
@@ -77,8 +77,8 @@ export const colorScale = (
       },
       legend: {
         kind: "gradient",
-        from: `${formatPace(slow)} (lento)`,
-        to: `${formatPace(fast)} (rápido)`,
+        from: `${formatPace(slow)} (slow)`,
+        to: `${formatPace(fast)} (fast)`,
         stops: steps(ramp),
       },
     };
@@ -129,8 +129,8 @@ export const colorScale = (
     },
     legend: {
       kind: "gradient",
-      from: `descida ${GRADE_LIMIT}%`,
-      to: `subida ${GRADE_LIMIT}%`,
+      from: `downhill ${GRADE_LIMIT}%`,
+      to: `uphill ${GRADE_LIMIT}%`,
       stops: [...steps(down).reverse(), ...steps(up)],
     },
   };

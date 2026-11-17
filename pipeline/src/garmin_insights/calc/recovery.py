@@ -21,24 +21,24 @@ GLANCE_MIN_REFERENCE = 7
 EVENING_START_MINUTES = 18 * 60
 
 TRENDS = (
-    ("hrv_last_night", "VFC da noite", "ms", 0, True, "Variação entre batimentos no sono. Dentro da faixa = recuperado; abaixo por dias seguidos = cansaço ou doença."),
-    ("resting_hr", "FC de repouso", "bpm", 0, False, "Cai com o condicionamento. Alta de 5 bpm ou mais por dias seguidos pede atenção."),
-    ("sleep_score", "Pontuação do sono", "", 0, True, "0 a 100: 80 ou mais é bom."),
-    ("sleep_h", "Horas de sono", "h", 1, True, "Tempo dormindo, sem contar despertares."),
-    ("readiness_score", "Prontidão", "", 0, True, "Leitura da manhã, 0 a 100. Abaixo de 50: treino leve."),
-    ("body_battery_high", "Body Battery máximo", "", 0, True, "O pico de energia do dia, normalmente ao acordar."),
-    ("stress_avg", "Estresse médio", "", 0, False, "Estimado pela VFC durante o dia, 0 a 100."),
-    ("sleep_respiration", "Respiração no sono", "rpm", 1, None, "Respirações por minuto dormindo. Alta incomum pode anunciar doença."),
-    ("steps", "Passos", "", 0, True, "Passos no dia."),
+    ("hrv_last_night", "Overnight HRV", "ms", 0, True, "Variation between heartbeats during sleep. Within the range = recovered; below it for consecutive days = fatigue or illness."),
+    ("resting_hr", "Resting HR", "bpm", 0, False, "Drops with fitness. A rise of 5 bpm or more for consecutive days calls for attention."),
+    ("sleep_score", "Sleep Score", "", 0, True, "0 to 100: 80 or more is good."),
+    ("sleep_h", "Sleep duration", "h", 1, True, "Time asleep, not counting awake periods."),
+    ("readiness_score", "Training Readiness", "", 0, True, "Morning reading, 0 to 100. Below 50: easy training."),
+    ("body_battery_high", "Body Battery high", "", 0, True, "The energy peak of the day, usually at wake-up."),
+    ("stress_avg", "Average stress", "", 0, False, "Estimated from HRV during the day, 0 to 100."),
+    ("sleep_respiration", "Sleep respiration", "brpm", 1, None, "Breaths per minute while asleep. An unusual rise can signal illness."),
+    ("steps", "Steps", "", 0, True, "Steps in the day."),
 )
 GLANCE = (
-    ("resting_hr", "FC repouso", False, 1.0, 0),
-    ("hrv_last_night", "VFC", True, 2.0, 0),
-    ("sleep_score", "Sono", True, 3.0, 0),
-    ("readiness_score", "Prontidão", True, 5.0, 0),
+    ("resting_hr", "Resting HR", False, 1.0, 0),
+    ("hrv_last_night", "HRV", True, 2.0, 0),
+    ("sleep_score", "Sleep", True, 3.0, 0),
+    ("readiness_score", "Readiness", True, 5.0, 0),
     ("body_battery_high", "Body Battery", True, 5.0, 0),
-    ("stress_avg", "Estresse", False, 2.0, 0),
-    ("steps", "Passos", True, 500.0, 0),
+    ("stress_avg", "Stress", False, 2.0, 0),
+    ("steps", "Steps", True, 500.0, 0),
 )
 
 
@@ -116,7 +116,7 @@ def glance_days(rows: list[sqlite3.Row]) -> list[GlanceDay]:
             value = row[key]
             reference = [item[key] for item in rows[max(0, index - GLANCE_WINDOW): index] if item[key] is not None]
             z = robust_z(value, reference, minimum_spread) if value is not None and len(reference) >= GLANCE_MIN_REFERENCE else None
-            display = "—" if value is None else f"{value:,.{digits}f}".replace(",", ".")
+            display = "—" if value is None else f"{value:,.{digits}f}"
             cells.append(GlanceCell(key=key, value=value, display=display, z=rounded(z), status=glance_status(z, higher)))
         days.append(GlanceDay(date=row["date"], cells=cells))
     return days

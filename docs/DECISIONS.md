@@ -1,73 +1,75 @@
-# Decisões
+# Decisions
 
-## JSON bruto como fonte da verdade, SQLite reconstruível
+## Raw JSON as the source of truth, rebuildable SQLite
 
-Cada resposta da Garmin é gravada em `data/raw/` e o banco é refeito do zero a cada execução
-(leva menos de um segundo). Corrigir um cálculo ou adicionar um campo nunca exige buscar de novo
-na Garmin, que limita requisições e já quebrou o login mais de uma vez em 2026.
+Each Garmin response is written to `data/raw/` and the database is rebuilt from scratch on every
+run (it takes under a second). Fixing a calculation or adding a field never requires fetching
+from Garmin again, which rate-limits requests and has broken login more than once in 2026.
 
-## SQLite em vez de Parquet
+## SQLite instead of Parquet
 
-O volume é pequeno (dezenas de milhares de linhas por ano) e o banco é consultado diretamente
-quando a análise é feita com o Claude. O site não lê o banco: lê os JSON publicados.
+The volume is small (tens of thousands of rows per year) and the database is queried directly
+when the analysis is done with Claude. The site does not read the database: it reads the
+published JSON files.
 
-## Site lendo JSON a cada requisição (adapter-node)
+## Site reading JSON on every request (adapter-node)
 
-Depois de um sync basta recarregar a página, sem rebuild.
+After a sync, reloading the page is enough, with no rebuild.
 
-## Só local (2026-10-16)
+## Local only (2026-10-16)
 
-O site roda em localhost e os dados são atualizados quando o usuário quiser, rodando o pipeline.
-Não vai para VPS: sem login, sem multiusuário e sem sync agendado.
+The site runs on localhost and the data is updated whenever the user wants, by running the
+pipeline. It does not go on a VPS: no login, no multi-user and no scheduled sync.
 
-## Faixas de técnica e limites de referência
+## Technique ranges and reference limits
 
-As faixas de cadência, contato com o solo, oscilação e razão vertical seguem as cores da Garmin e
-são aproximadas. O "drift cardíaco" não é mostrado: só faz sentido em corridas de 60 minutos ou
-mais.
+The ranges for cadence, ground contact time, oscillation and vertical ratio follow Garmin's
+colours and are approximate. "Cardiac drift" is not shown: it only makes sense on runs of 60
+minutes or more.
 
-## Aclimatação ao calor
+## Heat acclimation
 
-A Garmin devolve `heatAltitudeAcclimation` vazio para o Forerunner 265S desta conta, então o painel
-usa o clima de cada corrida (temperatura e ponto de orvalho) para corrigir o pace.
+Garmin returns `heatAltitudeAcclimation` empty for this account's Forerunner 265S, so the
+dashboard uses each run's weather (temperature and dew point) to correct the pace.
 
-## Mapas e privacidade
+## Maps and privacy
 
-O site usa os blocos do OpenStreetMap (a CARTO passou a exigir chave). A zona de privacidade é
-detectada pelo ponto onde mais corridas começam ou terminam (pelo menos três, num raio de 300 m)
-e esconde 400 m em volta dele quando ligada.
+The site uses OpenStreetMap tiles (CARTO started requiring a key). The privacy zone is detected
+from the point where the most runs start or end (at least three, within a 300 m radius) and
+hides 400 m around it when enabled.
 
-## Projeções
+## Projections
 
-VO2max e previsões de prova só ganham projeção com 8 semanas de histórico, pela tendência de
-Theil-Sen amortecida pela metade. Com menos dados a extrapolação seria ruído.
+VO2max and race predictions only get a projection with 8 weeks of history, using the Theil-Sen
+trend damped by half. With less data the extrapolation would be noise.
 
-## Rotas com parâmetro e o menu do plinth
+## Parameterised routes and the plinth menu
 
-O `AppShell` do plinth não lista rotas com parâmetro. Por isso `/recuperacao` existe como rota
-própria (no menu) e cada noite fica em `/recuperacao/[noite]`, compartilhando o mesmo componente.
+plinth's `AppShell` does not list routes with a parameter. That is why `/recovery` exists as its
+own route (in the menu) and each night lives at `/recovery/[night]`, sharing the same component.
 
-## O dia em detalhe
+## The day in detail
 
-Três chamadas a mais por dia na coleta: FC a cada 2 min, estresse e Body Battery a cada 3 min e
-passos a cada 15 min. O estresse vem com códigos negativos: -1 é sem leitura e -2 é movimento
-demais para medir. Os dois quebram a linha; os trechos de -2 viram a faixa "em movimento". As
-atividades ocupam o tempo decorrido (com pausas), não o tempo em movimento. O dia de hoje só tem
-dados até a última sincronização do relógio com o Garmin e do pipeline.
+Three extra calls per day in the collection: HR every 2 min, stress and Body Battery every 3 min
+and steps every 15 min. Stress comes with negative codes: -1 means no reading and -2 means too
+much movement to measure. Both break the line; the -2 stretches become the "moving" band.
+Activities take up elapsed time (including pauses), not moving time. Today only has data up to
+the last sync of the watch with Garmin and of the pipeline.
 
-Minutos por esporte e calendário de treinos saíram da Carga (2026-10-16): sem futebol e academia
-gravados no relógio, não diziam nada. Os campos continuam no `load.json` para quando voltarem.
+Minutes per sport and the training calendar were removed from Load (2026-10-16): with no
+football or gym recorded on the watch, they said nothing. The fields remain in `load.json` for
+when they come back.
 
-## Carga e técnica simplificadas (2026-10-16)
+## Simplified load and technique (2026-10-16)
 
-A Carga virou uma resposta: um veredito em texto a partir da carga aguda da Garmin contra a faixa
-recomendada, com quantas corridas típicas (mediana da carga das corridas de 8 semanas) faltam
-para voltar a ela. Condicionamento/fadiga/frescor e monotonia/tensão saíram da tela porque não
-estabilizam com 2–3 treinos por semana; o foco de carga da Garmin saiu porque contradizia a
-conta de % leve (a Garmin classifica pelo efeito de treino, não pelas zonas). Os campos continuam
-no `load.json`.
+Load became an answer: a text verdict from Garmin's acute load against the recommended range,
+with how many typical runs (median load of the runs over 8 weeks) are needed to get back to it.
+Fitness/fatigue/freshness and monotony/strain left the screen because they do not stabilise
+with 2–3 workouts per week; Garmin's load focus left because it contradicted the % easy
+calculation (Garmin classifies by training effect, not by zones). The fields remain in
+`load.json`.
 
-A técnica deixou de ser um gráfico contra a velocidade. Cada corrida é ajustada para o ritmo
-mediano (arredondado a 0,5 km/h) pela reta da velocidade e plotada no tempo, com o sentido do
-que é melhor e a faixa média dos corredores da Garmin ao fundo. Cadência passou a contar como
-"maior é melhor"; passada continua sem melhor ou pior.
+Technique stopped being a chart against speed. Each run is adjusted to the median pace (rounded
+to 0.5 km/h) using the speed line and plotted over time, with the direction of what is better
+and the average runner band from Garmin in the background. Cadence now counts as "higher is
+better"; stride length still has no better or worse.

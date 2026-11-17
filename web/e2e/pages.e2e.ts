@@ -10,14 +10,14 @@ const collectErrors = (page: Page): string[] => {
   return errors;
 };
 
-test("hoje mostra a prontidão e os cards", async ({ page }) => {
+test("today shows readiness and cards", async ({ page }) => {
   const errors = collectErrors(page);
   await page.goto("/");
-  await expect(page.getByRole("heading", { name: "Hoje", level: 1 })).toBeVisible();
-  await expect(page.getByText("Prontidão para treinar")).toBeVisible();
-  await expect(page.getByRole("heading", { name: "Últimos 7 dias" })).toBeVisible();
-  await expect(page.getByRole("heading", { name: "O dia em detalhe" })).toBeVisible();
-  const heartRate = page.getByRole("img", { name: "FC ao longo do dia" });
+  await expect(page.getByRole("heading", { name: "Today", level: 1 })).toBeVisible();
+  await expect(page.getByText("Training Readiness")).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Last 7 days" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "The day in detail" })).toBeVisible();
+  const heartRate = page.getByRole("img", { name: "HR over the day" });
   await heartRate.scrollIntoViewIfNeeded();
   const box = await heartRate.boundingBox();
   if (!box) throw new Error("heart rate lane not rendered");
@@ -26,101 +26,101 @@ test("hoje mostra a prontidão e os cards", async ({ page }) => {
   expect(errors).toEqual([]);
 });
 
-test("corridas mostra explorador, percursos e tabela", async ({ page }) => {
+test("runs shows explorer, routes and table", async ({ page }) => {
   const errors = collectErrors(page);
-  await page.goto("/corridas");
-  await expect(page.getByRole("heading", { name: "Explorador" })).toBeVisible();
+  await page.goto("/runs");
+  await expect(page.getByRole("heading", { name: "Explorer" })).toBeVisible();
   await expect(page.locator("canvas")).toHaveCount(1);
-  await page.getByRole("button", { name: "Eficiência", exact: true }).click();
-  await expect(page.getByText("Metros por batimento: subir é evoluir.")).toBeVisible();
-  expect(await page.getByRole("img", { name: /Percurso da corrida/ }).count()).toBeGreaterThan(0);
+  await page.getByRole("button", { name: "Efficiency", exact: true }).click();
+  await expect(page.getByText("Metres per beat: going up means improving.")).toBeVisible();
+  expect(await page.getByRole("img", { name: /Route of the run/ }).count()).toBeGreaterThan(0);
   expect(errors).toEqual([]);
 });
 
-test("corrida sincroniza o hover entre as curvas e o mapa", async ({ page }) => {
+test("run syncs hover between the lanes and the map", async ({ page }) => {
   const errors = collectErrors(page);
-  await page.goto("/corridas");
-  await page.locator('a[href^="/corridas/"]').first().click();
-  await expect(page.getByRole("heading", { name: "Percurso" })).toBeVisible();
+  await page.goto("/runs");
+  await page.locator('a[href^="/runs/"]').first().click();
+  await expect(page.getByRole("heading", { name: "Route" })).toBeVisible();
   await expect(page.locator(".leaflet-container")).toBeVisible();
-  const lane = page.getByRole("img", { name: "Pace ao longo da corrida" });
+  const lane = page.getByRole("img", { name: "Pace over the run" });
   await lane.scrollIntoViewIfNeeded();
   const box = await lane.boundingBox();
   if (!box) throw new Error("pace lane not rendered");
   await lane.hover({ position: { x: box.width * 0.4, y: box.height / 2 } });
-  await expect(page.getByText(/^km \d+,\d{2}$/).first()).toBeVisible();
+  await expect(page.getByText(/^km \d+\.\d{2}$/).first()).toBeVisible();
   await expect(page.locator(".map-wrap").getByText(/bpm/)).toBeVisible();
-  await page.getByRole("button", { name: "Zona de FC", exact: true }).click();
+  await page.getByRole("button", { name: "HR zone", exact: true }).click();
   await expect(page.getByText(/^Z1 \d+–\d+$/)).toBeVisible();
   expect(errors).toEqual([]);
 });
 
-test("corrida inexistente responde 404", async ({ page }) => {
-  const response = await page.goto("/corridas/123");
+test("unknown run responds 404", async ({ page }) => {
+  const response = await page.goto("/runs/123");
   expect(response?.status()).toBe(404);
 });
 
-test("evolução mostra eficiência, provas e técnica", async ({ page }) => {
+test("progress shows efficiency, races and technique", async ({ page }) => {
   const errors = collectErrors(page);
-  await page.goto("/evolucao");
-  await expect(page.getByRole("heading", { name: "Metros por batimento" })).toBeVisible();
-  await expect(page.getByRole("heading", { name: "Previsões de prova" })).toBeVisible();
-  await expect(page.getByRole("heading", { name: "Técnica", exact: true })).toBeVisible();
-  await expect(page.getByText("↓ menor é melhor").first()).toBeVisible();
-  await page.getByRole("button", { name: "Como medido", exact: true }).click();
-  await expect(page.getByRole("img", { name: "Eficiência por corrida" })).toBeVisible();
+  await page.goto("/progress");
+  await expect(page.getByRole("heading", { name: "Metres per beat" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Race predictions" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Technique", exact: true })).toBeVisible();
+  await expect(page.getByText("↓ lower is better").first()).toBeVisible();
+  await page.getByRole("button", { name: "As measured", exact: true }).click();
+  await expect(page.getByRole("img", { name: "Efficiency per run" })).toBeVisible();
   expect(errors).toEqual([]);
 });
 
-test("carga mostra o veredito, o volume e a faixa", async ({ page }) => {
+test("load shows the verdict, the volume and the range", async ({ page }) => {
   const errors = collectErrors(page);
-  await page.goto("/carga");
+  await page.goto("/load");
   await expect(page.getByTestId("load-summary").getByRole("heading", { level: 2 })).toBeVisible();
-  await expect(page.getByRole("heading", { name: "Quilômetros por semana" })).toBeVisible();
-  await expect(page.getByRole("heading", { name: "Carga dos últimos 7 dias" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Kilometres per week" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Last 7 days load" })).toBeVisible();
   expect(await page.locator("canvas").count()).toBe(3);
   expect(errors).toEqual([]);
 });
 
-test("recuperação mostra tendências, hipnograma e mês", async ({ page }) => {
+test("recovery shows trends, hypnogram and month", async ({ page }) => {
   const errors = collectErrors(page);
-  await page.goto("/recuperacao");
-  await expect(page.getByRole("heading", { name: "VFC da noite" })).toBeVisible();
-  await expect(page.getByRole("img", { name: "Fases do sono ao longo da noite" })).toBeVisible();
-  await expect(page.getByRole("heading", { name: "Mês num relance" })).toBeVisible();
-  await page.getByRole("button", { name: "4 semanas", exact: true }).click();
+  await page.goto("/recovery");
+  await expect(page.getByRole("heading", { name: "Overnight HRV" })).toBeVisible();
+  await expect(page.getByRole("img", { name: "Sleep stages over the night" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Month at a glance" })).toBeVisible();
+  await page.getByRole("button", { name: "4 weeks", exact: true }).click();
   await expect(
     page
-      .getByRole("navigation", { name: "Navegação principal" })
-      .getByRole("link", { name: "Recuperação" }),
+      .getByRole("navigation", { name: "Main navigation" })
+      .getByRole("link", { name: "Recovery" }),
   ).toBeVisible();
-  const response = await page.goto("/recuperacao/2026-09-01");
+  const response = await page.goto("/recovery/2026-09-01");
   expect(response?.status()).toBe(200);
-  await expect(page.getByText(/Dormiu \d{2}:\d{2}/)).toBeVisible();
+  await expect(page.getByText(/Slept \d{2}:\d{2}/)).toBeVisible();
   expect(errors).toEqual([]);
 });
 
-test("mapas desenha todas as corridas e troca a cor", async ({ page }) => {
+test("maps draws all runs and switches the colour", async ({ page }) => {
   const errors = collectErrors(page);
-  await page.goto("/mapas");
+  await page.goto("/maps");
   await expect(page.locator(".leaflet-container")).toBeVisible();
   await page.getByRole("button", { name: "Pace", exact: true }).click();
-  await expect(page.getByText(/\(rápido\)/)).toBeVisible();
+  await expect(page.getByText(/\(fast\)/)).toBeVisible();
   expect(errors).toEqual([]);
 });
 
-test("hoje navega para outros dias", async ({ page }) => {
+test("today navigates to other days", async ({ page }) => {
   const errors = collectErrors(page);
   await page.goto("/");
-  await expect(page.getByRole("heading", { name: "Hoje", level: 1 })).toBeVisible();
-  await page.getByRole("link", { name: "← dia anterior" }).click();
-  await expect(page).toHaveURL(/\/dia\/\d{4}-\d{2}-\d{2}$/);
-  await expect(page.getByRole("link", { name: "próximo dia →" })).toBeVisible();
-  await expect(page.getByRole("heading", { level: 1 })).not.toHaveText("Hoje");
-  const response = await page.goto("/dia/2026-09-01");
+  await expect(page.getByRole("heading", { name: "Today", level: 1 })).toBeVisible();
+  await page.getByRole("link", { name: "← previous day" }).click();
+  await expect(page).toHaveURL(/\/day\/\d{4}-\d{2}-\d{2}$/);
+  await expect(page.getByRole("link", { name: "next day →" })).toBeVisible();
+  await expect(page.getByRole("heading", { level: 1 })).not.toHaveText("Today");
+  const response = await page.goto("/day/2026-09-01");
   expect(response?.status()).toBe(200);
-  await expect(page.getByText("Prontidão para treinar")).toBeVisible();
+  await expect(page.getByText("Training Readiness")).toBeVisible();
   expect(errors).toEqual([]);
-  const missing = await page.goto("/dia/2020-01-01");
+  const missing = await page.goto("/day/2020-01-01");
   expect(missing?.status()).toBe(404);
 });

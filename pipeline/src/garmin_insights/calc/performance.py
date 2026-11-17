@@ -25,29 +25,29 @@ FORM_CURRENT_RUNS = 3
 FORM_SPEED_STEP_KMH = 0.5
 RIEGEL_EXPONENT = 1.06
 PROJECTION_HORIZONS = (30, 90)
-RACES = (("5K", "5 km", 5.0), ("10K", "10 km", 10.0), ("21K", "Meia maratona", 21.0975), ("42K", "Maratona", 42.195))
+RACES = (("5K", "5 km", 5.0), ("10K", "10 km", 10.0), ("21K", "Half marathon", 21.0975), ("42K", "Marathon", 42.195))
 RECORD_TYPES = {
     1: ("1 km", "time", 1.0),
-    2: ("1 milha", "time", 1.609),
+    2: ("1 mile", "time", 1.609),
     3: ("5 km", "time", 5.0),
     4: ("10 km", "time", 10.0),
-    5: ("Meia maratona", "time", 21.0975),
-    6: ("Maratona", "time", 42.195),
-    7: ("Corrida mais longa", "distance", None),
-    12: ("Mais passos em um dia", "steps", None),
-    13: ("Mais passos em uma semana", "steps", None),
-    14: ("Mais passos em um mês", "steps", None),
-    15: ("Maior sequência de metas de passos", "days", None),
-    16: ("Sequência atual de metas de passos", "days", None),
+    5: ("Half marathon", "time", 21.0975),
+    6: ("Marathon", "time", 42.195),
+    7: ("Longest run", "distance", None),
+    12: ("Most steps in a day", "steps", None),
+    13: ("Most steps in a week", "steps", None),
+    14: ("Most steps in a month", "steps", None),
+    15: ("Longest step goal streak", "days", None),
+    16: ("Current step goal streak", "days", None),
 }
 RECORD_TO_RACE = {3: "5K", 4: "10K", 5: "21K", 6: "42K"}
 FORM_METRICS = (
-    ("cadence", "Cadência", "ppm", 0, False),
-    ("stride_m", "Passada", "m", 2, None),
-    ("ground_contact_ms", "Contato com o solo", "ms", 0, True),
-    ("vertical_oscillation_cm", "Oscilação vertical", "cm", 1, True),
-    ("vertical_ratio_pct", "Razão vertical", "%", 1, True),
-    ("power_w", "Potência", "W", 0, True),
+    ("cadence", "Cadence", "spm", 0, False),
+    ("stride_m", "Stride length", "m", 2, None),
+    ("ground_contact_ms", "Ground contact time", "ms", 0, True),
+    ("vertical_oscillation_cm", "Vertical oscillation", "cm", 1, True),
+    ("vertical_ratio_pct", "Vertical ratio", "%", 1, True),
+    ("power_w", "Power", "W", 0, True),
 )
 
 
@@ -114,9 +114,9 @@ def record_rows(connection: sqlite3.Connection) -> list[RecordRow]:
         value = row["value"]
         display = {
             "time": lambda: clock(value),
-            "distance": lambda: f"{value / 1000:.2f} km".replace(".", ","),
-            "steps": lambda: f"{round(value):,}".replace(",", "."),
-            "days": lambda: f"{round(value)} dias",
+            "distance": lambda: f"{value / 1000:.2f} km",
+            "steps": lambda: f"{round(value):,}",
+            "days": lambda: f"{round(value)} days",
         }[kind]()
         rows.append(RecordRow(type_id=row["type_id"], label=label, value=value, value_display=display, date=row["date"], activity_id=row["activity_id"]))
     return rows
@@ -183,19 +183,19 @@ def form_metrics(runs: list[ActivitySummary], today: date) -> list[FormMetric]:
         recent = [point for point in points if point.recent]
         earlier = [point for point in points if not point.recent]
         delta = None
-        verdict = f"Precisa de {FORM_MIN_RUNS} corridas antes e {FORM_MIN_RUNS} nas últimas {FORM_WINDOW_DAYS // 7} semanas para comparar."
+        verdict = f"Needs {FORM_MIN_RUNS} runs before and {FORM_MIN_RUNS} in the last {FORM_WINDOW_DAYS // 7} weeks to compare."
         if fit is not None and len(recent) >= FORM_MIN_RUNS and len(earlier) >= FORM_MIN_RUNS:
             delta = mean([point.adjusted for point in recent]) - mean([point.adjusted for point in earlier])
-            magnitude = f"{abs(delta):.{digits}f}".replace(".", ",")
+            magnitude = f"{abs(delta):.{digits}f}"
             if round(delta, digits) == 0:
-                verdict = "Igual às semanas anteriores."
+                verdict = "Same as the previous weeks."
             else:
-                direction = "menos" if delta < 0 else "mais"
-                verdict = f"{magnitude} {unit} a {direction} que nas semanas anteriores"
+                direction = "lower" if delta < 0 else "higher"
+                verdict = f"{magnitude} {unit} {direction} than in the previous weeks"
                 if lower_is_better is None:
                     verdict += "."
                 else:
-                    verdict += f": {'melhorou' if (delta < 0) == lower_is_better else 'piorou'}."
+                    verdict += f": {'improved' if (delta < 0) == lower_is_better else 'worsened'}."
         latest = [point.adjusted for point in points[-FORM_CURRENT_RUNS:] if point.adjusted is not None]
         metrics.append(FormMetric(
             key=key,
@@ -248,9 +248,9 @@ def performance_document(connection: sqlite3.Connection, summaries: list[Activit
         vo2max_per_30_days=rounded(trend_per_30_days(vo2), 2),
         vo2max_projection=as_points(vo2_projection),
         projection_note=(
-            "Projeção pela tendência robusta (Theil-Sen), amortecida pela metade: o ganho desacelera com o tempo."
+            "Projection from the robust trend (Theil-Sen), damped by half: the gain slows down over time."
             if vo2_projection
-            else f"A projeção aparece com {PROJECTION_MIN_SPAN_DAYS // 7} semanas de histórico; hoje há {span // 7}."
+            else f"The projection appears after {PROJECTION_MIN_SPAN_DAYS // 7} weeks of history; there are {span // 7} today."
         ),
         races=races(connection, records),
         form_window_days=FORM_WINDOW_DAYS,

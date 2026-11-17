@@ -11,7 +11,7 @@ FITNESS_DAYS = 42
 FATIGUE_DAYS = 7
 EASY_MIN_PCT = 65
 EASY_MAX_PCT = 92
-FOCUS_LABELS = {"aerobic_low": "Aeróbico leve", "aerobic_high": "Aeróbico forte", "anaerobic": "Anaeróbico"}
+FOCUS_LABELS = {"aerobic_low": "Low aerobic", "aerobic_high": "High aerobic", "anaerobic": "Anaerobic"}
 EASY_TARGET_PCT = 80
 SUMMARY_WEEKS = 4
 TYPICAL_RUN_DAYS = 56
@@ -57,10 +57,10 @@ def verdict(easy_pct: float | None) -> str | None:
     if easy_pct is None:
         return None
     if easy_pct < EASY_MIN_PCT:
-        return "intenso demais"
+        return "too hard"
     if easy_pct > EASY_MAX_PCT:
-        return "leve demais"
-    return "equilibrado"
+        return "too easy"
+    return "balanced"
 
 
 def weeks_of(summaries: list[ActivitySummary], loads: dict[str, float], start: date, end: date) -> list[WeekLoad]:
@@ -141,15 +141,15 @@ def typical_run_load(summaries: list[ActivitySummary], today: date) -> float | N
 def load_verdict(days: list[LoadDay], typical: float | None) -> tuple[str, str, str]:
     latest = next((day for day in reversed(days) if day.acute is not None and day.chronic_min is not None and day.chronic_max is not None), None)
     if latest is None:
-        return "unknown", "Ainda sem carga da Garmin", "A Garmin precisa de algumas semanas de treino para calcular a faixa recomendada."
+        return "unknown", "No Garmin load yet", "Garmin needs a few weeks of training to calculate the recommended range."
     acute, low, high = round(latest.acute), round(latest.chronic_min), round(latest.chronic_max)
     if acute < low:
         runs = None if not typical else max(1, math.ceil((low - acute) / typical))
-        hint = "" if runs is None else f" Cerca de {runs} {'corrida' if runs == 1 else 'corridas'} como as suas de costume nos próximos dias te {'coloca' if runs == 1 else 'colocam'} de volta nela."
-        return "attention", "Você está treinando menos do que aguenta", f"A carga dos últimos 7 dias é {acute}, abaixo da faixa recomendada ({low}–{high}). Dá para aumentar sem risco.{hint}"
+        hint = "" if runs is None else f" About {runs} {'run' if runs == 1 else 'runs'} like your usual ones over the next few days will bring you back into it."
+        return "attention", "You are training less than you can handle", f"Your acute load over the last 7 days is {acute}, below the recommended range ({low}–{high}). You can increase it safely.{hint}"
     if acute > high:
-        return "bad", "Você está treinando mais do que está acostumado", f"A carga dos últimos 7 dias é {acute}, acima da faixa recomendada ({low}–{high}). Acima dela o risco de lesão sobe: segure alguns dias."
-    return "good", "Carga na medida certa", f"A carga dos últimos 7 dias é {acute}, dentro da faixa recomendada ({low}–{high}). É assim que você evolui sem exagero."
+        return "bad", "You are training more than you are used to", f"Your acute load over the last 7 days is {acute}, above the recommended range ({low}–{high}). Above it the injury risk rises: hold back for a few days."
+    return "good", "Load right on target", f"Your acute load over the last 7 days is {acute}, within the recommended range ({low}–{high}). This is how you improve without overdoing it."
 
 
 def easy_line(weeks: list[WeekLoad]) -> str | None:
@@ -160,12 +160,12 @@ def easy_line(weeks: list[WeekLoad]) -> str | None:
         return None
     share = round(easy / total * 100)
     if share < EASY_MIN_PCT:
-        advice = "Está forte demais: corra mais devagar na maior parte dos treinos."
+        advice = "Too hard: run slower in most workouts."
     elif share > EASY_MAX_PCT:
-        advice = "Dá para incluir um treino mais forte por semana."
+        advice = "You can add one harder workout per week."
     else:
-        advice = "Boa mistura."
-    return f"Nas últimas {len(recent)} semanas, {share}% do tempo correndo foi leve (meta: uns {EASY_TARGET_PCT}%). {advice}"
+        advice = "Good mix."
+    return f"Over the last {len(recent)} weeks, {share}% of running time was easy (target: about {EASY_TARGET_PCT}%). {advice}"
 
 
 def load_document(connection: sqlite3.Connection, summaries: list[ActivitySummary], today: date) -> Load:

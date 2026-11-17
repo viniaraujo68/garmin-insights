@@ -202,10 +202,7 @@
     if (hover === null) return null;
     const distance = streams.distance_m[hover];
     return {
-      km:
-        distance === null || distance === undefined
-          ? "—"
-          : (distance / 1000).toFixed(2).replace(".", ","),
+      km: distance === null || distance === undefined ? "—" : (distance / 1000).toFixed(2),
       pace: pace(streams.pace_s_km[hover]),
       hr: streams.hr[hover] ?? null,
     };

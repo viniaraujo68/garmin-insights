@@ -21,30 +21,30 @@ from garmin_insights.publish.contract import (
 SPARK_DAYS = 14
 BASELINE_DAYS = 7
 READINESS_FACTORS = (
-    ("sleep", "Sono da noite", "readiness_sleep_pct"),
-    ("sleep_history", "Sono dos últimos dias", "readiness_sleep_history_pct"),
-    ("recovery", "Tempo de recuperação", "readiness_recovery_pct"),
-    ("load", "Carga aguda", "readiness_load_pct"),
-    ("stress", "Histórico de estresse", "readiness_stress_pct"),
-    ("hrv", "VFC", "readiness_hrv_pct"),
+    ("sleep", "Sleep", "readiness_sleep_pct"),
+    ("sleep_history", "Sleep History", "readiness_sleep_history_pct"),
+    ("recovery", "Recovery Time", "readiness_recovery_pct"),
+    ("load", "Acute Load", "readiness_load_pct"),
+    ("stress", "Stress History", "readiness_stress_pct"),
+    ("hrv", "HRV Status", "readiness_hrv_pct"),
 )
 TRAINING_STATUS = {
-    "PRODUCTIVE": "Produtivo",
-    "MAINTAINING": "Mantendo",
-    "RECOVERY": "Recuperação",
-    "UNPRODUCTIVE": "Improdutivo",
-    "DETRAINING": "Destreinando",
-    "PEAKING": "No pico",
-    "OVERREACHING": "Excesso",
-    "STRAINED": "Sobrecarregado",
-    "NO_STATUS": "Sem status",
+    "PRODUCTIVE": "Productive",
+    "MAINTAINING": "Maintaining",
+    "RECOVERY": "Recovery",
+    "UNPRODUCTIVE": "Unproductive",
+    "DETRAINING": "Detraining",
+    "PEAKING": "Peaking",
+    "OVERREACHING": "Overreaching",
+    "STRAINED": "Strained",
+    "NO_STATUS": "No Status",
 }
 
 
 def number(value: float | None, digits: int = 0, suffix: str = "") -> str:
     if value is None:
         return "—"
-    text = f"{value:,.{digits}f}".replace(",", "X").replace(".", ",").replace("X", ".")
+    text = f"{value:,.{digits}f}"
     return f"{text}{suffix}"
 
 
@@ -107,19 +107,19 @@ def hrv_tile(days: dict[str, sqlite3.Row], day: date) -> BaselineTile:
     high = row["hrv_balanced_high"] if row else None
     weekly = row["hrv_weekly_avg"] if row else None
     if value is None or low is None or high is None:
-        status, label = "unknown", "sem faixa definida"
+        status, label = "unknown", "no range set"
     elif value < low:
-        status, label = "attention", "abaixo da sua faixa"
+        status, label = "attention", "below your range"
     elif value > high:
-        status, label = "typical", "acima da sua faixa"
+        status, label = "typical", "above your range"
     else:
-        status, label = "good", "dentro da sua faixa"
+        status, label = "good", "within your range"
     return BaselineTile(
         key="hrv",
-        label="VFC da noite",
+        label="Overnight HRV",
         value=value,
         display=number(value, 0, " ms"),
-        baseline_label=f"média de 7 noites {number(weekly, 0, ' ms')}",
+        baseline_label=f"7-night average {number(weekly, 0, ' ms')}",
         delta_display=signed(None if value is None or weekly is None else value - weekly, 0, " ms"),
         status=status,
         status_label=label,
@@ -135,19 +135,19 @@ def resting_hr_tile(days: dict[str, sqlite3.Row], day: date) -> BaselineTile:
     baseline = mean(values(window(days, day, BASELINE_DAYS, offset=1), "resting_hr"))
     delta = None if value is None or baseline is None else value - baseline
     if delta is None:
-        status, label = "unknown", "sem referência"
+        status, label = "unknown", "no baseline"
     elif delta > 3:
-        status, label = "attention", "acima do seu normal"
+        status, label = "attention", "above your normal"
     elif delta < -3:
-        status, label = "good", "abaixo do seu normal"
+        status, label = "good", "below your normal"
     else:
-        status, label = "typical", "no seu normal"
+        status, label = "typical", "at your normal"
     return BaselineTile(
         key="resting_hr",
-        label="FC de repouso",
+        label="Resting HR",
         value=value,
         display=number(value, 0, " bpm"),
-        baseline_label=f"média de 7 dias {number(baseline, 0, ' bpm')}",
+        baseline_label=f"7-day average {number(baseline, 0, ' bpm')}",
         delta_display=signed(delta, 0, " bpm"),
         status=status,
         status_label=label,
@@ -163,19 +163,19 @@ def sleep_tile(days: dict[str, sqlite3.Row], day: date) -> BaselineTile:
     slept = row["sleep_s"] if row else None
     need = row["sleep_need_min"] if row else None
     if score is None:
-        status, label = "unknown", "sem dado de sono"
+        status, label = "unknown", "no sleep data"
     elif score >= 80:
-        status, label = "good", "sono bom"
+        status, label = "good", "good sleep"
     elif score >= 60:
-        status, label = "typical", "sono razoável"
+        status, label = "typical", "fair sleep"
     else:
-        status, label = "attention", "sono ruim"
+        status, label = "attention", "poor sleep"
     return BaselineTile(
         key="sleep",
-        label="Sono",
+        label="Sleep",
         value=score,
         display=f"{number(score)} · {hours_minutes(slept)}",
-        baseline_label=f"precisava de {hours_minutes(need * 60)}" if need else "sem meta de sono",
+        baseline_label=f"needed {hours_minutes(need * 60)}" if need else "no sleep need set",
         delta_display=signed(None if slept is None or need is None else (slept / 60 - need) / 60, 1, " h"),
         status=status,
         status_label=label,
@@ -190,19 +190,19 @@ def body_battery_tile(days: dict[str, sqlite3.Row], day: date) -> BaselineTile:
     value = row["body_battery_high"] if row else None
     baseline = mean(values(window(days, day, BASELINE_DAYS, offset=1), "body_battery_high"))
     if value is None:
-        status, label = "unknown", "sem dado"
+        status, label = "unknown", "no data"
     elif value >= 75:
-        status, label = "good", "carregado"
+        status, label = "good", "charged"
     elif value >= 50:
-        status, label = "typical", "meia carga"
+        status, label = "typical", "half charged"
     else:
-        status, label = "attention", "pouca energia"
+        status, label = "attention", "low energy"
     return BaselineTile(
         key="body_battery",
-        label="Body Battery ao acordar",
+        label="Body Battery at wake-up",
         value=value,
         display=number(value),
-        baseline_label=f"média de 7 dias {number(baseline)}",
+        baseline_label=f"7-day average {number(baseline)}",
         delta_display=signed(None if value is None or baseline is None else value - baseline),
         status=status,
         status_label=label,
@@ -218,21 +218,21 @@ def stress_tile(days: dict[str, sqlite3.Row], day: date) -> BaselineTile:
     value = row["stress_avg"] if row else None
     baseline = mean(values(window(days, yesterday, BASELINE_DAYS, offset=1), "stress_avg"))
     if value is None:
-        status, label = "unknown", "sem dado"
+        status, label = "unknown", "no data"
     elif value <= 25:
-        status, label = "good", "descanso"
+        status, label = "good", "rest"
     elif value <= 50:
-        status, label = "typical", "baixo"
+        status, label = "typical", "low"
     elif value <= 75:
-        status, label = "attention", "médio"
+        status, label = "attention", "medium"
     else:
-        status, label = "bad", "alto"
+        status, label = "bad", "high"
     return BaselineTile(
         key="stress",
-        label="Estresse de ontem",
+        label="Yesterday's stress",
         value=value,
         display=number(value),
-        baseline_label=f"média de 7 dias {number(baseline)}",
+        baseline_label=f"7-day average {number(baseline)}",
         delta_display=signed(None if value is None or baseline is None else value - baseline),
         status=status,
         status_label=label,
@@ -248,17 +248,17 @@ def steps_tile(days: dict[str, sqlite3.Row], day: date) -> BaselineTile:
     value = row["steps"] if row else None
     goal = row["step_goal"] if row else None
     if value is None or not goal:
-        status, label = "unknown", "sem meta"
+        status, label = "unknown", "no goal"
     elif value >= goal:
-        status, label = "good", "meta batida"
+        status, label = "good", "goal reached"
     else:
-        status, label = "typical", f"{round(value / goal * 100)}% da meta"
+        status, label = "typical", f"{round(value / goal * 100)}% of goal"
     return BaselineTile(
         key="steps",
-        label="Passos de ontem",
+        label="Yesterday's steps",
         value=value,
         display=number(value),
-        baseline_label=f"meta {number(goal)}",
+        baseline_label=f"goal {number(goal)}",
         delta_display=signed(None if value is None or goal is None else value - goal),
         status=status,
         status_label=label,
@@ -269,9 +269,9 @@ def steps_tile(days: dict[str, sqlite3.Row], day: date) -> BaselineTile:
 
 
 ILLNESS_SIGNALS = (
-    ("resting_hr", "FC de repouso", "bpm", "resting_hr", 1, 3.0, 1.0),
-    ("hrv", "VFC da noite", "ms", "hrv_last_night", -1, 0.0, 2.0),
-    ("respiration", "Respiração no sono", "rpm", "sleep_respiration", 1, 1.0, 0.5),
+    ("resting_hr", "Resting HR", "bpm", "resting_hr", 1, 3.0, 1.0),
+    ("hrv", "Overnight HRV", "ms", "hrv_last_night", -1, 0.0, 2.0),
+    ("respiration", "Sleep respiration", "brpm", "sleep_respiration", 1, 1.0, 0.5),
 )
 
 
@@ -298,13 +298,13 @@ def illness_watch(days: dict[str, sqlite3.Row], day: date) -> IllnessWatch:
     nights = min((len(values(reference, signal[3])) for signal in ILLNESS_SIGNALS), default=0)
     flags = sum(signal.flagged for signal in signals)
     if nights < config.ILLNESS_MIN_REFERENCE_NIGHTS:
-        status, message = "insufficient", f"Precisa de {config.ILLNESS_MIN_REFERENCE_NIGHTS} noites de referência; há {nights}."
+        status, message = "insufficient", f"Needs {config.ILLNESS_MIN_REFERENCE_NIGHTS} reference nights; there are {nights}."
     elif flags >= 2:
-        status, message = "alert", "Dois ou mais sinais fora do seu normal ao mesmo tempo: pode ser o começo de uma doença ou cansaço acumulado. Pegue leve hoje."
+        status, message = "alert", "Two or more signals outside your normal at the same time: it could be the start of an illness or accumulated fatigue. Take it easy today."
     elif flags == 1:
-        status, message = "watch", "Um sinal fora do seu normal. Sozinho não quer dizer muito; vale observar amanhã."
+        status, message = "watch", "One signal outside your normal. On its own it does not mean much; worth watching tomorrow."
     else:
-        status, message = "ok", "FC de repouso, VFC e respiração dentro do seu normal."
+        status, message = "ok", "Resting HR, HRV and respiration within your normal."
     return IllnessWatch(status=status, message=message, reference_nights=nights, signals=signals)
 
 
@@ -345,21 +345,21 @@ def signals_of(connection: sqlite3.Connection, summaries: list[ActivitySummary],
     if load:
         ratio = load["acwr"]
         if ratio < 0.8:
-            status, detail = "attention", "abaixo de 0,8: dá para aumentar a carga com segurança"
+            status, detail = "attention", "below 0.8: you can safely increase the load"
         elif ratio <= 1.3:
-            status, detail = "good", "entre 0,8 e 1,3: evolução segura"
+            status, detail = "good", "between 0.8 and 1.3: safe progression"
         elif ratio <= 1.5:
-            status, detail = "attention", "acima de 1,3: cuidado com aumentos bruscos"
+            status, detail = "attention", "above 1.3: beware of sudden increases"
         else:
-            status, detail = "bad", "acima de 1,5: risco alto de lesão"
-        signals.append(Signal(key="acwr", label="Carga aguda ÷ crônica", display=number(ratio, 1), detail=detail, status=status))
+            status, detail = "bad", "above 1.5: high injury risk"
+        signals.append(Signal(key="acwr", label="Acute:Chronic load ratio", display=number(ratio, 1), detail=detail, status=status))
     recent = run_km(summaries, day - timedelta(days=6), day)
     prior = run_km(summaries, day - timedelta(days=34), day - timedelta(days=7)) / 4
     signals.append(Signal(
         key="weekly_km",
-        label="Km nos últimos 7 dias",
+        label="Km in the last 7 days",
         display=number(recent, 1),
-        detail=f"média das 4 semanas anteriores: {number(prior, 1)} km",
+        detail=f"average of the previous 4 weeks: {number(prior, 1)} km",
         status="typical",
     ))
     runs = [summary for summary in summaries if summary.sport == "run" and summary.date <= str(day)]
@@ -368,9 +368,9 @@ def signals_of(connection: sqlite3.Connection, summaries: list[ActivitySummary],
         since = (day - date.fromisoformat(last.date)).days
         signals.append(Signal(
             key="days_since_run",
-            label="Desde a última corrida",
-            display="hoje" if since == 0 else f"{since} dia{'s' if since > 1 else ''}",
-            detail=f"{number(last.distance_km, 1)} km em {last.date[8:10]}/{last.date[5:7]}",
+            label="Since last run",
+            display="today" if since == 0 else f"{since} day{'s' if since > 1 else ''}",
+            detail=f"{number(last.distance_km, 1)} km on {date.fromisoformat(last.date):%b} {int(last.date[8:10])}",
             status="attention" if since >= 5 else "typical",
         ))
         window_start = str(date.fromisoformat(last.date) - timedelta(days=30))
@@ -379,12 +379,12 @@ def signals_of(connection: sqlite3.Connection, summaries: list[ActivitySummary],
         spike = longest > 0 and (last.distance_km or 0) > longest * 1.1
         signals.append(Signal(
             key="long_run",
-            label="Longão",
+            label="Longest run",
             display=number(max(longest, last.distance_km or 0), 1, " km"),
             detail=(
-                f"a última corrida passou 10% da maior dos 30 dias antes ({number(longest, 1)} km): aumente aos poucos"
+                f"the last run was over 10% longer than the longest of the 30 days before it ({number(longest, 1)} km): build up gradually"
                 if spike
-                else "maior corrida dos últimos 30 dias"
+                else "longest run of the last 30 days"
             ),
             status="attention" if spike else "typical",
         ))

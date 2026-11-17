@@ -13,7 +13,7 @@ export const readDocument = async <T>(name: string): Promise<T> => {
     if ((cause as NodeJS.ErrnoException).code === "ENOENT")
       error(
         503,
-        `Dados não encontrados em ${file}. Rode o pipeline: cd pipeline && uv run --frozen python -m garmin_insights.run`,
+        `Data not found at ${file}. Run the pipeline: cd pipeline && uv run --frozen python -m garmin_insights.run`,
       );
     throw cause;
   }

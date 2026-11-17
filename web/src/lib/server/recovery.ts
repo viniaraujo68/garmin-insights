@@ -8,7 +8,7 @@ export const loadRecovery = async (requested: string | null) => {
     readDocument<Meta>("meta"),
   ]);
   const dates = recovery.nights.map((night) => night.date);
-  if (requested !== null && !dates.includes(requested)) error(404, "Noite não encontrada");
+  if (requested !== null && !dates.includes(requested)) error(404, "Night not found");
   const chosen = requested ?? dates.at(-1) ?? null;
   const night = chosen ? await readDocument<SleepNight>(`sleep/${chosen}`) : null;
   return { recovery, night, today: meta.today };

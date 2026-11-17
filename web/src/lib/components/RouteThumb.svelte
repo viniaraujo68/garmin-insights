@@ -53,7 +53,7 @@
   viewBox="0 0 {WIDTH} {HEIGHT}"
   class="aspect-[4/3] w-full"
   role="img"
-  aria-label="Percurso da corrida de {route.date}"
+  aria-label="Route of the run on {route.date}"
 >
   {#each segments as segment, index (index)}
     <line

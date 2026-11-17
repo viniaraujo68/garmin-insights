@@ -8,8 +8,8 @@
   const UNIT: Record<string, string> = {
     hrv: "ms",
     resting_hr: "bpm",
-    sleep: "pontos",
-    steps: "passos",
+    sleep: "points",
+    steps: "steps",
   };
   const FIXED: Record<string, [number, number]> = {
     sleep: [0, 100],
@@ -33,7 +33,7 @@
       bandHigh={tile.band_high}
       unit={UNIT[tile.key] ?? ""}
       yDomain={FIXED[tile.key] ?? null}
-      label="{tile.label} nos últimos 14 dias"
+      label="{tile.label} over the last 14 days"
     />
   </div>
 </article>

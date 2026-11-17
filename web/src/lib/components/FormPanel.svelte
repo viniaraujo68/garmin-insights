@@ -8,22 +8,22 @@
   const { metric }: { metric: FormMetric } = $props();
 
   const HELP: Record<string, string> = {
-    cadence: "Passos por minuto. Passos mais curtos e rápidos costumam reduzir o impacto.",
-    stride_m: "Distância de cada passo. Depende da altura e da velocidade.",
+    cadence: "Steps per minute. Shorter, quicker steps tend to reduce impact.",
+    stride_m: "Distance covered by each step. Depends on height and speed.",
     ground_contact_ms:
-      "Quanto tempo o pé fica no chão a cada passo. Menos = passada mais elástica.",
+      "How long the foot stays on the ground each step. Less = a springier stride.",
     vertical_oscillation_cm:
-      "Quanto o corpo sobe e desce a cada passo. Menos = menos energia gasta subindo.",
-    vertical_ratio_pct: "A oscilação vertical dividida pela passada. Menos = mais eficiente.",
-    power_w: "A força para manter o ritmo. Menos watts no mesmo ritmo = mais econômico.",
+      "How much the body moves up and down each step. Less = less energy wasted bouncing.",
+    vertical_ratio_pct: "Vertical oscillation divided by stride length. Less = more efficient.",
+    power_w: "The force needed to hold the pace. Fewer watts at the same pace = more economical.",
   };
 
   const digits = $derived(Math.min(2, Math.max(0, metric.digits)) as 0 | 1 | 2);
   const band = $derived(TECHNIQUE.find((item) => item.key === metric.key) ?? null);
   const rank = $derived(band && band.limits ? techniqueRank(band, metric.current) : null);
   const direction = $derived.by(() => {
-    if (metric.lower_is_better === null) return "sem melhor ou pior";
-    return metric.lower_is_better ? "↓ menor é melhor" : "↑ maior é melhor";
+    if (metric.lower_is_better === null) return "no better or worse";
+    return metric.lower_is_better ? "↓ lower is better" : "↑ higher is better";
   });
   const tone = $derived.by(() => {
     if (
@@ -43,7 +43,7 @@
   const averageRange = $derived(
     band?.limits
       ? {
-          label: "Média dos corredores",
+          label: "Average runners",
           low: points.map((point) => ({ date: point.date, value: band.limits?.[1] ?? null })),
           high: points.map((point) => ({ date: point.date, value: band.limits?.[2] ?? null })),
           slot: 2,
@@ -67,14 +67,14 @@
       {#if rank}<StatusText status={rank.status} label={rank.label} />{/if}
     </div>
     <p class="text-xs text-base-content/60">
-      média das últimas 3 corridas{referencePace ? `, no ritmo de ${referencePace}/km` : ""}
+      average of the last 3 runs{referencePace ? `, at ${referencePace}/km pace` : ""}
     </p>
     <p class={["text-sm", tone]}>{metric.verdict}</p>
     <TimeChart
       series={[{ label: metric.label, points, slot: 0, dots: true, width: 1.5 }]}
       band={averageRange}
       format={(value) => `${number(value, digits)} ${metric.unit}`}
-      ariaLabel="{metric.label} por corrida"
+      ariaLabel="{metric.label} per run"
       legend={false}
       zero={false}
       height="h-40"

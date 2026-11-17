@@ -10,10 +10,10 @@
   const summary = $derived(load.summary);
 
   const SUMMARY_LABEL: Record<string, string> = {
-    good: "na faixa",
-    attention: "abaixo da faixa",
-    bad: "acima da faixa",
-    unknown: "sem dado",
+    good: "in range",
+    attention: "below range",
+    bad: "above range",
+    unknown: "no data",
   };
 
   const firstTraining = $derived(load.weeks.findIndex((week) => week.load > 0));
@@ -25,21 +25,21 @@
   );
   const firstGarminDay = $derived(load.days.findIndex((day) => (day.acute ?? 0) > 0));
   const garminDays = $derived(firstGarminDay < 0 ? [] : load.days.slice(firstGarminDay));
-  const runsLabel = (runs: number): string => `${runs} ${runs === 1 ? "corrida" : "corridas"}`;
+  const runsLabel = (runs: number): string => `${runs} ${runs === 1 ? "run" : "runs"}`;
 </script>
 
 <PageFrame
-  title="Carga"
-  description="Se você está treinando o suficiente, demais ou de menos, e se a mistura de leve e forte está boa."
+  title="Load"
+  description="Whether you are training enough, too much or too little, and whether your mix of easy and hard is right."
 >
   <section
     class="card border border-base-content/10 bg-base-100"
-    aria-labelledby="veredito"
+    aria-labelledby="verdict"
     data-testid="load-summary"
   >
     <div class="card-body gap-3 p-5">
-      <StatusText status={summary.status} label={SUMMARY_LABEL[summary.status] ?? "sem dado"} />
-      <h2 id="veredito" class="text-xl font-semibold tracking-tight">{summary.headline}</h2>
+      <StatusText status={summary.status} label={SUMMARY_LABEL[summary.status] ?? "no data"} />
+      <h2 id="verdict" class="text-xl font-semibold tracking-tight">{summary.headline}</h2>
       <p class="max-w-3xl text-sm text-base-content/80">{summary.detail}</p>
       {#if summary.easy_line}
         <p class="max-w-3xl text-sm text-base-content/80">{summary.easy_line}</p>
@@ -50,10 +50,9 @@
   <div class="grid gap-4 xl:grid-cols-2">
     <section class="card border border-base-content/10 bg-base-100" aria-labelledby="volume">
       <div class="card-body gap-3 p-5">
-        <h2 id="volume" class="text-base font-semibold">Quilômetros por semana</h2>
+        <h2 id="volume" class="text-base font-semibold">Kilometres per week</h2>
         <p class="text-xs text-base-content/70">
-          Quanto você correu em cada semana (de segunda a domingo). A semana com * ainda está em
-          andamento.
+          How far you ran each week (Monday to Sunday). The week marked * is still in progress.
         </p>
         <BarChart
           labels={weekLabels}
@@ -64,62 +63,62 @@
             return week ? [`${runsLabel(week.runs)} · ${number(week.minutes_run)} min`] : [];
           }}
           height="h-56"
-          ariaLabel="Quilômetros por semana"
+          ariaLabel="Kilometres per week"
         />
       </div>
     </section>
-    <section class="card border border-base-content/10 bg-base-100" aria-labelledby="leve">
+    <section class="card border border-base-content/10 bg-base-100" aria-labelledby="easy">
       <div class="card-body gap-3 p-5">
-        <h2 id="leve" class="text-base font-semibold">Quanto do tempo foi leve</h2>
+        <h2 id="easy" class="text-base font-semibold">How much of the time was easy</h2>
         <p class="text-xs text-base-content/70">
-          % do tempo correndo nas zonas de FC 1 e 2. A regra 80/20: uns 80% leve deixa você aguentar
-          mais treino e evoluir mais. Bem abaixo da linha = forte demais.
+          % of running time in HR zones 1 and 2. The 80/20 rule: around 80% easy lets you handle
+          more training and improve more. Well below the line = too hard.
         </p>
         <BarChart
           labels={weekLabels}
-          series={[{ label: "Leve", values: weeks.map((week) => week.easy_pct), slot: 2 }]}
+          series={[{ label: "Easy", values: weeks.map((week) => week.easy_pct), slot: 2 }]}
           format={(value) => `${number(value)}%`}
-          reference={{ value: 80, label: "meta 80%" }}
+          reference={{ value: 80, label: "target 80%" }}
           extraTooltip={(index) => {
             const week = weeks[index];
             return week
               ? [
-                  `${number(week.easy_min)} de ${number(week.easy_min + week.moderate_min + week.hard_min)} min leves`,
+                  `${number(week.easy_min)} de ${number(week.easy_min + week.moderate_min + week.hard_min)} min easy`,
                 ]
               : [];
           }}
           height="h-56"
-          ariaLabel="Porcentagem de tempo leve por semana"
+          ariaLabel="Percentage of easy time per week"
         />
       </div>
     </section>
   </div>
 
-  <section class="card border border-base-content/10 bg-base-100" aria-labelledby="faixa">
+  <section class="card border border-base-content/10 bg-base-100" aria-labelledby="range">
     <div class="card-body gap-3 p-5">
-      <h2 id="faixa" class="text-base font-semibold">Carga dos últimos 7 dias</h2>
+      <h2 id="range" class="text-base font-semibold">Last 7 days load</h2>
       <p class="text-xs text-base-content/70">
-        Cada ponto soma o esforço (a carga que a Garmin dá a cada treino) dos 7 dias anteriores. A
-        faixa verde é o quanto você aguenta, calculada pelas suas últimas 4 semanas: dentro dela
-        você evolui; abaixo está destreinando; acima o risco de lesão sobe.
+        Each point adds up the effort (the load Garmin gives each workout) of the previous 7 days.
+        The green band is how much you can handle, calculated from your last 4 weeks: inside it you
+        improve; below it you are detraining; above it injury risk rises.
       </p>
       <TimeChart
         series={[
           {
-            label: "Carga dos últimos 7 dias",
+            label: "Last 7 days load",
             points: garminDays.map((day) => ({ date: day.date, value: day.acute })),
             slot: 0,
             width: 2.5,
           },
         ]}
         band={{
-          label: "Faixa recomendada",
+          label: "Recommended range",
           low: garminDays.map((day) => ({ date: day.date, value: day.chronic_min })),
           high: garminDays.map((day) => ({ date: day.date, value: day.chronic_max })),
           slot: 2,
         }}
         format={(value) => number(value)}
-        ariaLabel="Carga dos últimos 7 dias e faixa recomendada"
+        ariaLabel="Last 7 days load and recommended range"
         height="h-56"
       />
     </div>

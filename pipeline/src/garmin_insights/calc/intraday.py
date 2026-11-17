@@ -9,10 +9,10 @@ STRESS_NO_DATA = -1
 STRESS_MOTION = -2
 MOTION_MERGE_MS = 2 * STRESS_SAMPLE_MS
 STRESS_SHARES = (
-    ("rest", "descanso", "stress_rest_s"),
-    ("low", "baixo", "stress_low_s"),
-    ("medium", "médio", "stress_medium_s"),
-    ("high", "alto", "stress_high_s"),
+    ("rest", "rest", "stress_rest_s"),
+    ("low", "low", "stress_low_s"),
+    ("medium", "medium", "stress_medium_s"),
+    ("high", "high", "stress_high_s"),
 )
 
 
@@ -45,7 +45,7 @@ def motion_spans(raw_stress: list[tuple[int, float]], bounds: tuple[int, int]) -
             merged[-1][1] = timestamp + STRESS_SAMPLE_MS
         else:
             merged.append([timestamp, timestamp + STRESS_SAMPLE_MS])
-    return [span for start, end in merged if (span := clipped("motion", start, end, bounds, "em movimento"))]
+    return [span for start, end in merged if (span := clipped("motion", start, end, bounds, "moving"))]
 
 
 def sleep_spans(connection: sqlite3.Connection, day: str, bounds: tuple[int, int]) -> list[DaySpan]:
@@ -54,7 +54,7 @@ def sleep_spans(connection: sqlite3.Connection, day: str, bounds: tuple[int, int
         "SELECT date, min(start_ms) AS start_ms, max(end_ms) AS end_ms FROM sleep_stages WHERE date IN (?, ?) GROUP BY date",
         (day, following),
     )
-    return [span for row in rows if (span := clipped("sleep", row["start_ms"], row["end_ms"], bounds, "sono"))]
+    return [span for row in rows if (span := clipped("sleep", row["start_ms"], row["end_ms"], bounds, "sleep"))]
 
 
 def activity_spans(connection: sqlite3.Connection, bounds: tuple[int, int]) -> list[DaySpan]:
@@ -62,7 +62,7 @@ def activity_spans(connection: sqlite3.Connection, bounds: tuple[int, int]) -> l
     query = "SELECT activity_id, start_local, coalesce(elapsed_s, duration_s) AS seconds, name FROM activities WHERE coalesce(elapsed_s, duration_s) IS NOT NULL"
     for row in connection.execute(query):
         start = local_ms(row["start_local"])
-        span = clipped("activity", start, start + int(row["seconds"] * 1000), bounds, row["name"] or "atividade", row["activity_id"])
+        span = clipped("activity", start, start + int(row["seconds"] * 1000), bounds, row["name"] or "activity", row["activity_id"])
         if span:
             spans.append(span)
     return spans

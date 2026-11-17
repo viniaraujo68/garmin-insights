@@ -81,7 +81,7 @@
               ]
             : []),
           {
-            label: "pontos",
+            label: "points",
             data: items.map((item) => ({ x: item.x, y: item.y })),
             backgroundColor: resolved,
             borderColor: colors.surface,
@@ -97,10 +97,10 @@
         animation: false,
         onClick: (_event, elements, chart) => {
           const hit = elements.find(
-            (element) => chart.data.datasets[element.datasetIndex]?.label === "pontos",
+            (element) => chart.data.datasets[element.datasetIndex]?.label === "points",
           );
           const activityId = hit ? items[hit.index]?.activityId : undefined;
-          if (activityId) void goto(resolve("/corridas/[id]", { id: activityId }));
+          if (activityId) void goto(resolve("/runs/[id]", { id: activityId }));
         },
         plugins: {
           legend: { display: false },
@@ -111,7 +111,7 @@
             borderColor: colors.grid,
             borderWidth: 1,
             padding: 10,
-            filter: (item) => item.dataset.label === "pontos",
+            filter: (item) => item.dataset.label === "points",
             callbacks: {
               title: () => "",
               label: (item) => items[item.dataIndex]?.tooltip ?? [],

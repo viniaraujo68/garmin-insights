@@ -1,140 +1,142 @@
 # garmin-insights
 
-Painel pessoal de corrida e saúde a partir do seu relógio Garmin. Ele baixa os seus dados da
-Garmin Connect, guarda tudo na sua máquina e mostra num site local com respostas diretas:
-como você acordou, se está treinando o suficiente, se está ficando mais eficiente e como foi
-cada corrida e cada noite.
+A personal running and health dashboard built from your Garmin watch. It downloads your data
+from Garmin Connect, keeps everything on your machine and shows it on a local site with direct
+answers: how you woke up, whether you are training enough, whether you are getting more
+efficient, and how each run and each night went.
 
-Roda só em `localhost`. Nada sai da sua máquina além das chamadas à própria Garmin.
+It runs on `localhost` only. Nothing leaves your machine except the calls to Garmin itself.
 
-## O que tem
+## What is in it
 
-| Tela | O que responde |
+| Page | What it answers |
 |---|---|
-| **Hoje** (`/` e `/dia/[data]`) | Prontidão e o que pesou, cards comparados à sua média, o dia em detalhe (FC, estresse, Body Battery e passos da meia-noite à meia-noite, com sono e atividades), alerta de doença e a semana. Funciona para qualquer dia anterior também |
-| **Corridas** (`/corridas`) | Explorador de corridas por qualquer métrica, galeria de percursos e tabela |
-| **Corrida** (`/corridas/[id]`) | Mapa colorido por pace, FC, zona ou inclinação, curvas sincronizadas com o mapa, splits, zonas, clima e técnica |
-| **Evolução** (`/evolucao`) | Eficiência com e sem o efeito do calor, VO2max, previsões de prova, técnica corrida a corrida e recordes |
-| **Carga** (`/carga`) | Se você está treinando de menos, na medida ou demais, km por semana e quanto do tempo foi leve |
-| **Recuperação** (`/recuperacao`) | VFC, FC de repouso, sono e Body Battery contra a sua faixa normal, fases do sono e cada noite em detalhe |
-| **Mapas** (`/mapas`) | Todas as corridas sobrepostas por frequência, pace ou FC |
+| **Today** (`/` and `/day/[date]`) | Training Readiness and what weighed in, cards compared with your baseline, the day in detail (HR, stress, Body Battery and steps from midnight to midnight, with sleep and activities), illness alert and the week. Works for any previous day too |
+| **Runs** (`/runs`) | Run explorer by any metric, route gallery and table |
+| **Run** (`/runs/[id]`) | Map coloured by pace, HR, zone or grade, lanes synced with the map, splits, zones, weather and technique |
+| **Progress** (`/progress`) | Efficiency with and without the heat effect, VO2max, race predictions, technique run by run and records |
+| **Load** (`/load`) | Whether you are training too little, just right or too much, km per week and how much of the time was easy |
+| **Recovery** (`/recovery`) | HRV, resting HR, sleep and Body Battery against your normal range, sleep stages and each night in detail |
+| **Maps** (`/maps`) | All runs overlaid by frequency, pace or HR |
 
-## Rodando pela primeira vez
+## First run
 
-Precisa de:
+You need:
 
-- Linux, macOS ou WSL
-- [uv](https://docs.astral.sh/uv/getting-started/installation/) (instala o Python sozinho)
-- [Node.js](https://nodejs.org/) 22 ou mais novo
-- Uma conta Garmin Connect com um relógio sincronizado
+- Linux, macOS or WSL
+- [uv](https://docs.astral.sh/uv/getting-started/installation/) (installs Python by itself)
+- [Node.js](https://nodejs.org/) 22 or newer
+- A Garmin Connect account with a synced watch
 
 ```bash
 git clone https://github.com/viniaraujo68/garmin-insights.git
 cd garmin-insights
 ```
 
-Escolha desde quando buscar o histórico em `pipeline/src/garmin_insights/config.py`
-(`HISTORY_START`). Quanto mais longe, mais demora a primeira sincronização: são umas 10
-chamadas por dia de histórico, com pausa de 1 s entre elas para não ser bloqueado pela Garmin.
+Choose how far back to fetch history in `pipeline/src/garmin_insights/config.py`
+(`HISTORY_START`). The further back, the longer the first sync takes: about 10 calls per day of
+history, with a 1 s pause between them so Garmin does not block you.
 
-Depois é um comando só:
-
-```bash
-./run.sh
-```
-
-Na primeira vez ele instala as dependências do site, pede o seu e-mail, a senha (escondida) e,
-se a conta tiver, o código de verificação da Garmin. O login fica salvo em `~/.garminconnect`
-e a senha não é guardada. Em seguida ele baixa o histórico, monta o banco e sobe o site em
-http://localhost:5173.
-
-## No dia a dia
+After that it is a single command:
 
 ```bash
 ./run.sh
 ```
 
-Busca o que mudou desde a última vez (normalmente 1 a 2 minutos) e sobe o site. Se o site já
-estiver no ar, ele só atualiza os dados: é só recarregar a página. `Ctrl+C` para o site.
+The first time, it installs the site dependencies and asks for your e-mail, your password
+(hidden) and, if the account has one, the Garmin verification code. The login is saved in
+`~/.garminconnect` and the password is not stored. Then it downloads the history, builds the
+database and starts the site at http://localhost:5173.
 
-As opções ficam no topo do `run.sh`: `PORT`, e `SYNC=false` para subir sem sincronizar.
+## Day to day
 
-Se aparecer erro de login (o token da Garmin expira de tempos em tempos), entre de novo:
+```bash
+./run.sh
+```
+
+It fetches what changed since the last time (usually 1 to 2 minutes) and starts the site. If
+the site is already running, it only updates the data: just reload the page. `Ctrl+C` stops the
+site.
+
+The options are at the top of `run.sh`: `PORT`, and `SYNC=false` to start without syncing.
+
+If a login error appears (the Garmin token expires from time to time), log in again:
 
 ```bash
 cd pipeline && uv run --frozen python -m garmin_insights.login
 ```
 
-## Como funciona
+## How it works
 
 ```mermaid
 flowchart LR
-  G[Garmin Connect] -->|collect| R[data/raw<br/>JSON bruto]
+  G[Garmin Connect] -->|collect| R[data/raw<br/>raw JSON]
   R -->|store| D[(data/garmin.db<br/>SQLite)]
-  D -->|publish| S[data/site<br/>JSON validado]
+  D -->|publish| S[data/site<br/>validated JSON]
   S --> W[web<br/>SvelteKit]
 ```
 
-1. **collect** baixa cada resposta da Garmin para um arquivo em `data/raw/`. É incremental:
-   busca de novo só os últimos `LOOKBACK_DAYS` dias (a Garmin revisa sono, VFC e carga depois)
-   e completa o que faltar. Respeita pausas e espera quando a Garmin responde 429.
-2. **store** reconstrói o banco SQLite inteiro a partir de `data/raw/` a cada execução.
-3. **publish** calcula as métricas e escreve os JSON que o site lê, validados por um contrato
-   pydantic (campo inesperado ou arquivo faltando derruba a publicação, e o site anterior fica).
-4. **web** é um SvelteKit que lê os JSON a cada requisição, então não precisa de build novo
-   depois de sincronizar.
+1. **collect** downloads each Garmin response into a file under `data/raw/`. It is incremental:
+   it only refetches the last `LOOKBACK_DAYS` days (Garmin revises sleep, HRV and load later)
+   and fills in whatever is missing. It respects pauses and waits when Garmin answers 429.
+2. **store** rebuilds the whole SQLite database from `data/raw/` on every run.
+3. **publish** computes the metrics and writes the JSON files the site reads, validated by a
+   pydantic contract (an unexpected field or a missing file aborts the publish, and the previous
+   site stays).
+4. **web** is a SvelteKit app that reads the JSON on every request, so it needs no new build
+   after a sync.
 
-| Pasta | O que tem |
+| Folder | What is in it |
 |---|---|
-| `pipeline/src/garmin_insights/collect` | Cliente da Garmin com cache, pausa e nova tentativa; sync incremental |
-| `pipeline/src/garmin_insights/store` | Esquema SQLite e carga do JSON bruto |
-| `pipeline/src/garmin_insights/calc` | Métricas calculadas a partir do banco |
-| `pipeline/src/garmin_insights/publish` | Contrato dos JSON do site, escrita e verificação |
+| `pipeline/src/garmin_insights/collect` | Garmin client with caching, pauses and retries; incremental sync |
+| `pipeline/src/garmin_insights/store` | SQLite schema and raw JSON loading |
+| `pipeline/src/garmin_insights/calc` | Metrics computed from the database |
+| `pipeline/src/garmin_insights/publish` | Contract for the site JSON, writing and verification |
 | `web/` | SvelteKit (adapter-node), [plinth](https://github.com/viniaraujo68/plinth), Chart.js e Leaflet |
-| `data/` | Fora do git: seus dados de saúde e GPS |
-| `docs/DECISIONS.md` | Por que cada coisa foi feita do jeito que foi |
+| `data/` | Outside git: your health and GPS data |
+| `docs/DECISIONS.md` | Why each thing was done the way it was |
 
-O acesso à Garmin usa a biblioteca não oficial
-[python-garminconnect](https://github.com/cyberjunky/python-garminconnect). Se a Garmin mudar a
-API, a sincronização pode quebrar até a biblioteca ser atualizada.
+Garmin access uses the unofficial
+[python-garminconnect](https://github.com/cyberjunky/python-garminconnect) library. If Garmin
+changes its API, syncing may break until the library is updated.
 
-## Desenvolvimento
+## Development
 
 ```bash
 cd pipeline
-uv run --frozen pytest -q                       # testes do pipeline
-uv run --frozen python -m garmin_insights.run   # sincroniza, monta o banco e publica
+uv run --frozen pytest -q                       # pipeline tests
+uv run --frozen python -m garmin_insights.run   # sync, build the database and publish
 
 cd ../web
 npm ci
-npm run dev                                     # http://localhost:5173 com hot reload
-npm run check                                   # tipos
+npm run dev                                     # http://localhost:5173 with hot reload
+npm run check                                   # types
 npm run lint                                    # Prettier + ESLint
 npm run test:e2e                                # Playwright
 ```
 
-Os testes e2e rodam contra os seus dados em `data/site`, então precisam de uma sincronização
-antes. Na primeira vez, rode `npx playwright install chromium-headless-shell`.
+The e2e tests run against your data in `data/site`, so they need a sync first. The first time,
+run `npx playwright install chromium-headless-shell`.
 
-As etapas do pipeline (`STAGES`) ficam no topo de `pipeline/src/garmin_insights/run.py`; o
-resto da configuração em `pipeline/src/garmin_insights/config.py`.
+The pipeline stages (`STAGES`) are at the top of `pipeline/src/garmin_insights/run.py`; the
+rest of the configuration is in `pipeline/src/garmin_insights/config.py`.
 
-Ao mudar o contrato (`publish/contract.py`), regenere o esquema e os tipos do site; um teste
-falha se eles estiverem desatualizados:
+When you change the contract (`publish/contract.py`), regenerate the site schema and types; a
+test fails if they are out of date:
 
 ```bash
 cd pipeline && uv run --frozen python -m garmin_insights.publish.schema
 cd ../web && npm run types
 ```
 
-## Privacidade
+## Privacy
 
-- `data/` não entra no git: dados de saúde e percursos GPS ficam só na sua máquina.
-- O login da Garmin fica em `~/.garminconnect`, fora do projeto. A senha nunca é salva.
-- Os percursos GPS mostram onde você mora. O pipeline já detecta essa região
-  (`routes.json` → `privacy`), mas o site local mostra os percursos inteiros. Cuidado ao
-  compartilhar prints dos mapas.
+- `data/` is not committed to git: health data and GPS routes stay only on your machine.
+- The Garmin login lives in `~/.garminconnect`, outside the project. The password is never saved.
+- GPS routes show where you live. The pipeline already detects that area
+  (`routes.json` → `privacy`), but the local site shows the full routes. Be careful when
+  sharing screenshots of the maps.
 
-## Licença
+## License
 
 [MIT](LICENSE)

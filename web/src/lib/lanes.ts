@@ -33,7 +33,7 @@ export interface LaneBand {
 }
 
 const PAUSE_SECONDS = 30;
-const hourFormat = new Intl.DateTimeFormat("pt-BR", {
+const hourFormat = new Intl.DateTimeFormat("en-GB", {
   hour: "2-digit",
   minute: "2-digit",
   timeZone: "America/Sao_Paulo",
@@ -93,7 +93,7 @@ export const pauses = (
     if (gap >= PAUSE_SECONDS)
       found.push({
         index,
-        marker: { x: where / 1000, label: `pausa ${Math.round(gap / 60)} min` },
+        marker: { x: where / 1000, label: `pause ${Math.round(gap / 60)} min` },
       });
   }
   return found;

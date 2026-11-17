@@ -4,11 +4,11 @@ import type { ActivityDetail, ActivitySummary } from "$lib/data/types";
 import type { PageServerLoad } from "./$types";
 
 export const load: PageServerLoad = async ({ params }) => {
-  if (!/^\d+$/.test(params.id)) error(404, "Corrida não encontrada");
+  if (!/^\d+$/.test(params.id)) error(404, "Run not found");
   const activities = await readDocument<ActivitySummary[]>("activities");
   const runs = activities.filter((activity) => activity.sport === "run");
   const position = runs.findIndex((run) => run.activity_id === params.id);
-  if (position < 0) error(404, "Corrida não encontrada");
+  if (position < 0) error(404, "Run not found");
   return {
     detail: await readDocument<ActivityDetail>(`activity/${params.id}`),
     previousId: runs[position - 1]?.activity_id ?? null,

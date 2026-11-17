@@ -84,7 +84,7 @@
     if (area)
       datasets.push(
         {
-          label: `${area.label} (mín)`,
+          label: `${area.label} (min)`,
           data: toXY(area.low),
           borderWidth: 0,
           pointRadius: 0,
@@ -141,7 +141,7 @@
               boxWidth: 8,
               boxHeight: 8,
               padding: 14,
-              filter: (item) => !String(item.text).endsWith("(mín)"),
+              filter: (item) => !String(item.text).endsWith("(min)"),
             },
           },
           tooltip: {
@@ -152,7 +152,7 @@
             borderWidth: 1,
             padding: 10,
             filter: (item) =>
-              !String(item.dataset.label).endsWith("(mín)") && item.parsed.y !== null,
+              !String(item.dataset.label).endsWith("(min)") && item.parsed.y !== null,
             callbacks: {
               title: (items) =>
                 items[0] ? dayMonth(new Date(items[0].parsed.x ?? 0).toISOString()) : "",

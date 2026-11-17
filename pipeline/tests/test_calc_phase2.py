@@ -42,7 +42,7 @@ def test_riegel_scales_time_with_distance():
 
 
 def test_week_verdict_follows_the_easy_share():
-    assert (verdict(None), verdict(50), verdict(80), verdict(95)) == (None, "intenso demais", "equilibrado", "leve demais")
+    assert (verdict(None), verdict(50), verdict(80), verdict(95)) == (None, "too hard", "balanced", "too easy")
 
 
 def test_weeks_split_minutes_by_sport_and_intensity():
@@ -59,9 +59,9 @@ def test_form_compares_recent_runs_at_the_same_pace():
     recent = [summary(str(today - timedelta(days=5 + n)), pace_s_km=330 - n * 5, ground_contact_ms=270.0) for n in range(3)]
     contact = next(metric for metric in form_metrics(earlier + recent, today) if metric.key == "ground_contact_ms")
     assert contact.recent_delta == pytest.approx(-10.0)
-    assert contact.verdict.endswith("melhorou.")
+    assert contact.verdict.endswith("improved.")
     cadence = next(metric for metric in form_metrics(earlier + recent, today) if metric.key == "cadence")
-    assert "melhorou" not in cadence.verdict and "piorou" not in cadence.verdict
+    assert "improved" not in cadence.verdict and "worsened" not in cadence.verdict
 
 
 def test_form_adjusts_each_run_to_the_reference_speed():
@@ -80,8 +80,8 @@ def load_day(acute: float | None, low: float | None = 100.0, high: float | None 
 
 def test_load_verdict_counts_typical_runs_to_reach_the_band():
     status, headline, detail = load_verdict([load_day(40.0)], typical=25.0)
-    assert status == "attention" and "menos" in headline
-    assert "Cerca de 3 corridas" in detail
+    assert status == "attention" and "less" in headline
+    assert "About 3 runs" in detail
     assert load_verdict([load_day(150.0)], typical=25.0)[0] == "good"
     assert load_verdict([load_day(260.0)], typical=25.0)[0] == "bad"
     assert load_verdict([load_day(None)], typical=25.0)[0] == "unknown"
@@ -95,5 +95,5 @@ def test_easy_line_sums_the_last_four_calendar_weeks():
     ]
     weeks = weeks_of(runs, {}, date(2026, 8, 31), date(2026, 10, 14))
     line = easy_line(weeks)
-    assert line is not None and line.startswith("Nas últimas 4 semanas, 75%")
+    assert line is not None and line.startswith("Over the last 4 weeks, 75%")
 

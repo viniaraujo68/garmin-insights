@@ -11,17 +11,17 @@
     insufficient: "border-base-content/10",
   };
   const TITLE: Record<string, string> = {
-    ok: "Tudo no seu normal",
-    watch: "Um sinal fora do normal",
-    alert: "Atenção: sinais de cansaço ou doença",
-    insufficient: "Ainda aprendendo o seu normal",
+    ok: "Everything in your normal range",
+    watch: "One signal outside your normal",
+    alert: "Attention: signs of fatigue or illness",
+    insufficient: "Still learning your normal",
   };
 </script>
 
-<section class={["card border bg-base-100", TONE[watch.status]]} aria-labelledby="doenca">
+<section class={["card border bg-base-100", TONE[watch.status]]} aria-labelledby="illness">
   <div class="card-body gap-3 p-5">
     <div class="flex flex-col gap-1">
-      <h2 id="doenca" class="text-base font-semibold">{TITLE[watch.status]}</h2>
+      <h2 id="illness" class="text-base font-semibold">{TITLE[watch.status]}</h2>
       <p class="text-sm text-base-content/70">{watch.message}</p>
     </div>
     <ul class="grid gap-2 sm:grid-cols-3">
@@ -38,16 +38,16 @@
             <span class="text-xs font-normal text-base-content/60">{signal.unit}</span>
           </p>
           <p class="text-xs text-base-content/60 tabular-nums">
-            seu normal {number(signal.median, 1)} · {signal.z === null
-              ? "sem desvio"
-              : `${delta(signal.z, 1)} desvios`}
+            your normal {number(signal.median, 1)} · {signal.z === null
+              ? "no deviation"
+              : `${delta(signal.z, 1)} SD`}
           </p>
         </li>
       {/each}
     </ul>
     <p class="text-xs text-base-content/50">
-      Compara a noite de hoje com a mediana das noites entre 30 e 3 dias atrás ({watch.reference_nights}
-      noites). Um sinal sozinho é comum; dois juntos merecem atenção. Não é diagnóstico.
+      Compares tonight's reading with the median of the nights between 30 and 3 days ago ({watch.reference_nights}
+      nights). One signal alone is common; two together deserve attention. Not a diagnosis.
     </p>
   </div>
 </section>

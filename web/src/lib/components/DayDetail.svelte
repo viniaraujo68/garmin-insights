@@ -20,9 +20,9 @@
     motion: "var(--color-base-content)",
   };
   const SPAN_LABEL: Record<DaySpan["kind"], string> = {
-    sleep: "sono",
-    activity: "atividade",
-    motion: "em movimento (sem leitura de estresse)",
+    sleep: "sleep",
+    activity: "activity",
+    motion: "moving (no stress reading)",
   };
   const SHARE_COLOR: Record<string, string> = {
     rest: "var(--series-1)",
@@ -32,9 +32,9 @@
   };
   const STEP_BUCKET_MS = 15 * 60 * 1000;
   const stressReferences: LaneReference[] = [
-    { y: 25, label: "descanso" },
-    { y: 50, label: "baixo" },
-    { y: 75, label: "médio" },
+    { y: 25, label: "rest" },
+    { y: 50, label: "low" },
+    { y: 75, label: "medium" },
   ];
 
   let hover = $state<number | null>(null);
@@ -75,7 +75,7 @@
     [
       {
         key: "hr",
-        label: "FC",
+        label: "HR",
         unit: "bpm",
         points: toPoints(day.hr),
         color: "var(--series-8)",
@@ -86,11 +86,11 @@
         summary:
           day.hr_min === null
             ? "—"
-            : `${number(day.hr_min)}–${number(day.hr_max)}${day.hr_resting === null ? "" : ` · repouso ${number(day.hr_resting)}`}`,
+            : `${number(day.hr_min)}–${number(day.hr_max)}${day.hr_resting === null ? "" : ` · resting ${number(day.hr_resting)}`}`,
       },
       {
         key: "stress",
-        label: "Estresse",
+        label: "Stress",
         unit: "0–100",
         points: toPoints(day.stress),
         color: "var(--series-4)",
@@ -98,7 +98,7 @@
         references: stressReferences,
         spans: toSpans(["sleep", "activity", "motion"]),
         barWidth: null,
-        summary: day.stress_avg === null ? "—" : `média ${number(day.stress_avg)}`,
+        summary: day.stress_avg === null ? "—" : `avg ${number(day.stress_avg)}`,
       },
       {
         key: "body_battery",
@@ -117,32 +117,33 @@
       },
       {
         key: "steps",
-        label: "Passos",
-        unit: "a cada 15 min",
+        label: "Steps",
+        unit: "per 15 min",
         points: steps,
         color: "var(--series-1)",
         yDomain: [0, stepsTop] as [number, number],
         references: [],
         spans: toSpans(["sleep", "activity"]),
         barWidth: STEP_BUCKET_MS,
-        summary: day.steps_total === null ? "—" : `${number(day.steps_total)} no dia`,
+        summary: day.steps_total === null ? "—" : `${number(day.steps_total)} for the day`,
       },
     ].filter((lane) => lane.points.some((point) => point.y !== null)),
   );
 </script>
 
-<section class="card border border-base-content/10 bg-base-100" aria-labelledby="dia-detalhe">
+<section class="card border border-base-content/10 bg-base-100" aria-labelledby="day-detail">
   <div class="card-body gap-3 p-5">
     <div class="flex flex-wrap items-baseline justify-between gap-2">
-      <h2 id="dia-detalhe" class="text-base font-semibold">O dia em detalhe</h2>
+      <h2 id="day-detail" class="text-base font-semibold">The day in detail</h2>
       {#if partial && day.last_sample_ms !== null}
         <p class="text-xs text-warning">
-          dados até {clockLabel(day.last_sample_ms)}: sincronize de novo para ver o resto do dia
+          data up to {clockLabel(day.last_sample_ms)}: sync again to see the rest of the day
         </p>
       {/if}
     </div>
     <p class="text-xs text-base-content/70">
-      Da meia-noite à meia-noite. O estresse só é medido parado: em movimento o relógio não calcula.
+      Midnight to midnight. Stress is only measured at rest: the watch does not calculate it while
+      you move.
     </p>
 
     {#if day.stress_shares.length}
@@ -150,7 +151,7 @@
         <div
           class="flex h-3 w-full overflow-hidden rounded-sm"
           role="img"
-          aria-label="Tempo em cada nível de estresse"
+          aria-label="Time at each stress level"
         >
           {#each day.stress_shares as share (share.key)}
             <span
@@ -164,7 +165,7 @@
           {#each day.stress_shares as share (share.key)}
             <li class="inline-flex items-center gap-1.5">
               <i class="size-2.5 rounded-sm" style:background={SHARE_COLOR[share.key]}></i>
-              <span>estresse {share.label}</span>
+              <span>{share.label} stress</span>
               <span class="text-base-content/60 tabular-nums">{hours(share.minutes * 60)}</span>
             </li>
           {/each}
@@ -208,7 +209,7 @@
             {#if index === 0}
               <p class="truncate text-base-content/50 tabular-nums">
                 {hover === null
-                  ? "passe o mouse"
+                  ? "hover to inspect"
                   : `${clockLabel(hover)}${hoverSpan ? ` · ${hoverSpan.label}` : ""}`}
               </p>
             {/if}
@@ -219,7 +220,7 @@
             xTicks={ticks}
             format={(value) => number(value)}
             color={lane.color}
-            label="{lane.label} ao longo do dia"
+            label="{lane.label} over the day"
             yDomain={lane.yDomain}
             references={lane.references}
             spans={lane.spans}

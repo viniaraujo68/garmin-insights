@@ -30,30 +30,30 @@
   };
 
   const SLEEP_FEEDBACK: Record<string, string> = {
-    NEGATIVE_NOT_RESTORATIVE: "pouco reparador",
-    NEGATIVE_NOT_ENOUGH_REM: "pouco REM",
-    NEGATIVE_LONG_BUT_NOT_ENOUGH_REM: "longo, mas pouco REM",
-    NEGATIVE_LONG_BUT_NOT_RESTORATIVE: "longo, mas pouco reparador",
-    NEGATIVE_LONG_BUT_DISCONTINUOUS: "longo, mas interrompido",
-    NEGATIVE_SHORT: "curto",
-    NEGATIVE_SHORT_AND_NONRECOVERING: "curto e pouco recuperador",
-    NEGATIVE_SHORT_AND_POOR_QUALITY: "curto e de baixa qualidade",
-    NEGATIVE_LATE_BED_TIME: "dormiu tarde",
-    POSITIVE_LONG_AND_DEEP: "longo e profundo",
-    POSITIVE_LONG_AND_CALM: "longo e tranquilo",
-    POSITIVE_LONG_AND_CONTINUOUS: "longo e contínuo",
-    POSITIVE_LONG_AND_RECOVERING: "longo e recuperador",
-    POSITIVE_LONG_AND_REFRESHING: "longo e revigorante",
-    POSITIVE_SHORT_BUT_DEEP: "curto, mas profundo",
-    POSITIVE_SHORT_BUT_REFRESHING: "curto, mas revigorante",
-    POSITIVE_HIGHLY_RECOVERING: "muito recuperador",
-    POSITIVE_RECOVERING: "recuperador",
-    POSITIVE_REFRESHING: "revigorante",
-    POSITIVE_OPTIMAL_STRUCTURE: "estrutura ideal",
-    POSITIVE_CALM: "tranquilo",
-    POSITIVE_DEEP: "profundo",
-    POSITIVE_RESTFUL: "reparador",
-    POSITIVE_CONTINUOUS: "contínuo",
+    NEGATIVE_NOT_RESTORATIVE: "not restorative",
+    NEGATIVE_NOT_ENOUGH_REM: "not enough REM",
+    NEGATIVE_LONG_BUT_NOT_ENOUGH_REM: "long, but not enough REM",
+    NEGATIVE_LONG_BUT_NOT_RESTORATIVE: "long, but not restorative",
+    NEGATIVE_LONG_BUT_DISCONTINUOUS: "long, but interrupted",
+    NEGATIVE_SHORT: "short",
+    NEGATIVE_SHORT_AND_NONRECOVERING: "short and not recovering",
+    NEGATIVE_SHORT_AND_POOR_QUALITY: "short and poor quality",
+    NEGATIVE_LATE_BED_TIME: "late bedtime",
+    POSITIVE_LONG_AND_DEEP: "long and deep",
+    POSITIVE_LONG_AND_CALM: "long and calm",
+    POSITIVE_LONG_AND_CONTINUOUS: "long and continuous",
+    POSITIVE_LONG_AND_RECOVERING: "long and recovering",
+    POSITIVE_LONG_AND_REFRESHING: "long and refreshing",
+    POSITIVE_SHORT_BUT_DEEP: "short, but deep",
+    POSITIVE_SHORT_BUT_REFRESHING: "short, but refreshing",
+    POSITIVE_HIGHLY_RECOVERING: "highly recovering",
+    POSITIVE_RECOVERING: "recovering",
+    POSITIVE_REFRESHING: "refreshing",
+    POSITIVE_OPTIMAL_STRUCTURE: "optimal structure",
+    POSITIVE_CALM: "calm",
+    POSITIVE_DEEP: "deep",
+    POSITIVE_RESTFUL: "restful",
+    POSITIVE_CONTINUOUS: "continuous",
   };
 
   const windowed = (trend: RecoveryTrend) => {
@@ -106,27 +106,27 @@
 </script>
 
 <PageFrame
-  title="Recuperação"
-  description="Se o seu corpo está absorvendo o treino: VFC, FC de repouso, sono e energia comparados com o seu próprio normal."
+  title="Recovery"
+  description="Whether your body is absorbing training: HRV, resting HR, sleep and energy compared with your own normal."
 >
   {#snippet header()}
     <div class="mt-2">
       <SegmentedControl
         options={[
-          { id: "4", label: "4 semanas" },
-          { id: "12", label: "12 semanas" },
-          { id: "26", label: "26 semanas" },
-          { id: "52", label: "52 semanas" },
+          { id: "4", label: "4 weeks" },
+          { id: "12", label: "12 weeks" },
+          { id: "26", label: "26 weeks" },
+          { id: "52", label: "52 weeks" },
         ]}
         bind:value={period}
-        label="Período"
-        caption="Período"
+        label="Period"
+        caption="Period"
         size="sm"
       />
     </div>
   {/snippet}
 
-  <section class="grid gap-3 md:grid-cols-2 xl:grid-cols-3" aria-label="Tendências">
+  <section class="grid gap-3 md:grid-cols-2 xl:grid-cols-3" aria-label="Trends">
     {#each recovery.trends as trend (trend.key)}
       {@const info = summary(trend)}
       {@const points = windowed(trend)}
@@ -142,15 +142,15 @@
           <div class="flex flex-wrap items-center justify-between gap-2 text-xs">
             <StatusText
               status={info.status}
-              label="{delta(info.difference, digitsOf(trend))} vs média do período ({number(
+              label="{delta(info.difference, digitsOf(trend))} vs period average ({number(
                 info.average,
                 digitsOf(trend),
               )})"
             />
             <span class="text-base-content/60 tabular-nums">
-              mín {number(info.lowest?.value ?? null, digitsOf(trend))}{info.lowest
+              min {number(info.lowest?.value ?? null, digitsOf(trend))}{info.lowest
                 ? ` (${dayMonth(info.lowest.date)})`
-                : ""} · máx {number(info.highest?.value ?? null, digitsOf(trend))}{info.highest
+                : ""} · max {number(info.highest?.value ?? null, digitsOf(trend))}{info.highest
                 ? ` (${dayMonth(info.highest.date)})`
                 : ""}
             </span>
@@ -158,14 +158,14 @@
           <TimeChart
             series={[
               {
-                label: "Dia",
+                label: "Day",
                 points: points.map((point) => ({ date: point.date, value: point.value })),
                 slot: 0,
                 line: false,
                 dots: true,
               },
               {
-                label: "Média de 7 dias",
+                label: "7-day average",
                 points: points.map((point) => ({ date: point.date, value: point.mean7 })),
                 slot: 0,
                 width: 2.5,
@@ -173,14 +173,14 @@
             ]}
             band={trend.key === "hrv_last_night"
               ? {
-                  label: "Sua faixa normal",
+                  label: "Your normal range",
                   low: points.map((point) => ({ date: point.date, value: point.band_low })),
                   high: points.map((point) => ({ date: point.date, value: point.band_high })),
                   slot: 2,
                 }
               : undefined}
             format={(value) => number(value, digitsOf(trend))}
-            ariaLabel="{trend.label} por dia"
+            ariaLabel="{trend.label} per day"
             legend={false}
             zero={false}
             min={BOUNDS[trend.key]?.min}
@@ -194,41 +194,39 @@
   </section>
 
   <div class="grid gap-4 xl:grid-cols-2">
-    <section class="card border border-base-content/10 bg-base-100" aria-labelledby="fases">
+    <section class="card border border-base-content/10 bg-base-100" aria-labelledby="stages">
       <div class="card-body gap-3 p-5">
-        <h2 id="fases" class="text-base font-semibold">Fases do sono por noite</h2>
+        <h2 id="stages" class="text-base font-semibold">Sleep stages per night</h2>
         <p class="text-xs text-base-content/70">
-          Horas em cada fase. Profundo recupera o corpo; REM consolida memória e aprendizado e se
-          concentra no fim da noite.
+          Hours in each stage. Deep sleep restores the body; REM consolidates memory and learning
+          and concentrates towards the end of the night.
         </p>
         <BarChart
           labels={nightsChart.map((night) => dayMonth(night.date))}
           series={[
-            { label: "Profundo", values: nightsChart.map((night) => night.deep_h), slot: 0 },
+            { label: "Deep", values: nightsChart.map((night) => night.deep_h), slot: 0 },
             { label: "REM", values: nightsChart.map((night) => night.rem_h), slot: 2 },
-            { label: "Leve", values: nightsChart.map((night) => night.light_h), slot: 4 },
-            { label: "Acordado", values: nightsChart.map((night) => night.awake_h), slot: 3 },
+            { label: "Light", values: nightsChart.map((night) => night.light_h), slot: 4 },
+            { label: "Awake", values: nightsChart.map((night) => night.awake_h), slot: 3 },
           ]}
           stacked
           format={(value) => hours(value * 3600)}
           extraTooltip={(index) => {
             const night = nightsChart[index];
             return night
-              ? [
-                  `pontuação ${number(night.score)} · precisava de ${hours((night.need_h ?? 0) * 3600)}`,
-                ]
+              ? [`score ${number(night.score)} · needed ${hours((night.need_h ?? 0) * 3600)}`]
               : [];
           }}
-          ariaLabel="Fases do sono por noite"
+          ariaLabel="Sleep stages per night"
         />
       </div>
     </section>
-    <section class="card border border-base-content/10 bg-base-100" aria-labelledby="regularidade">
+    <section class="card border border-base-content/10 bg-base-100" aria-labelledby="regularity">
       <div class="card-body gap-3 p-5">
-        <h2 id="regularidade" class="text-base font-semibold">Regularidade do sono</h2>
+        <h2 id="regularity" class="text-base font-semibold">Sleep regularity</h2>
         <p class="text-xs text-base-content/70">
-          Cada barra vai da hora em que você dormiu até a hora em que acordou; a cor é a pontuação
-          (mais escuro = melhor). Horários regulares ajudam a recuperação tanto quanto dormir mais.
+          Each bar runs from the time you fell asleep to the time you woke up; the colour is the
+          score (darker = better). Regular schedules help recovery as much as sleeping more.
         </p>
         <SleepWindows nights={nightsChart} />
       </div>
@@ -236,14 +234,14 @@
   </div>
 
   {#if data.night}
-    <section class="card border border-base-content/10 bg-base-100" aria-labelledby="noite">
+    <section class="card border border-base-content/10 bg-base-100" aria-labelledby="night">
       <div class="card-body gap-3 p-5">
         <div class="flex flex-wrap items-center justify-between gap-3">
           <div>
-            <h2 id="noite" class="text-base font-semibold">A noite em detalhe</h2>
+            <h2 id="night" class="text-base font-semibold">The night in detail</h2>
             <p class="text-xs text-base-content/70">
-              Dormiu {data.night.night.bedtime ?? "—"}, acordou {data.night.night.wake_time ?? "—"} ·
-              {hours((data.night.night.sleep_h ?? 0) * 3600)} · pontuação {number(
+              Slept {data.night.night.bedtime ?? "—"}, woke {data.night.night.wake_time ?? "—"} ·
+              {hours((data.night.night.sleep_h ?? 0) * 3600)} · score {number(
                 data.night.night.score,
               )}
               {#if data.night.night.feedback && SLEEP_FEEDBACK[data.night.night.feedback]}· {SLEEP_FEEDBACK[
@@ -255,10 +253,10 @@
             <Select
               options={nightOptions}
               bind:value={selectedNight}
-              placeholder="Escolha uma noite"
+              placeholder="Choose a night"
               onchange={(value: string | null) => {
                 if (value)
-                  void goto(resolve("/recuperacao/[noite]", { noite: value }), {
+                  void goto(resolve("/recovery/[night]", { night: value }), {
                     noScroll: true,
                     keepFocus: true,
                   });
@@ -271,12 +269,12 @@
     </section>
   {/if}
 
-  <section class="card border border-base-content/10 bg-base-100" aria-labelledby="mes">
+  <section class="card border border-base-content/10 bg-base-100" aria-labelledby="month">
     <div class="card-body gap-3 p-5">
-      <h2 id="mes" class="text-base font-semibold">Mês num relance</h2>
+      <h2 id="month" class="text-base font-semibold">Month at a glance</h2>
       <p class="text-xs text-base-content/70">
-        Cada dia comparado com os 28 dias anteriores. Verde: melhor que o seu normal; amarelo: pior;
-        vermelho: bem pior. Passe o mouse para ver quantos desvios.
+        Each day compared with the previous 28 days. Green: better than your normal; yellow: worse;
+        red: much worse. Hover to see how many standard deviations.
       </p>
       <GlanceGrid
         days={recovery.glance.slice(-35)}

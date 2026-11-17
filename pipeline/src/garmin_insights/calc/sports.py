@@ -21,16 +21,16 @@ HIGH_SPEED_MS = 15 / 3.6
 POSITION_STEP = 5
 EPLEY_DIVISOR = 30
 MUSCLE_LABELS = {
-    "chest": "Peito",
-    "back": "Costas",
-    "shoulders": "Ombros",
-    "biceps": "Bíceps",
-    "triceps": "Tríceps",
-    "core": "Abdômen e core",
-    "glutes": "Glúteos",
-    "quads": "Quadríceps",
-    "hamstrings": "Posteriores da coxa",
-    "calves": "Panturrilhas",
+    "chest": "Chest",
+    "back": "Back",
+    "shoulders": "Shoulders",
+    "biceps": "Biceps",
+    "triceps": "Triceps",
+    "core": "Core",
+    "glutes": "Glutes",
+    "quads": "Quadriceps",
+    "hamstrings": "Hamstrings",
+    "calves": "Calves",
 }
 CATEGORY_MUSCLES = {
     "BENCH_PRESS": ("chest", "triceps", "shoulders"),
@@ -63,23 +63,23 @@ CATEGORY_MUSCLES = {
     "TOTAL_BODY": ("quads", "back", "chest", "core"),
 }
 CATEGORY_LABELS = {
-    "BENCH_PRESS": "Supino",
-    "PUSH_UP": "Flexão",
-    "FLYE": "Crucifixo",
-    "ROW": "Remada",
-    "PULL_UP": "Barra fixa",
-    "SHOULDER_PRESS": "Desenvolvimento",
-    "LATERAL_RAISE": "Elevação lateral",
-    "CURL": "Rosca",
-    "TRICEPS_EXTENSION": "Tríceps",
-    "SQUAT": "Agachamento",
-    "LUNGE": "Avanço",
-    "DEADLIFT": "Levantamento terra",
-    "LEG_CURL": "Flexora",
-    "CALF_RAISE": "Panturrilha",
-    "HIP_RAISE": "Elevação de quadril",
-    "PLANK": "Prancha",
-    "CRUNCH": "Abdominal",
+    "BENCH_PRESS": "Bench press",
+    "PUSH_UP": "Push-up",
+    "FLYE": "Fly",
+    "ROW": "Row",
+    "PULL_UP": "Pull-up",
+    "SHOULDER_PRESS": "Shoulder press",
+    "LATERAL_RAISE": "Lateral raise",
+    "CURL": "Curl",
+    "TRICEPS_EXTENSION": "Triceps extension",
+    "SQUAT": "Squat",
+    "LUNGE": "Lunge",
+    "DEADLIFT": "Deadlift",
+    "LEG_CURL": "Leg curl",
+    "CALF_RAISE": "Calf raise",
+    "HIP_RAISE": "Hip raise",
+    "PLANK": "Plank",
+    "CRUNCH": "Crunch",
 }
 
 
@@ -222,7 +222,7 @@ def gear_items(connection: sqlite3.Connection) -> list[GearItem]:
     return [
         GearItem(
             gear_id=row["gear_id"],
-            name=row["name"] or "Sem nome",
+            name=row["name"] or "Unnamed",
             gear_type=row["gear_type"],
             distance_km=round((row["distance_m"] or 0) / 1000, 1),
             max_km=rounded((row["max_distance_m"] or 0) / 1000, 0) or None,

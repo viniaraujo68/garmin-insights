@@ -31,58 +31,58 @@
       format: (v) => `${pace(v)}/km`,
       reverse: true,
       step: 30,
-      hint: "Mais alto no gráfico = mais rápido.",
+      hint: "Higher on the chart = faster.",
     },
     {
       id: "heat",
-      label: "Pace sem calor",
+      label: "Heat-adjusted pace",
       value: (run) => run.heat_adjusted_pace_s_km,
       format: (v) => `${pace(v)}/km`,
       reverse: true,
       step: 30,
-      hint: "O pace que você teria num dia fresco, corrigindo temperatura e umidade.",
+      hint: "The pace you would have run on a cool day, correcting for temperature and humidity.",
     },
     {
       id: "efficiency",
-      label: "Eficiência",
+      label: "Efficiency",
       value: (run) => run.meters_per_beat,
-      format: (v) => `${number(v, 2)} m/bat`,
-      hint: "Metros por batimento: subir é evoluir.",
+      format: (v) => `${number(v, 2)} m/beat`,
+      hint: "Metres per beat: going up means improving.",
     },
     {
       id: "hr",
-      label: "FC média",
+      label: "Avg HR",
       value: (run) => run.avg_hr,
       format: (v) => `${number(v)} bpm`,
-      hint: "Batimentos por minuto em média na corrida.",
+      hint: "Average beats per minute during the run.",
     },
     {
       id: "distance",
-      label: "Distância",
+      label: "Distance",
       value: (run) => run.distance_km,
       format: (v) => km(v),
-      hint: "Quilômetros por corrida.",
+      hint: "Kilometres per run.",
     },
     {
       id: "cadence",
-      label: "Cadência",
+      label: "Cadence",
       value: (run) => run.cadence,
-      format: (v) => `${number(v)} ppm`,
-      hint: "Passos por minuto.",
+      format: (v) => `${number(v)} spm`,
+      hint: "Steps per minute.",
     },
     {
       id: "condition",
-      label: "Condição",
+      label: "Condition",
       value: (run) => run.performance_condition,
       format: (v) => number(v, 1),
-      hint: "Condição de desempenho média: acima de 0 é dia bom.",
+      hint: "Average Performance Condition: above 0 is a good day.",
     },
     {
       id: "load",
-      label: "Carga",
+      label: "Load",
       value: (run) => run.training_load,
       format: (v) => number(v),
-      hint: "Carga de treino da corrida (EPOC).",
+      hint: "Training load of the run (EPOC).",
     },
   ];
 
@@ -159,7 +159,7 @@
           if (!element) return;
           const raw = chart.data.datasets[element.datasetIndex]?.data[element.index] as
             Point | undefined;
-          if (raw) void goto(resolve("/corridas/[id]", { id: raw.run.activity_id }));
+          if (raw) void goto(resolve("/runs/[id]", { id: raw.run.activity_id }));
         },
         onHover: (event, elements) => {
           const target = event.native?.target as HTMLElement | undefined;
@@ -183,7 +183,7 @@
                 const raw = item.raw as Point;
                 return [
                   ` ${chosen.label}: ${chosen.format(raw.y ?? 0)}`,
-                  ` Pace ${pace(raw.run.pace_s_km)}/km · FC ${number(raw.run.avg_hr)}`,
+                  ` Pace ${pace(raw.run.pace_s_km)}/km · HR ${number(raw.run.avg_hr)}`,
                   ` ${labelOf(TRAINING_EFFECT, raw.run.training_effect_label)}`,
                 ];
               },
@@ -226,10 +226,10 @@
     <SegmentedControl
       options={METRICS.map((item) => ({ id: item.id, label: item.label }))}
       bind:value={metricId}
-      label="Métrica do eixo vertical"
+      label="Vertical axis metric"
       size="sm"
     />
-    <ul class="flex flex-wrap gap-x-4 gap-y-1 text-xs" aria-label="Cores por tipo de treino">
+    <ul class="flex flex-wrap gap-x-4 gap-y-1 text-xs" aria-label="Colours by workout type">
       {#each effects as effect (effect)}
         <li class="flex items-center gap-1.5">
           <span class="size-2.5 rounded-full" style:background={seriesVar(EFFECT_SLOT[effect] ?? 0)}
@@ -237,16 +237,11 @@
           {labelOf(TRAINING_EFFECT, effect)}
         </li>
       {/each}
-      <li class="text-base-content/60">tamanho = distância</li>
+      <li class="text-base-content/60">size = distance</li>
     </ul>
   </div>
   <p class="text-xs text-base-content/70">{metric.hint}</p>
-  <div
-    bind:this={host}
-    class="relative h-80 w-full"
-    role="img"
-    aria-label="Corridas por {metric.label}"
-  >
+  <div bind:this={host} class="relative h-80 w-full" role="img" aria-label="Runs by {metric.label}">
     <canvas bind:this={canvas}></canvas>
   </div>
 </div>
